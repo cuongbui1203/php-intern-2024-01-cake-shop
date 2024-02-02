@@ -13,6 +13,8 @@ class User extends Authenticatable
     use HasFactory;
     use Notifiable;
 
+    public $timestamp = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -25,7 +27,7 @@ class User extends Authenticatable
         'phone',
         'dob',
         'address',
-        'role_id'
+        'role_id',
     ];
 
     /**
@@ -46,4 +48,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
 }

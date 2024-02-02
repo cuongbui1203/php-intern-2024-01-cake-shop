@@ -18,7 +18,7 @@ class CreateCakesTable extends Migration
             // $table->timestamps();
             $table->string('name', 50);
             $table->text('description');
-            $table->foreignId('type_id')->references('id')->on('cake_types');
+            $table->foreignId('type_id');
             $table->integer('price');
             $table->integer('amount');
             $table->tinyInteger('cook_time');
