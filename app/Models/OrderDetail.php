@@ -4,15 +4,28 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class OrderDetail extends Model
 {
     use HasFactory;
 
+    public $timestamp = false;
+
     protected $fillable = [
         'order_id',
         'cake_id',
         'amount',
-        'note'
+        'note',
     ];
+
+    public function cake(): BelongsTo
+    {
+        return $this->belongsTo(Cake::class);
+    }
+
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

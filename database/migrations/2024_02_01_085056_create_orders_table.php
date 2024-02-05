@@ -19,8 +19,8 @@ class CreateOrdersTable extends Migration
             $table->string('shipping_address', 255);
             $table->string('shipping_phone', 11);
             $table->foreignId('status_id');
-            $table->timestamp('created_at');
-            $table->timestamp('finished_at');
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('finished_at')->nullable();
         });
     }
 
