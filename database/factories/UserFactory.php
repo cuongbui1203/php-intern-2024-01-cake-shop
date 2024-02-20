@@ -14,12 +14,22 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $fakePhone = '0';
+        for ($i = 0; $i < 10; $i++) {
+            $fakePhone .= mt_rand(0, 9);
+        }
+
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
+            // 'email_verified_at' => now(),
+            'dob' => $this->faker->date(),
+            'phone' => $fakePhone,
+            'address' => $this->faker->address(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            'created_at' => now(),
+            'updated_at' => now(),
         ];
     }
 

@@ -10,8 +10,6 @@ class OrderDetail extends Model
 {
     use HasFactory;
 
-    public $timestamp = false;
-
     protected $fillable = [
         'order_id',
         'cake_id',

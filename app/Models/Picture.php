@@ -10,7 +10,6 @@ class Picture extends Model
 {
     use HasFactory;
 
-    public $timestamp = false;
 
     protected $fillable = [
         'cake_id',
