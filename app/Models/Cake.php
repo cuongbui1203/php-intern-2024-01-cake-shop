@@ -12,8 +12,6 @@ class Cake extends Model
 {
     use HasFactory;
 
-    public $timestamp = false;
-
     public $fillable = [
         'name',
         'description',

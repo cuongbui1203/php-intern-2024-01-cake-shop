@@ -9,7 +9,6 @@ class Status extends Model
 {
     use HasFactory;
 
-    public $timestamp = false;
 
     public $fillable = [
         'name',
