@@ -5,7 +5,7 @@ stages:
   - test
 
 jobs:
-  - name: build
+  - name: build:php
     stage: build
     image: sunasteriskrnd/php-workspace:7.4
     services:
@@ -34,6 +34,17 @@ jobs:
       - composer install
     after_script:
       - echo "Finish job"
+
+  - name: build:node
+    stage: build
+    image: node:12-alpine
+    script:
+      - npm install
+      - npm run dev
+    cache:
+    - key: node_modules_$CI_BRANCH
+      paths:
+        - node_modules
 
   - name: test:node
     stage: test
