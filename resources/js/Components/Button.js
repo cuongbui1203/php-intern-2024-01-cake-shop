@@ -1,6 +1,8 @@
+import { t } from 'i18next';
 import React from 'react';
 
 export default function Button({ type = 'submit', className = '', processing, children }) {
+    var children2 = typeof children === 'string' ? t(children) : children;
     return (
         <button
             type={type}
@@ -11,7 +13,7 @@ export default function Button({ type = 'submit', className = '', processing, ch
             }
             disabled={processing}
         >
-            {children}
+            {children2}
         </button>
     );
 }

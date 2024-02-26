@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Head } from '@inertiajs/inertia-react';
+import { t } from 'i18next';
 
 export default function Welcome(props) {
     return (
@@ -20,14 +21,14 @@ export default function Welcome(props) {
                                 href={route('login')}
                                 className="text-sm text-gray-700 underline"
                             >
-                                Log in
+                                {t('Login')}
                             </Link>
 
                             <Link
                                 href={route('register')}
                                 className="ml-4 text-sm text-gray-700 underline"
                             >
-                                Register
+                                {t('Register')}
                             </Link>
                         </>
                     )}
