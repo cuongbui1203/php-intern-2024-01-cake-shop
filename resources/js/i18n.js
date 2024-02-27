@@ -1,8 +1,9 @@
 import i18n from 'i18next';
+import { getCookie } from './Components/Cookies';
 
 i18n.init({
     // Ngôn ngữ mặc định
-    lng: localStorage.getItem('lang') ? localStorage.getItem('lang') : 'en',
+    lng: getCookie('lang') ? getCookie('lang') : 'en',
     // Ngôn ngữ dự phòng
     fallbackLng: 'en',
     // Đường dẫn đến các file bản dịch

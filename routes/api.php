@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\CakeController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'currentUser']);
+
+Route::get('cakes', [CakeController::class, 'getAllCakes'])->name('api.cakes.all');
+Route::get('cakes/{cake}', [CakeController::class, 'getCake'])->name('api.cakes.get');

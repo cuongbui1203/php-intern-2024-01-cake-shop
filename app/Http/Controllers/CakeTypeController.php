@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CakeType;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CakeTypeController extends Controller
 {
@@ -14,7 +15,12 @@ class CakeTypeController extends Controller
      */
     public function index()
     {
-        //
+        $cakeTypes = CakeType::all()->load('cakes');
+        $data = [
+            'data' => $cakeTypes,
+        ];
+
+        return Inertia::render('CakeType/ListCakeType', compact('data')); //phpcs:ignore
     }
 
     /**
@@ -46,7 +52,9 @@ class CakeTypeController extends Controller
      */
     public function show(CakeType $cakeType)
     {
-        //
+        $cakeType->load('cakes');
+
+        return Inertia::render('CakeType/CakeTypeDetail', compact('cakeType')); // phpcs:ignore
     }
 
     /**
