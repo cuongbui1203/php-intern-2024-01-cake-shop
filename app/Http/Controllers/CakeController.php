@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cake;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class CakeController extends Controller
 {
@@ -15,6 +16,9 @@ class CakeController extends Controller
     public function index()
     {
         //
+        return Inertia::render('ListCakes', [
+            'cakes' => Cake::paginate(10),
+        ]);
     }
 
     /**
@@ -46,7 +50,12 @@ class CakeController extends Controller
      */
     public function show(Cake $cake)
     {
-        //
+        // $cake->type->name;
+        // sleep(2);
+        $cake->load(['type', 'pictures']);
+        return Inertia::render('Details', [
+            'cake' => $cake,
+        ]);
     }
 
     /**
