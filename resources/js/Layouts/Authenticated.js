@@ -32,6 +32,9 @@ export default function Authenticated({ auth, header, children }) {
 
                         <div className="hidden sm:flex sm:items-center sm:ml-6">
                             <div className="ml-3 relative">
+                            <div>
+                                cart
+                            </div>
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CakeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
@@ -20,5 +21,9 @@ Route::get('/', [LandingPageController::class, 'landingPage']);
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
+Route::get('/cakes/{cake}', [CakeController::class, 'show'])
+    ->name('cakes.show');
 
+Route::get('/cakes', [CakeController::class, 'show'])
+    ->name('cakes.show');
 require __DIR__ . '/auth.php';
