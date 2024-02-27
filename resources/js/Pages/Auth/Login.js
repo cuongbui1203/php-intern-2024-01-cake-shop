@@ -6,6 +6,7 @@ import Input from '@/Components/Input';
 import Label from '@/Components/Label';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import {t} from 'i18next';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -70,7 +71,7 @@ export default function Login({ status, canResetPassword }) {
                     <label className="flex items-center">
                         <Checkbox name="remember" value={data.remember} handleChange={onHandleChange} />
 
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                        <span className="ml-2 text-sm text-gray-600">{t('Remember Me')}</span>
                     </label>
                 </div>
 
@@ -80,12 +81,12 @@ export default function Login({ status, canResetPassword }) {
                             href={route('password.request')}
                             className="underline text-sm text-gray-600 hover:text-gray-900"
                         >
-                            Forgot your password?
+                            {t('Forgot Your Password?')}
                         </Link>
                     )}
 
                     <Button className="ml-4" processing={processing}>
-                        Log in
+                        Login
                     </Button>
                 </div>
             </form>

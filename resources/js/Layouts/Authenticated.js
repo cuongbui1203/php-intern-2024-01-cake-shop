@@ -4,6 +4,8 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/inertia-react';
+import { t } from 'i18next';
+import LanguageSwitcher from '@/Components/LanguageSwitcher';
 
 export default function Authenticated({ auth, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
@@ -24,6 +26,7 @@ export default function Authenticated({ auth, header, children }) {
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
                                 </NavLink>
+                                <LanguageSwitcher />
                             </div>
                         </div>
 
@@ -56,7 +59,7 @@ export default function Authenticated({ auth, header, children }) {
 
                                     <Dropdown.Content>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
+                                            {t('Logout')}
                                         </Dropdown.Link>
                                     </Dropdown.Content>
                                 </Dropdown>
@@ -104,7 +107,7 @@ export default function Authenticated({ auth, header, children }) {
 
                         <div className="mt-3 space-y-1">
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
+                                {t('Logout')}
                             </ResponsiveNavLink>
                         </div>
                     </div>
