@@ -3,10 +3,10 @@ require('./bootstrap');
 import React from 'react';
 import { render } from 'react-dom';
 import { createInertiaApp } from '@inertiajs/inertia-react';
-import { InertiaProgress } from '@inertiajs/progress';
-import i18n from './i18n'; // Import i18n instance
-import { I18nextProvider } from 'react-i18next';
 import { CookiesProvider } from 'react-cookie';
+import { InertiaProgress } from '@inertiajs/progress';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18n';
 
 const appName =
     window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
@@ -23,7 +23,7 @@ createInertiaApp({
             </CookiesProvider>,
             el
         );
-    },
+    }
 });
 
 InertiaProgress.init({ color: '#4B5563' });

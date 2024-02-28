@@ -16,13 +16,12 @@ const Cart = () => {
     const conditionalRendering = () => {
         if (cart.length > 0) {
             return (
-                <React.Fragment>
+                <>
                     <Title name="your" title="cart" />
                     <CartColumns />
-                    <CartList value={{ cart }} /> // Pass cart directly to
-                    CartList
+                    <CartList value={{ cart }} />
                     <CartTotals value={{ cart }} history="" />
-                </React.Fragment>
+                </>
             );
         } else {
             return <EmptyCart />;

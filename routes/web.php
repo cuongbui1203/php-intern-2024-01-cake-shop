@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CakeController;
+use App\Http\Controllers\CakeTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
 use Illuminate\Support\Facades\Route;
@@ -24,6 +25,9 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])
 Route::get('/cakes/{cake}', [CakeController::class, 'show'])
     ->name('cakes.show');
 
-Route::get('/cakes', [CakeController::class, 'show'])
-    ->name('cakes.show');
+Route::get('/cakes', [CakeController::class, 'index'])
+    ->name('cakes.index');
+
+Route::get('/cake-types', [CakeTypeController::class, 'index'])->name('cakeType.index');
+
 require __DIR__ . '/auth.php';

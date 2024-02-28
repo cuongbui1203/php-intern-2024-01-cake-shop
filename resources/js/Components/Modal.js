@@ -27,7 +27,6 @@ export default class Modal extends Component {
                                                 src={img}
                                                 alt=""
                                                 className="img-fluid"
-                                                alt="product"
                                             />
                                             <h5>{title}</h5>
                                             <h5 className="text-muted">
