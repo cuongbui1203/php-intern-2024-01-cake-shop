@@ -24,6 +24,7 @@ class CakeSeeder extends Seeder
                 'type_id' => rand(1, 5),
             ])
             ->each(function ($cake) use ($ingredients) {
+                $cake->type_id = rand(1, 5);
                 // Select a random number of ingredients (2-6):
                 $n = rand(2, 6);
                 // Randomly choose ingredients, avoiding duplicates:
@@ -38,6 +39,7 @@ class CakeSeeder extends Seeder
 
                 // Attach chosen ingredients to the cake:
                 $cake->ingredients()->sync($chosenIngredients);
+                $cake->save();
             });
     }
 }

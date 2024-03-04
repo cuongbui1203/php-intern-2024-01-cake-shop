@@ -1,8 +1,15 @@
-import { t } from 'i18next';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-export default function Button({ type = 'submit', className = '', processing, children }) {
+export default function Button({
+    type = 'submit',
+    className = '',
+    processing,
+    children
+}) {
+    const [t] = useTranslation();
     var children2 = typeof children === 'string' ? t(children) : children;
+
     return (
         <button
             type={type}

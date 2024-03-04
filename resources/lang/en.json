@@ -51,5 +51,19 @@
     "Already registered?":"Already registered?",
     "Dob":"Day of birth",
     "Phone":"Phone number",
-    "LogedNoti":"You\"re logged in!"
+    "LogedNoti":"You\"re logged in!",
+    "Cake Type":"Cake Type",
+    "Cake Types":"Cake Types",
+    "Price":"Price",
+    "Quantity":"Quantity",
+    "Action":"Action",
+    "Delete All":"Delete all",
+    "Subtotal":"Subtotal",
+    "Total":"Total",
+    "Tax":"Tax",
+    "CartEmpty":"Your cart is currently empty",
+    "InfoCake":"Some info about cake",
+    "Back to Cakes":"Back To Cakes",
+    "Add to card":"Add to card",
+    "inCard":"In Card"
 }

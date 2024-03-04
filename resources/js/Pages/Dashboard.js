@@ -2,7 +2,6 @@ import React from 'react';
 import Authenticated from '@/Layouts/Authenticated';
 import { Head } from '@inertiajs/inertia-react';
 import { t } from 'i18next';
-// import { router } from "@inertiajs/react";
 
 export default function Dashboard(props) {
     const { users } = props;

@@ -51,5 +51,22 @@
     "Already registered?":"Đã đăng ký?",
     "Dob":"Ngày sinh",
     "Phone":"Số điện thoại",
-    "LogedNoti":"Bạn đã đăng nhập!"
+    "LogedNoti":"Bạn đã đăng nhập!",
+    "Cake Type":"Loại bánh",
+    "Cake Types":"Các loại bánh",
+    "Cakes": "Bánh",
+    "Cake Name":"Tên bánh",
+    "Price":"Giá",
+    "Quantity":"Số lượng",
+    "Action":"Hành động",
+    "Delete All":"Xóa hết",
+    "Subtotal":"Tổng",
+    "Total":"Tổng cộng",
+    "Tax":"Thuế",
+    "CartEmpty":"Giỏ hàng của bạn hiện đang trống",
+    "InfoCake":"Thông tin về bánh",
+    "Back To Cakes":"Trở về trang danh sách",
+    "Add to card":"Thêm vào giỏ hàng",
+    "inCart":"Đã thêm",
+    "Description":"Mô tả"
 }
