@@ -1,10 +1,12 @@
+import Navbar from '@/Components/Navbar';
+import Title from '@/Components/Title';
 import { Link } from '@inertiajs/inertia-react';
-import { Button, Table } from 'antd';
+import { Table } from 'antd';
+import axios from 'axios';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function ListCakeType({ data }) {
-    console.log(data);
+export default function ListCakeType({ cakeTypes, auth }) {
     const [t] = useTranslation();
     const col = [
         {
@@ -25,32 +27,75 @@ export default function ListCakeType({ data }) {
         }
     ];
     const dataSource = [];
-    data.map((e) => {
+    const handleDelete = async (id) => {
+        const accept = confirm(t('Confirm continue'));
+        if (!accept) return;
+        const res = await axios.delete(
+            route('api.cake-types.destroy', {
+                cakeType: id
+            })
+        );
+        if (res.data.success) {
+            window.location.pathname = 'cake-types';
+        } else {
+            alert(res.data.message);
+        }
+    };
+    cakeTypes.map((e) => {
         dataSource.push({
             name: e.name,
             description: e.description,
             action: (
-                <div style={{ width: 'fit-content', display: 'flex' }}>
+                <div
+                    key={e.id}
+                    style={{ width: 'fit-content', display: 'flex' }}
+                >
                     <Link
                         href={route('cake-types.show', {
                             cakeType: e.id
                         })}
                         as="button"
-                        className="ant-btn css-dev-only-do-not-override-1k979oh ant-btn-default"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
                     >
                         <span>{t('View')}</span>
                     </Link>
-                    <Button>
+                    <Link
+                        as="button"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                        href={route('cakeType.edit', {
+                            cakeType: e.id
+                        })}
+                    >
                         <span>{t('Edit')}</span>
-                    </Button>
-                    <Button>
+                    </Link>
+                    <button
+                        onClick={() => {
+                            handleDelete(e.id);
+                        }}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    >
                         <span>{t('Delete')}</span>
-                    </Button>
+                    </button>
                 </div>
             ),
             quantity: e.cakes.length
         });
     });
-    console.log(data);
-    return <Table columns={col} dataSource={dataSource}></Table>;
+
+    return (
+        <>
+            <Navbar auth={auth} />
+            <Title title={t('Cake Type')} />
+            <div className="d-flex justify-content-end mr-4">
+                <Link
+                    href={route('cakeType.create')}
+                    as="button"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                >
+                    {t('Add')}
+                </Link>
+            </div>
+            <Table columns={col} dataSource={dataSource}></Table>
+        </>
+    );
 }

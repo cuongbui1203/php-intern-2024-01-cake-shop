@@ -51,7 +51,7 @@ class CakeController extends Controller
     {
         $cake->load(['type', 'pictures']);
 
-        return Inertia::render('Details', compact('cake')); //phpcs:ignore
+        return Inertia::render('Cake/Details', compact('cake')); //phpcs:ignore
     }
 
     /**

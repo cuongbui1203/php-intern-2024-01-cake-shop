@@ -5,7 +5,6 @@ import Input from '@/Components/Input';
 import Label from '@/Components/Label';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
-import { t } from 'i18next';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -15,7 +14,7 @@ export default function Register() {
         phone: '',
         password: '',
         address: '',
-        password_confirmation: '',
+        password_confirmation: ''
     });
 
     useEffect(() => {

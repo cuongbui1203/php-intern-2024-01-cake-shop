@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\CakeType;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class CakeTypeController extends Controller
@@ -16,11 +15,8 @@ class CakeTypeController extends Controller
     public function index()
     {
         $cakeTypes = CakeType::all()->load('cakes');
-        $data = [
-            'data' => $cakeTypes,
-        ];
 
-        return Inertia::render('CakeType/ListCakeType', compact('data')); //phpcs:ignore
+        return Inertia::render('CakeType/ListCakeType', compact('cakeTypes')); //phpcs:ignore
     }
 
     /**
@@ -30,18 +26,7 @@ class CakeTypeController extends Controller
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return Inertia::render('CakeType/CreateCakeType');
     }
 
     /**
@@ -65,29 +50,6 @@ class CakeTypeController extends Controller
      */
     public function edit(CakeType $cakeType)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CakeType  $cakeType
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, CakeType $cakeType)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\CakeType  $cakeType
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(CakeType $cakeType)
-    {
-        //
+        return Inertia::render('CakeType/Edit', compact('cakeType')); // phpcs:ignore
     }
 }

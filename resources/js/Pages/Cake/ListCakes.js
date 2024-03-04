@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useTranslation } from 'react-i18next';
+
 import Paginate from '@/Components/Paginate';
 import Product from '@/Components/Product';
 import Title from '@/Components/Title';
-import axios from 'axios';
 
 export default function ListCakes() {
+    const [t] = useTranslation();
     const [cakes, setCakes] = useState([]);
     const [current_page, setCurrent_page] = useState(1);
     const [total, setTotal] = useState(1);
     const [ListCakes, setListCakes] = useState(<></>);
     const [pageSize, setPageSize] = useState(4);
+
     const handelChangePage = (pageNum, pageSize) => {
         setCurrent_page(pageNum);
         setPageSize(pageSize);
@@ -23,8 +27,6 @@ export default function ListCakes() {
                 }
             });
             setCakes(res.data.data);
-            console.log(res.data);
-            // setCurrent_page()
             setTotal(res.data.total);
         };
         loadData();
@@ -41,7 +43,7 @@ export default function ListCakes() {
             );
             return;
         }
-        setListCakes(<>not found</>);
+        setListCakes(<>{t('Not Found')}</>);
         return;
     };
     useEffect(() => {
@@ -49,17 +51,19 @@ export default function ListCakes() {
     }, [cakes]);
     console.log(cakes);
     return (
-        <div>
-            <div className="py-5">
-                <Title title="Cakes" />
-                <div className="row">{ListCakes}</div>
+        <>
+            <div>
+                <div className="py-5">
+                    <Title title="Cakes" />
+                    <div className="row">{ListCakes}</div>
+                </div>
+                <Paginate
+                    page={current_page}
+                    total={total}
+                    pageSize={pageSize}
+                    onChange={handelChangePage}
+                />
             </div>
-            <Paginate
-                page={current_page}
-                total={total}
-                pageSize={pageSize}
-                onChange={handelChangePage}
-            />
-        </div>
+        </>
     );
 }

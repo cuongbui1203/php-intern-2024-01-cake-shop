@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from '@inertiajs/inertia-react';
 import Button from './Button';
@@ -18,13 +18,8 @@ const NavWrapper = styled.nav`
 const Navbar = ({ auth }) => {
     const [t] = useTranslation();
 
-    console.log(auth);
-    // const { user } = auth;
     return (
         <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5 flex justify-content-between">
-            <Link href="/">
-                {/* <img src={logo} alt="store" className="navbar-brand" /> */}
-            </Link>
             <ul className="navbar-nav align-items-center">
                 <li className="nav-item ml-5">
                     <Link href={route('cakeType.index')} className="nav-link">
@@ -33,13 +28,13 @@ const Navbar = ({ auth }) => {
                 </li>
 
                 <li className="nav-item ml-5">
-                    <Link href={route('cakes.index')} className="nav-link">
+                    <Link href={'/'} className="nav-link">
                         {t('Cakes')}
                     </Link>
                 </li>
             </ul>
             <LanguageSwitcher />
-            {auth.user ? (
+            {auth?.user ? (
                 <Dropdown>
                     <Dropdown.Trigger>
                         <span className="inline-flex rounded-md">
