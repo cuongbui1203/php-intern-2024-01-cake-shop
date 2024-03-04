@@ -65,5 +65,15 @@
     "InfoCake":"Some info about cake",
     "Back to Cakes":"Back To Cakes",
     "Add to card":"Add to card",
-    "inCard":"In Card"
+    "inCard":"In Card",
+    "Description":"Description",
+    "View":"View",
+    "Edit":"Edit",
+    "Delete":"Delete",
+    "Add":"Add",
+    "Create":"Create",
+    "Update":"Update",
+    "Update success":"Update success",
+    "Confirm continue":"Are you sure you want to perform this action. If so, click OK.",
+    "Create success":"Create success"
 }

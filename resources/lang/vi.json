@@ -68,5 +68,14 @@
     "Back To Cakes":"Trở về trang danh sách",
     "Add to card":"Thêm vào giỏ hàng",
     "inCart":"Đã thêm",
-    "Description":"Mô tả"
+    "Description":"Mô tả",
+    "View":"Xem",
+    "Edit":"Sửa",
+    "Delete":"Xóa",
+    "Add":"Thêm",
+    "Create":"Tạo mới",
+    "Update":"Cập nhật",
+    "Update success":"Cập nhật thành công",
+    "Confirm continue":"Bạn có chắc chắn muốn thực hiện hành động này không. Nếu có hãy bấm OK.",
+    "Create success":"Tạo mới thành công!"
 }

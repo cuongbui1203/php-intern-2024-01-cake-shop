@@ -6,7 +6,6 @@ import { t } from 'i18next';
 export default class Detail extends Component {
     render() {
         const { id, type, img, description, price, name } = this.props.cake;
-        console.log(this.props.cake);
         const inCart = false;
         return (
             <div className="container py-5">
