@@ -5,7 +5,6 @@ import { t } from 'i18next';
 
 export default function Dashboard(props) {
     const { users } = props;
-    console.log(users);
     return (
         <Authenticated
             auth={props.auth}

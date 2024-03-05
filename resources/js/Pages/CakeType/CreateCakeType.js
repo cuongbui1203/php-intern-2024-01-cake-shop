@@ -1,4 +1,3 @@
-import Button from '@/Components/Button';
 import Input from '@/Components/Input';
 import Label from '@/Components/Label';
 import Navbar from '@/Components/Navbar';
@@ -30,12 +29,10 @@ export default function CreateCakeType({ auth }) {
         e.preventDefault();
         try {
             const res = await axios.post(route('api.cake-types.store'), data);
-            console.log(res.data);
             setErrors({});
             alert(t('Create success'));
             window.location.pathname = '/cake-types/';
         } catch (e) {
-            console.log(e.response.data.errors);
             setErrors(e.response.data.errors);
         }
     };

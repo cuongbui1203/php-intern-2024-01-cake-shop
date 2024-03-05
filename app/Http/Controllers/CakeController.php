@@ -27,7 +27,7 @@ class CakeController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Cake/Create');
     }
 
     /**
@@ -62,7 +62,16 @@ class CakeController extends Controller
      */
     public function edit(Cake $cake)
     {
-        //
+        $cake->load('pictures');
+
+        return Inertia::render('Cake/Edit', compact('cake')); //phpcs:ignore
+    }
+
+    public function addCake(Cake $cake)
+    {
+        $cake->load('pictures');
+
+        return Inertia::render('Cake/AddCake', compact('cake')); //phpcs:ignore
     }
 
     /**

@@ -61,7 +61,7 @@
     "Subtotal":"Subtotal",
     "Total":"Total",
     "Tax":"Tax",
-    "CartEmpty":"Your cart is currently empty",
+    "CartEmpty":"Your cart is currentddCakeRequestly empty",
     "InfoCake":"Some info about cake",
     "Back to Cakes":"Back To Cakes",
     "Add to card":"Add to card",
@@ -75,5 +75,9 @@
     "Update":"Update",
     "Update success":"Update success",
     "Confirm continue":"Are you sure you want to perform this action. If so, click OK.",
-    "Create success":"Create success"
+    "Create success":"Create success",
+    "Something went wrong.":"Something went wrong.",
+    "addCake":"Add cake",
+    "addNewCake":"Add new cake",
+    "ok":"ok"
 }

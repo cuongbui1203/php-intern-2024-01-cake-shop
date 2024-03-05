@@ -19,4 +19,9 @@ class CakeType extends Model
     {
         return $this->hasMany(Cake::class, 'type_id');
     }
+
+    protected $cast = [
+        'updated_at' => 'timestamp',
+        'created_at' => 'timestamp',
+    ];
 }

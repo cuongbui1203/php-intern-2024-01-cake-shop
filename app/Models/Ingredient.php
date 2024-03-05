@@ -18,4 +18,9 @@ class Ingredient extends Model
     {
         return $this->belongsToMany(Cake::class);
     }
+
+    protected $cast = [
+        'updated_at' => 'timestamp',
+        'created_at' => 'timestamp',
+    ];
 }

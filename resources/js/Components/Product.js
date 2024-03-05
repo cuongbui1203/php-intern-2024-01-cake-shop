@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import { router } from '@inertiajs/react';
+import img from '@/img/no_image.png';
 
 const Product = ({ product }) => {
     const { id, name, price } = product;
@@ -9,10 +9,12 @@ const Product = ({ product }) => {
     const handleImageClick = () => {
         router.visit('cakes/' + id);
     };
-
+    var imgLink = img;
+    if (product.pictures.length !== 0) {
+        imgLink = product.pictures[0].link;
+    }
     const handleAddToCart = () => {
         // Implement your cart-related logic here
-        console.log('click');
     };
 
     return (
@@ -20,7 +22,7 @@ const Product = ({ product }) => {
             <div className="card">
                 <div className="img-container p-5" onClick={handleImageClick}>
                     <img
-                        src="https://pbs.twimg.com/profile_images/1701878932176351232/AlNU3WTK_400x400.jpg"
+                        src={imgLink}
                         alt="product"
                         className="card-img-top"
                         // onClick={handleImageClick}
@@ -47,16 +49,6 @@ const Product = ({ product }) => {
             </div>
         </ProductWrapper>
     );
-};
-
-Product.propTypes = {
-    product: PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        img: PropTypes.string.isRequired,
-        title: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        inCart: PropTypes.bool.isRequired
-    }).isRequired
 };
 
 // ... ProductWrapper styled component definition
