@@ -25,8 +25,15 @@ Route::get('/dashboard', [DashboardController::class, 'dashboard'])
 
 Route::get('/cakes', [CakeController::class, 'index'])
     ->name('cakes.index');
+Route::get('cakes/create', [CakeController::class, 'create'])
+    ->name('cakes.create');
+
 Route::get('/cakes/{cake}', [CakeController::class, 'show'])
     ->name('cakes.show');
+Route::get('/cakes/{cake}/edit', [CakeController::class, 'edit'])
+    ->name('cakes.edit');
+Route::get('/cakes/{cake}/add-cake', [CakeController::class, 'addCake'])
+    ->name('cakes.addCake');
 
 Route::get('/cake-types', [CakeTypeController::class, 'index'])
     ->name('cakeType.index');

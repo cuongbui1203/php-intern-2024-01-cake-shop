@@ -69,4 +69,14 @@ class CakeTypeController extends BaseApiController
             ]);
         }
     }
+
+    public function getListCakeType()
+    {
+        $cakeTypes = CakeType::all(['id', 'name']);
+
+        return response()->json([
+            'success' => true,
+            'data' => $cakeTypes,
+        ]);
+    }
 }

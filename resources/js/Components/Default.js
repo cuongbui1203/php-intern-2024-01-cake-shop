@@ -4,10 +4,6 @@ import { useTranslation } from 'react-i18next';
 const Default = (props) => {
     const [t] = useTranslation();
 
-    useEffect(() => {
-        console.log(props);
-    }, []);
-
     return (
         <div className="container">
             <div className="row">

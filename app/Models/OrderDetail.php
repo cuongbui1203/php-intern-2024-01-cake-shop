@@ -26,4 +26,9 @@ class OrderDetail extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+    protected $cast = [
+        'updated_at' => 'timestamp',
+        'created_at' => 'timestamp',
+    ];
 }

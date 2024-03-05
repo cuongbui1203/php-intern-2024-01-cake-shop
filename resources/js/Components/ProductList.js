@@ -11,7 +11,7 @@ const ProductList = () => {
         };
         getCakes();
     }, []);
-    console.log(cakes);
+
     return (
         <div className="py-5">
             <Title title="Cakes" />

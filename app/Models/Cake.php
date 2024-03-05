@@ -36,8 +36,8 @@ class Cake extends Model
         return $this->hasMany(Picture::class);
     }
 
-    public function getPriceAttribute()
-    {
-        return number_format($this->attributes['price'], 2, '.', ',');
-    }
+    protected $cast = [
+        'updated_at' => 'timestamp',
+        'created_at' => 'timestamp',
+    ];
 }

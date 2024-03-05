@@ -24,4 +24,9 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    protected $cast = [
+        'updated_at' => 'timestamp',
+        'created_at' => 'timestamp',
+    ];
 }
