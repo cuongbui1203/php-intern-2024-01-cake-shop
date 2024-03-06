@@ -1,15 +1,15 @@
-import Input from '@/Components/Input';
 import Label from '@/Components/Label';
 import Navbar from '@/Components/Navbar';
 import Title from '@/Components/Title';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { Head } from '@inertiajs/inertia-react';
-import { Select } from 'antd';
-import axios from 'axios';
+import { Select, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '@/i18n';
 
 export default function Create({ auth }) {
+    const { TextArea } = Input;
     const [t] = useTranslation();
     const [errors, setErrors] = useState({});
     const [cakeTypes, setCakeTypes] = useState([]);
@@ -29,7 +29,11 @@ export default function Create({ auth }) {
                 price: price,
                 cookTime: cookTime
             };
-            const res = await axios.post(route('api.cakes.store'), data);
+            const res = await axios.post(route('api.cakes.store'), data, {
+                headers: {
+                    'X-localization': i18n.language
+                }
+            });
             setErrors({});
             alert(t('Create success'));
             window.location.pathname = '/';
@@ -41,7 +45,11 @@ export default function Create({ auth }) {
     useEffect(() => {
         const loadData = async () => {
             try {
-                const res = await axios.get(route('api.cake-types.get-list'));
+                const res = await axios.get(route('api.cake-types.index'), {
+                    headers: {
+                        'X-localization': i18n.language
+                    }
+                });
                 setCakeTypes(res.data.data);
             } catch (e) {}
         };
@@ -64,30 +72,32 @@ export default function Create({ auth }) {
             <Head title="create cake" />
             <ValidationErrors errors={errors} />
             <Title title={t('Create')} />
-            <form>
+            <form style={{ width: '500px', margin: 'auto' }}>
                 <div>
                     <Label forInput="name" value={t('Name')} />
                     <Input
                         type="text"
                         name="name"
                         value={name}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full rounded"
                         isFocused={true}
-                        handleChange={(e) => {
-                            setName(e.target.value);
+                        onChange={(e) => {
+                            setName(e.value);
                         }}
                         required
                     />
                 </div>
                 <div>
                     <Label forInput="description" value={t('Description')} />
-                    <Input
+                    <TextArea
                         type="text"
                         name="description"
                         value={desc}
-                        className="mt-1 block w-full"
-                        handleChange={(e) => {
-                            setDesc(e.target.value);
+                        cols={5}
+                        style={{ height: '100px' }}
+                        className="mt-1 block w-full rounded"
+                        onChange={(e) => {
+                            setDesc(e.value);
                         }}
                         required
                     />
@@ -96,8 +106,7 @@ export default function Create({ auth }) {
                     <Label forInput="cakeType" value={t('Cake Type')} />
                     <Select
                         name="cakeType"
-                        className="mt-1 block w-full"
-                        // handleChange={onHandleChange}
+                        className="mt-1 block w-full rounded"
                         onChange={(e) => {
                             setIdCakeType(e);
                         }}
@@ -107,27 +116,27 @@ export default function Create({ auth }) {
                     />
                 </div>
                 <div>
-                    <Label forInput="price" value={t('price')} />
+                    <Label forInput="price" value={t('Price')} />
                     <Input
                         type="number"
                         name="price"
                         value={price}
-                        className="mt-1 block w-full"
-                        handleChange={(e) => {
-                            setPrice(e.target.value);
+                        className="mt-1 block w-full rounded"
+                        onChange={(e) => {
+                            setPrice(e.value);
                         }}
                         required
                     />
                 </div>
                 <div>
-                    <Label forInput="cookTime" value={t('CookTime')} />
+                    <Label forInput="cookTime" value={t('TimeCook')} />
                     <Input
                         type="number"
                         name="cookTime"
                         value={cookTime}
-                        className="mt-1 block w-full"
-                        handleChange={(e) => {
-                            setCookTime(e.target.value);
+                        className="mt-1 block w-full rounded"
+                        onChange={(e) => {
+                            setCookTime(e.value);
                         }}
                         required
                     />

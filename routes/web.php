@@ -17,32 +17,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [LandingPageController::class, 'landingPage']);
+require __DIR__ . '/auth.php';
+
+Route::get('/', [LandingPageController::class, 'landingPage'])
+    ->name('landing');
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::get('/cakes', [CakeController::class, 'index'])
-    ->name('cakes.index');
-Route::get('cakes/create', [CakeController::class, 'create'])
-    ->name('cakes.create');
+Route::name('cakes.')
+    ->prefix('cakes')
+    ->group(function () {
+        Route::get('/', [CakeController::class, 'index'])
+            ->name('index');
+        Route::get('/{cake}', [CakeController::class, 'show'])
+            ->name('show');
+    });
 
-Route::get('/cakes/{cake}', [CakeController::class, 'show'])
-    ->name('cakes.show');
-Route::get('/cakes/{cake}/edit', [CakeController::class, 'edit'])
-    ->name('cakes.edit');
-Route::get('/cakes/{cake}/add-cake', [CakeController::class, 'addCake'])
-    ->name('cakes.addCake');
-
-Route::get('/cake-types', [CakeTypeController::class, 'index'])
-    ->name('cakeType.index');
-
-Route::get('cake-type/{cakeType}', [CakeTypeController::class, 'show'])
-    ->name('cake-types.show');
-
-Route::get('cake-types/create', [CakeTypeController::class, 'create'])
-    ->name('cakeType.create');
-Route::get('cake-types/{cakeType}/edit', [CakeTypeController::class, 'edit'])
-    ->name('cakeType.edit');
-require __DIR__ . '/auth.php';
+Route::name('cake-types.')
+    ->prefix('cake-types')
+    ->group(function () {
+        Route::get('/', [CakeTypeController::class, 'index'])
+            ->name('index');
+        Route::get('/{cakeType}', [CakeTypeController::class, 'show'])
+            ->name('show');
+        Route::get('/create', [CakeTypeController::class, 'create'])
+            ->name('create');
+        Route::get('/{cakeType}/edit', [CakeTypeController::class, 'edit'])
+            ->name('edit');
+    });

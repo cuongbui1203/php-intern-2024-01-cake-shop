@@ -2,31 +2,31 @@ import React from 'react';
 import styled from 'styled-components';
 import { router } from '@inertiajs/react';
 import img from '@/img/no_image.png';
+import { useTranslation } from 'react-i18next';
 
 const Product = ({ product }) => {
-    const { id, name, price } = product;
+    const { id, name, price, pictures } = product;
     const inCart = false;
     const handleImageClick = () => {
         router.visit('cakes/' + id);
     };
-    var imgLink = img;
-    if (product.pictures.length !== 0) {
-        imgLink = product.pictures[0].link;
-    }
+    const [t] = useTranslation();
+    var imgLink =
+        pictures.length != 0
+            ? route('api.image.show', {
+                  picture: pictures[0]
+              })
+            : img;
+
     const handleAddToCart = () => {
         // Implement your cart-related logic here
     };
 
     return (
-        <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
+        <ProductWrapper className="col-9 col-md-6 col-lg-3 my-3">
             <div className="card">
-                <div className="img-container p-5" onClick={handleImageClick}>
-                    <img
-                        src={imgLink}
-                        alt="product"
-                        className="card-img-top"
-                        // onClick={handleImageClick}
-                    />
+                <div className="img-container" onClick={handleImageClick}>
+                    <img src={imgLink} alt="product" className="card-img-top" />
                     <button
                         className="cart-btn"
                         disabled={inCart}
@@ -42,8 +42,9 @@ const Product = ({ product }) => {
                 <div className="card-footer d-flex justify-content-between">
                     <p className="align-seft-center mb-0">{name}</p>
                     <h5 className="text-blue font-italic mb-0">
-                        <span className="mr-1">$</span>
-                        {price}
+                        {t('price2', {
+                            gia: price
+                        })}
                     </h5>
                 </div>
             </div>
@@ -74,6 +75,8 @@ const ProductWrapper = styled.div`
     .img-container {
         position: relative;
         overflow: hidden;
+        width: 200;
+        height: 300;
     }
     .card-img-top {
         transition: all 0.5s linear;

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -34,10 +33,14 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request)
     {
         $request->authenticate();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $token = $user->createToken('login')->plainTextToken;
 
-        $request->session()->regenerate();
-
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return response()->json([
+            'success' => true,
+            'token' => $token,
+        ]);
     }
 
     /**
@@ -48,12 +51,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+        $user->tokens()->delete();
 
-        $request->session()->invalidate();
+        Auth::logout();
 
-        $request->session()->regenerateToken();
-
-        return redirect('/');
+        return response()->noContent();
     }
 }

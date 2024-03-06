@@ -6,7 +6,9 @@ use App\Http\Requests\AddCakeRequest;
 use App\Http\Requests\CreateCakeRequest;
 use App\Models\Cake;
 use DB;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CakeController extends BaseApiController
 {
@@ -43,6 +45,43 @@ class CakeController extends BaseApiController
         DB::table('cakes')->where('id', '=', $cake->id)->update([
             'amount' => $cake->amount + $request->amount,
         ]);
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    public function store(CreateCakeRequest $request)
+    {
+        DB::table('cakes')->insert([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type_id' => $request->idCakeType,
+            'price' => $request->price,
+            'cook_time' => $request->cookTime,
+            'amount' => 0,
+        ]);
+
+        return response()->json([
+            'success' => true,
+        ]);
+    }
+
+    public function destroy(Cake $cake)
+    {
+        $pictures = $cake->pictures;
+        foreach ($pictures as $picture) {
+            try {
+                Storage::get($picture->link);
+                Storage::delete($picture->link);
+            } catch (Exception $e) {
+                dd($e);
+            }
+
+            DB::table('pictures')->where('id', '=', $picture->id)->delete();
+        }
+
+        DB::table('cakes')->where('id', '=', $cake->id)->delete();
 
         return response()->json([
             'success' => true,

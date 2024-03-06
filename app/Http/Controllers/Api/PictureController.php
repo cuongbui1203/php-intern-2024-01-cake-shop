@@ -5,30 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UploadPictureRequest;
 use App\Models\Picture;
-use Illuminate\Http\Request;
+use Exception;
+use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\Storage;
 
 class PictureController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -37,13 +19,22 @@ class PictureController extends Controller
      */
     public function store(UploadPictureRequest $request)
     {
-        $imagePath = $request->file('image')->store('local');
-        $f = new Picture();
-        $f->cake_id = $request->cakeId;
-        $f->link = $imagePath;
-        $f->save();
+        $path = Storage::put('cakes' . $request->cakeId, $request->file('image'));
+        try {
+            $picture = new Picture();
+            $picture->link = $path;
+            $picture->cake_id = $request->cakeId;
+            $picture->save();
 
-        return response()->json($f);
+            return response()->json(['success' => true]);
+        } catch (Exception $e) {
+            Storage::delete($path);
+
+            return response()->json([
+                'success' => false,
+                'message' => __('uploadImageFail'),
+            ], HttpResponse::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -54,30 +45,14 @@ class PictureController extends Controller
      */
     public function show(Picture $picture)
     {
-        //
-    }
+        // dd(Storage::get($picture->link));
+        try {
+            Storage::get($picture->link);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Picture $picture
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Picture $picture)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Picture  $picture
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Picture $picture)
-    {
-        //
+            return response()->download(Storage::path($picture->link), 'image' . $picture->id);
+        } catch (Exception $e) {
+            abort(404, __('http-statuses.404'));
+        }
     }
 
     /**
@@ -88,6 +63,16 @@ class PictureController extends Controller
      */
     public function destroy(Picture $picture)
     {
-        //
+        $error = [];
+        try {
+            Storage::get($picture->link);
+            Storage::delete($picture->link);
+        } catch (Exception $e) {
+            array_push($error, $e->getMessage());
+        }
+
+        $picture->delete();
+
+        return response()->json(['success' => true]);
     }
 }

@@ -2,6 +2,6 @@
 
 return [
     'pageSize' => [
-        'cakes' => 10,
+        'cakes' => 12,
     ],
 ];

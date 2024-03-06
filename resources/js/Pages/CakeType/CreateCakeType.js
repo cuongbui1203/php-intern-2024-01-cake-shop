@@ -3,11 +3,11 @@ import Label from '@/Components/Label';
 import Navbar from '@/Components/Navbar';
 import Title from '@/Components/Title';
 import ValidationErrors from '@/Components/ValidationErrors';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import React, { useState } from 'react';
 import { Input as InputAntd } from 'antd';
-import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import i18n from '@/i18n';
 
 export default function CreateCakeType({ auth }) {
     const [t] = useTranslation();
@@ -28,7 +28,11 @@ export default function CreateCakeType({ auth }) {
     const submit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post(route('api.cake-types.store'), data);
+            const res = await axios.post(route('api.cake-types.store'), data, {
+                headers: {
+                    'X-localization': i18n.language
+                }
+            });
             setErrors({});
             alert(t('Create success'));
             window.location.pathname = '/cake-types/';
@@ -39,10 +43,17 @@ export default function CreateCakeType({ auth }) {
     return (
         <>
             <Navbar auth={auth} />
+            <Link
+                href={route('cake-types.index')}
+                as="button"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+            >
+                {t('Back')}
+            </Link>
             <Head title={t('Create')} />
             <ValidationErrors errors={errors} />
             <Title title={t('Create')} />
-            <from onSubmit={submit}>
+            <div style={{ width: '500px', margin: 'auto' }}>
                 <div>
                     <Label forInput="name" value={t('Name')} />
                     <Input
@@ -71,7 +82,7 @@ export default function CreateCakeType({ auth }) {
                         {t('Create')}
                     </button>
                 </div>
-            </from>
+            </div>
         </>
     );
 }

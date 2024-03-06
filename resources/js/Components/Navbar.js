@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from '@inertiajs/inertia-react';
-import Button from './Button';
+import { Button } from 'antd';
 import Dropdown from './Dropdown';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useTranslation } from 'react-i18next';
+import { ROLE } from '@/const/role';
+import axios from 'axios';
+import i18n from '@/i18n';
 
 const NavWrapper = styled.nav`
     background: var(--mainBlue);
@@ -17,21 +20,41 @@ const NavWrapper = styled.nav`
 
 const Navbar = ({ auth }) => {
     const [t] = useTranslation();
-
+    const roleId = auth.user != null ? auth.user.role_id : ROLE.USER;
+    const handelLogout = async () => {
+        const res = await axios.post(route('logout'), {
+            headers: {
+                'X-localization': i18n.language
+            }
+        });
+        location.pathname = '/';
+    };
     return (
         <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5 flex justify-content-between">
             <ul className="navbar-nav align-items-center">
                 <li className="nav-item ml-5">
-                    <Link href={route('cakeType.index')} className="nav-link">
+                    <Link href={route('cake-types.index')} className="nav-link">
                         {t('Cake Types')}
                     </Link>
                 </li>
 
                 <li className="nav-item ml-5">
-                    <Link href={'/'} className="nav-link">
+                    <Link href={route('landing')} className="nav-link">
                         {t('Cakes')}
                     </Link>
                 </li>
+                {roleId == 1 ? (
+                    <li className="nav-item ml-5">
+                        <Link
+                            href={route('admin.cakes.index')}
+                            className="nav-link"
+                        >
+                            {t('CakeAdmin')}
+                        </Link>
+                    </li>
+                ) : (
+                    <></>
+                )}
             </ul>
             <LanguageSwitcher />
             {auth?.user ? (
@@ -61,21 +84,19 @@ const Navbar = ({ auth }) => {
                     </Dropdown.Trigger>
 
                     <Dropdown.Content>
-                        <Dropdown.Link href="/cart">
+                        <div className="d-flex justify-content-center m-2">
                             <Button>
                                 <span className="mr-2">
                                     <i className="fas fa-cart-plus"></i>
                                 </span>
                                 {t('MyCart')}
                             </Button>
-                        </Dropdown.Link>
-                        <Dropdown.Link
-                            href={route('logout')}
-                            method="post"
-                            as="button"
-                        >
-                            {t('Logout')}
-                        </Dropdown.Link>
+                        </div>
+                        <div className="d-flex justify-content-center m-2">
+                            <Button onClick={handelLogout}>
+                                {t('Logout')}
+                            </Button>
+                        </div>
                     </Dropdown.Content>
                 </Dropdown>
             ) : (

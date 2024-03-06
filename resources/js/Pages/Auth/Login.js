@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '@/Components/Button';
 import Checkbox from '@/Components/Checkbox';
 import Guest from '@/Layouts/Guest';
@@ -6,13 +6,16 @@ import Input from '@/Components/Input';
 import Label from '@/Components/Label';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
-import {t} from 'i18next';
+import { t } from 'i18next';
+import axios from 'axios';
+import i18n from '@/i18n';
 
 export default function Login({ status, canResetPassword }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const [errors, setErrors] = useState({});
+    const { data, setData, post, processing, reset } = useForm({
         email: '',
         password: '',
-        remember: '',
+        remember: ''
     });
 
     useEffect(() => {
@@ -22,20 +25,45 @@ export default function Login({ status, canResetPassword }) {
     }, []);
 
     const onHandleChange = (event) => {
-        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+        setData(
+            event.target.name,
+            event.target.type === 'checkbox'
+                ? event.target.checked
+                : event.target.value
+        );
     };
 
     const submit = (e) => {
         e.preventDefault();
-
-        post(route('login'));
+        const f = async () => {
+            try {
+                const res = await axios.post(route('login'), data, {
+                    headers: {
+                        'X-localization': i18n.language
+                    }
+                });
+                if (res.data.success) {
+                    localStorage.setItem('token', res.data.token);
+                    axios.defaults.headers.Authorization =
+                        'Bearer ' + res.data.token;
+                }
+                location.pathname = '/login';
+            } catch (e) {
+                setErrors(e.response.data.errors);
+            }
+        };
+        f();
     };
 
     return (
         <Guest>
             <Head title="Log in" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            {status && (
+                <div className="mb-4 font-medium text-sm text-green-600">
+                    {status}
+                </div>
+            )}
 
             <ValidationErrors errors={errors} />
 
@@ -69,9 +97,15 @@ export default function Login({ status, canResetPassword }) {
 
                 <div className="block mt-4">
                     <label className="flex items-center">
-                        <Checkbox name="remember" value={data.remember} handleChange={onHandleChange} />
+                        <Checkbox
+                            name="remember"
+                            value={data.remember}
+                            handleChange={onHandleChange}
+                        />
 
-                        <span className="ml-2 text-sm text-gray-600">{t('Remember Me')}</span>
+                        <span className="ml-2 text-sm text-gray-600">
+                            {t('Remember Me')}
+                        </span>
                     </label>
                 </div>
 

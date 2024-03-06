@@ -21,6 +21,6 @@ class CheckAdmin
             return $next($request);
         }
 
-        abort(401);
+        abort(401, __('http-statuses.401'));
     }
 }
