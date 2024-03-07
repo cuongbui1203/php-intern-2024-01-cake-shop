@@ -61,7 +61,7 @@
     "Subtotal":"Subtotal",
     "Total":"Total",
     "Tax":"Tax",
-    "CartEmpty":"Your cart is currentddCakeRequestly empty",
+    "CartEmpty":"Your cart is currently empty",
     "InfoCake":"Some info about cake",
     "Back to Cakes":"Back To Cakes",
     "Add to card":"Add to card",
@@ -79,5 +79,14 @@
     "Something went wrong.":"Something went wrong.",
     "addCake":"Add cake",
     "addNewCake":"Add new cake",
-    "ok":"ok"
+    "ok":"ok",
+    "price2":"{{gia}} VND",
+    "Amount":"Amount",
+    "Back":"Back",
+    "Success":"Success",
+    "AddAmount":"Add Amount",
+    "CakeAdmin":"cake management",
+    "TimeCook":"Time Cook",
+    "Min":"{{min}} Min",
+    "Images":"Images"
 }

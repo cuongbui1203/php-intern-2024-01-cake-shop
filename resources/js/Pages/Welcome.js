@@ -8,7 +8,7 @@ export default function Welcome(props) {
         <>
             <Head title="Welcome" />
             <Navbar auth={props.auth} />
-            <ListCakes />
+            <ListCakes auth={props.auth} />
         </>
     );
 }

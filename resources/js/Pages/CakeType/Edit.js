@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/inertia-react';
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import { Input as InputAntd } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -8,11 +8,12 @@ import Label from '@/Components/Label';
 import Navbar from '@/Components/Navbar';
 import Title from '@/Components/Title';
 import ValidationErrors from '@/Components/ValidationErrors';
+import i18n from '@/i18n';
 
 export default function Edit({ cakeType, auth }) {
     const [t] = useTranslation();
     const { TextArea } = InputAntd;
-    const { data, setData, reset } = useForm({
+    const { data, setData } = useForm({
         name: cakeType.name,
         description: cakeType.description
     });
@@ -28,11 +29,16 @@ export default function Edit({ cakeType, auth }) {
     const submit = async (e) => {
         e.preventDefault();
 
-        const res = await axios.post(
+        const res = await axios.put(
             route('api.cake-types.update', {
                 cakeType: cakeType.id
             }),
-            data
+            data,
+            {
+                headers: {
+                    'X-localization': i18n.language
+                }
+            }
         );
         if (res.data.success) {
             setErrors({});
@@ -45,10 +51,17 @@ export default function Edit({ cakeType, auth }) {
     return (
         <>
             <Navbar auth={auth} />
+            <Link
+                href={route('cake-types.index')}
+                as="button"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+            >
+                {t('Back')}
+            </Link>
             <Head title={t('Create')} />
             <ValidationErrors errors={errors} />
             <Title title={t('Create')} />
-            <from onSubmit={submit}>
+            <div style={{ width: '500px', margin: 'auto' }}>
                 <div>
                     <Label forInput="name" value={t('Name')} />
                     <Input
@@ -79,7 +92,7 @@ export default function Edit({ cakeType, auth }) {
                         {t('Update')}
                     </button>
                 </div>
-            </from>
+            </div>
         </>
     );
 }

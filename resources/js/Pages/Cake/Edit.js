@@ -1,13 +1,12 @@
-import Input from '@/Components/Input';
+import React, { useEffect, useState } from 'react';
+import { Button, Select, Table, Upload, Input } from 'antd';
+import { useTranslation } from 'react-i18next';
 import Label from '@/Components/Label';
 import Navbar from '@/Components/Navbar';
 import Title from '@/Components/Title';
 import ValidationErrors from '@/Components/ValidationErrors';
+import i18n from '@/i18n';
 import { Head } from '@inertiajs/inertia-react';
-import { Button, Select, Table, Upload } from 'antd';
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 export default function Edit({ auth, cake }) {
     const [t] = useTranslation();
@@ -18,8 +17,9 @@ export default function Edit({ auth, cake }) {
     const [desc, setDesc] = useState(cake.description);
     const [idCakeType, setIdCakeType] = useState(cake.type_id);
     const [price, setPrice] = useState(parseInt(cake.price));
-    const [cookTime, setCookTime] = useState(cake.cook_time);
-
+    const [cookTime, setCookTime] = useState(parseInt(cake.cook_time));
+    const { TextArea } = Input;
+    console.log(auth);
     const col = [
         {
             title: t('Picture'),
@@ -30,18 +30,37 @@ export default function Edit({ auth, cake }) {
             dataIndex: 'action'
         }
     ];
-
+    const handelDeleteImg = async (id) => {
+        const res = await axios.delete(
+            route('api.image.destroy', {
+                picture: id
+            }),
+            {
+                headers: {
+                    'X-localization': i18n.language
+                }
+            }
+        );
+        location.pathname = location.pathname;
+    };
     const dataSource = [];
-    cake.pictures.map((e) => {
+    cake.pictures?.map((e) => {
         dataSource.push({
             image: (
                 <>
-                    <img src={e.link} />
+                    <img
+                        src={route('api.image.show', {
+                            picture: e.id
+                        })}
+                        width={500}
+                    />
                 </>
             ),
             action: (
                 <>
-                    <button>{t('Remove')}</button>
+                    <Button danger onClick={() => handelDeleteImg(e.id)}>
+                        {t('Remove')}
+                    </Button>
                 </>
             )
         });
@@ -58,15 +77,20 @@ export default function Edit({ auth, cake }) {
                 cookTime: cookTime
             };
 
-            const res = await axios.post(
+            const res = await axios.put(
                 route('api.cakes.update', {
                     cake: cake.id
                 }),
-                data
+                data,
+                {
+                    headers: {
+                        'X-localization': i18n.language
+                    }
+                }
             );
             setErrors({});
             alert(t('Update success'));
-            window.location.pathname = '/';
+            window.location.pathname = window.location.pathname;
         } catch (e) {
             setErrors(e.response.data.errors);
         }
@@ -75,12 +99,13 @@ export default function Edit({ auth, cake }) {
     useEffect(() => {
         const loadData = async () => {
             try {
-                const res = await axios.get(route('api.cake-types.get-list'));
+                const res = await axios.get(route('api.cake-types.index'));
                 setCakeTypes(res.data.data);
             } catch (e) {}
         };
         loadData();
     }, []);
+
     useEffect(() => {
         if (cakeTypes.length === 0) return;
         const tem = [];
@@ -98,7 +123,7 @@ export default function Edit({ auth, cake }) {
             <Head title="Edit cake" />
             <ValidationErrors errors={errors} />
             <Title title={t('Edit')} />
-            <form>
+            <form style={{ width: '500px', margin: 'auto' }}>
                 <div>
                     <Label forInput="name" value={t('Name')} />
                     <Input
@@ -107,21 +132,21 @@ export default function Edit({ auth, cake }) {
                         value={name}
                         className="mt-1 block w-full"
                         isFocused={true}
-                        handleChange={(e) => {
-                            setName(e.target.value);
+                        onChange={(e) => {
+                            setName(e.value);
                         }}
                         required
                     />
                 </div>
                 <div>
                     <Label forInput="description" value={t('Description')} />
-                    <Input
+                    <TextArea
                         type="text"
                         name="description"
                         value={desc}
                         className="mt-1 block w-full"
-                        handleChange={(e) => {
-                            setDesc(e.target.value);
+                        onChange={(e) => {
+                            setDesc(e.value);
                         }}
                         required
                     />
@@ -146,8 +171,8 @@ export default function Edit({ auth, cake }) {
                         name="price"
                         value={price}
                         className="mt-1 block w-full"
-                        handleChange={(eCreate) => {
-                            setPrice(e.target.value);
+                        onChange={(e) => {
+                            setPrice(parseInt(e.value));
                         }}
                         required
                     />
@@ -159,17 +184,18 @@ export default function Edit({ auth, cake }) {
                         name="cookTime"
                         value={cookTime}
                         className="mt-1 block w-full"
-                        handleChange={(e) => {
-                            setCookTime(e.target.value);
+                        onChange={(e) => {
+                            setCookTime(parseInt(e.value));
                         }}
                         required
                     />
                 </div>
                 <div className=" mt-5">
-                    <div className="d-flex justify-content-end">
+                    <Label>{t('Images')}</Label>
+                    <div className="d-flex">
                         <Upload
                             name="image"
-                            action={route('api.img.upload', {
+                            action={route('api.image.store', {
                                 cakeId: cake.id
                             })}
                         >
@@ -177,7 +203,11 @@ export default function Edit({ auth, cake }) {
                         </Upload>
                     </div>
                     <div>
-                        <Table columns={col} dataSource={dataSource} />
+                        <Table
+                            columns={col}
+                            dataSource={dataSource}
+                            style={{ maxHeight: '500px' }}
+                        />
                     </div>
                 </div>
                 <div className=" d-flex justify-center m-2">

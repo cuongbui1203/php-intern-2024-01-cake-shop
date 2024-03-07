@@ -20,6 +20,13 @@ class CakeController extends Controller
         return Inertia::render('Cake/ListCakes', compact('cakes')); //phpcs:ignore
     }
 
+    public function adminIndex()
+    {
+        $cakes = Cake::paginate(config('paginate.pageSize.cakes'));
+
+        return Inertia::render('Admin/ListCakes', compact('cakes')); //phpcs:ignore
+    }
+
     /**
      * Show the form for creating a new resource.
      *

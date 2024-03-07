@@ -19,22 +19,50 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'currentUser']);
 
-Route::post('/image/upload', [PictureController::class, 'store'])
-    ->name('api.img.upload');
-Route::get('/image/{picture}/show', [PictureController::class, 'show'])
-    ->name('api.img.show');
+Route::name('image.')
+    ->prefix('images')
+    ->group(function () {
+        Route::post('/', [PictureController::class, 'store'])
+            ->name('store');
+        Route::get('/{picture}', [PictureController::class, 'show'])
+            ->name('show');
+        Route::delete('/{picture}', [PictureController::class, 'destroy'])
+            ->name('destroy');
+    });
 
-Route::get('cakes', [CakeController::class, 'getAllCakes'])->name('api.cakes.all');
-Route::get('cakes/{cake}', [CakeController::class, 'getCake'])->name('api.cakes.get');
-Route::post('cakes/create', [CakeController::class, 'store'])->name('api.cakes.store');
-Route::post('cakes/{cake}/update', [CakeController::class, 'update'])->name('api.cakes.update');
-Route::post('cakes/{cake}/add-cake', [CakeController::class, 'addCake'])->name('api.cakes.addCake');
+Route::name('cakes.')
+    ->prefix('cakes')
+    ->group(function () {
+        Route::get('/', [CakeController::class, 'getAllCakes'])
+            ->name('index');
 
-Route::post('cake-types/create', [CakeTypeController::class, 'store'])
-    ->name('api.cake-types.store');
-Route::delete('cake-types/{cakeType}/delete', [CakeTypeController::class, 'destroy'])
-    ->name('api.cake-types.destroy');
-Route::post('cake-types/{cakeType}/update', [CakeTypeController::class, 'update'])
-    ->name('api.cake-types.update');
-Route::get('cake-types/', [CakeTypeController::class, 'getListCakeType'])
-    ->name('api.cake-types.get-list');
+        Route::middleware(['admin', 'auth:sanctum'])
+            ->group(function () {
+                Route::post('/', [CakeController::class, 'store'])
+                    ->name('store');
+                Route::put('{cake}', [CakeController::class, 'update'])
+                    ->name('update');
+                Route::post('cakes/{cake}/add-cake', [CakeController::class, 'addCake'])
+                    ->name('addCake');
+                Route::delete('cakes/{cake}', [CakeController::class, 'destroy'])
+                    ->name('destroy');
+            });
+
+        Route::get('/{cake}', [CakeController::class, 'getCake'])
+            ->name('show');
+    });
+
+Route::name('cake-types.')->prefix('cake-types')->group(function () {
+    Route::get('/', [CakeTypeController::class, 'getListCakeType'])
+        ->name('index');
+
+    Route::middleware(['admin'])
+        ->group(function () {
+            Route::post('/', [CakeTypeController::class, 'store'])
+                ->name('store');
+            Route::put('/{cakeType}', [CakeTypeController::class, 'update'])
+                ->name('update');
+            Route::delete('{cakeType}', [CakeTypeController::class, 'destroy'])
+                ->name('destroy');
+        });
+});

@@ -81,5 +81,14 @@
     "Something went wrong.":"Có gì đó không đúng.",
     "addCake":"Thêm bánh mới ra lò",
     "addNewCake":"Thêm bánh",
-    "ok":"Xác nhận"
+    "ok":"Xác nhận",
+    "price2":"{{gia}} VND",
+    "Amount":"Số lượng",
+    "Back":"Trở về",
+    "Success":"Thành Công",
+    "AddAmount":"Số lượng muốn thêm",
+    "CakeAdmin":"Quản lý bánh",
+    "TimeCook":"Thời gian nướng",
+    "Min":"{{min}} Phút",
+    "Images":"Danh sách ảnh"
 }
