@@ -32,6 +32,7 @@
         "tailwindcss": "3.0.18"
     },
     "dependencies": {
+        "@ant-design/icons": "^5.3.1",
         "@inertiajs/react": "^1.0.15",
         "antd": "^5.14.2",
         "eslint-plugin-prettier": "^2.6.0",

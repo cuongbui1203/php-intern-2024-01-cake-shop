@@ -93,5 +93,10 @@
     "Upload":"Upload",
     "MyCart":"My Cart",
     "Ingredient":"Ingredient",
-    "PleaseSelect":"Please Select"
+    "PleaseSelect":"Please Select",
+    "Address":"Address",
+    "changePass":"Change password",
+    "changeInfo":"Change Information",
+    "Role":"Role",
+    "UserInfo":"User Information"
 }

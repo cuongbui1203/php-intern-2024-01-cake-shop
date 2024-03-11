@@ -69,7 +69,7 @@ class CakeController extends Controller
      */
     public function edit(Cake $cake)
     {
-        $cake->load('pictures', 'ingredients');
+        $cake->load(['pictures', 'ingredients']);
 
         return Inertia::render('Cake/Edit', compact('cake')); //phpcs:ignore
     }

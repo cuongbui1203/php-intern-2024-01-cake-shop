@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class UserController extends Controller
 {
@@ -46,8 +47,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
-        return $user;
+        $user->load('role');
+
+        return Inertia::render('Auth/User', compact('user')); //phpcs:ignore
     }
 
     /**

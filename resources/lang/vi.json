@@ -95,5 +95,10 @@
     "Upload":"Tải lên",
     "MyCart":"Giỏ hàng",
     "Ingredient":"Nguyên liệu",
-    "PleaseSelect":"Vui lòng chọn"
+    "PleaseSelect":"Vui lòng chọn",
+    "Address":"Địa chỉ",
+    "changePass":"Đổi mật khẩu",
+    "changeInfo":"Thay đổi thông tin",
+    "Role":"Quyền",
+    "UserInfo":"Thông tin người dùng"
 }
