@@ -47,15 +47,25 @@ const Navbar = ({ auth }) => {
                             {t('Cakes')}
                         </Link>
                     </li>
-                    {roleId == 1 ? (
-                        <li className="nav-item ml-5">
-                            <Link
-                                href={route('admin.cakes.index')}
-                                className="nav-link"
-                            >
-                                {t('CakeAdmin')}
-                            </Link>
-                        </li>
+                    {roleId == ROLE.ADMIN ? (
+                        <>
+                            <li className="nav-item ml-5">
+                                <Link
+                                    href={route('admin.cakes.index')}
+                                    className="nav-link"
+                                >
+                                    {t('CakeAdmin')}
+                                </Link>
+                            </li>
+                            <li className="nav-item ml-5">
+                                <Link
+                                    href={route('admin.users.index')}
+                                    className="nav-link"
+                                >
+                                    {t('ListAccount')}
+                                </Link>
+                            </li>
+                        </>
                     ) : (
                         <></>
                     )}
