@@ -37,7 +37,12 @@ export default function User({ auth, user }) {
                 </div>
             </div>
             <div className=" text-center w-100">
-                <Link className="mx-2">
+                <Link
+                    href={route('users.changePass', {
+                        user: user.id
+                    })}
+                    className="mx-2"
+                >
                     <Button>{t('changePass')}</Button>
                 </Link>
                 <Link className="mx-2">

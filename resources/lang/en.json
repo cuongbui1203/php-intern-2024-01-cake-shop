@@ -98,5 +98,11 @@
     "changePass":"Change password",
     "changeInfo":"Change Information",
     "Role":"Role",
-    "UserInfo":"User Information"
+    "UserInfo":"User Information",
+    "ChangePass":"Change password",
+    "currentPass":"Current password",
+    "newPass":"New password",
+    "confirmPass":"Confirm password",
+    "Confirm":"Confirm",
+    "ChangePassSuccess":"Change password successful"
 }

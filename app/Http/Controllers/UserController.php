@@ -52,6 +52,11 @@ class UserController extends Controller
         return Inertia::render('Auth/User', compact('user')); //phpcs:ignore
     }
 
+    public function changePass(User $user)
+    {
+        return Inertia::render('Auth/ChangePassword', compact('user')); //phpcs:ignore
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

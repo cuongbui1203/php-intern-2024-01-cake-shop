@@ -54,4 +54,6 @@ Route::name('users.')
     ->group(function () {
         Route::get('/{user}', [UserController::class, 'show'])
             ->name('show');
+        Route::get('{user}/change-pass', [UserController::class, 'changePass'])
+            ->name('changePass');
     });
