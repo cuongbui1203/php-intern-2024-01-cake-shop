@@ -19,7 +19,7 @@ class CakeSeeder extends Seeder
         $ingredients = Ingredient::factory(10)->create();
         CakeType::factory(5)->create();
 
-        Cake::factory(10)
+        Cake::factory(20)
             ->create([
                 'type_id' => rand(1, 5),
             ])

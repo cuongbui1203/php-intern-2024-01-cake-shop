@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CakeController;
 use App\Http\Controllers\Api\CakeTypeController;
+use App\Http\Controllers\Api\IngredientController;
 use App\Http\Controllers\Api\PictureController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
@@ -56,7 +57,7 @@ Route::name('cake-types.')->prefix('cake-types')->group(function () {
     Route::get('/', [CakeTypeController::class, 'getListCakeType'])
         ->name('index');
 
-    Route::middleware(['admin'])
+    Route::middleware(['admin', 'auth:sanctum'])
         ->group(function () {
             Route::post('/', [CakeTypeController::class, 'store'])
                 ->name('store');
@@ -66,3 +67,11 @@ Route::name('cake-types.')->prefix('cake-types')->group(function () {
                 ->name('destroy');
         });
 });
+
+
+Route::name('ingredient.')
+    ->prefix('ingredients')
+    ->group(function () {
+        Route::get('/', [IngredientController::class, 'index'])
+            ->name('index');
+    });

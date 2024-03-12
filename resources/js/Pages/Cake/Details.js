@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import img from '@/img/no_image.png';
 import Navbar from '@/Components/Navbar';
 import ListImage from '@/Components/ListImage';
-import { Button, Image } from 'antd';
+import { Button, Image, Table } from 'antd';
 import { ROLE } from '@/const/role';
 
 const Detail = ({ cake, auth }) => {
@@ -19,6 +19,19 @@ const Detail = ({ cake, auth }) => {
     const handleAddToCart = () => {
         setInCart(true); // Update button state after cart addition
     };
+    const col = [
+        {
+            title: t('Ingredient'),
+            dataIndex: 'name'
+        }
+    ];
+
+    const data = [];
+    cake.ingredients.map((e) => {
+        data.push({
+            name: e.name
+        });
+    });
 
     return (
         <>
@@ -59,6 +72,7 @@ const Detail = ({ cake, auth }) => {
                                 min: cake.cook_time
                             })}
                         </p>
+                        <Table columns={col} dataSource={data} />
                     </div>
                 </div>
                 <ListImage image={cake.pictures} />

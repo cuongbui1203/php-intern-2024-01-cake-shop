@@ -88,5 +88,10 @@
     "CakeAdmin":"cake management",
     "TimeCook":"Time Cook",
     "Min":"{{min}} Min",
-    "Images":"Images"
+    "Images":"Images",
+    "Picture":"Picture",
+    "Upload":"Upload",
+    "MyCart":"My Cart",
+    "Ingredient":"Ingredient",
+    "PleaseSelect":"Please Select"
 }

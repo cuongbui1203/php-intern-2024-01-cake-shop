@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 
 export default function ListCakes({ cakes, auth }) {
     const [t] = useTranslation();
-    console.log(cakes.data);
     const col = [
         {
             title: t('Name'),

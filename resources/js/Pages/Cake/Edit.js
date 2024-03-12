@@ -18,8 +18,20 @@ export default function Edit({ auth, cake }) {
     const [idCakeType, setIdCakeType] = useState(cake.type_id);
     const [price, setPrice] = useState(parseInt(cake.price));
     const [cookTime, setCookTime] = useState(parseInt(cake.cook_time));
+    const [ingredients, setIngredients] = useState([]);
+    const data = [];
+    cake.ingredients.map((e) => {
+        data.push(e.id);
+    });
+    const [ingredientSelected, setIngredientSelected] = useState(
+        JSON.stringify(data)
+    );
+    const [defaultIngredient, setDefaultIngredient] = useState(data);
+
+    const handleChange = (value) => {
+        setIngredientSelected(JSON.stringify(value));
+    };
     const { TextArea } = Input;
-    console.log(auth);
     const col = [
         {
             title: t('Picture'),
@@ -74,7 +86,8 @@ export default function Edit({ auth, cake }) {
                 description: desc,
                 idCakeType: idCakeType,
                 price: price,
-                cookTime: cookTime
+                cookTime: cookTime,
+                ingredients: ingredientSelected
             };
 
             const res = await axios.put(
@@ -100,6 +113,17 @@ export default function Edit({ auth, cake }) {
         const loadData = async () => {
             try {
                 const res = await axios.get(route('api.cake-types.index'));
+                const res2 = await axios.get(route('api.ingredient.index'));
+
+                const data = [];
+                res2.data.data.map((e) => {
+                    data.push({
+                        label: e.name,
+                        value: e.id
+                    });
+                });
+
+                setIngredients(data);
                 setCakeTypes(res.data.data);
             } catch (e) {}
         };
@@ -165,7 +189,7 @@ export default function Edit({ auth, cake }) {
                     />
                 </div>
                 <div>
-                    <Label forInput="price" value={t('price')} />
+                    <Label forInput="price" value={t('Price')} />
                     <Input
                         type="number"
                         name="price"
@@ -178,7 +202,7 @@ export default function Edit({ auth, cake }) {
                     />
                 </div>
                 <div>
-                    <Label forInput="cookTime" value={t('CookTime')} />
+                    <Label forInput="cookTime" value={t('TimeCook')} />
                     <Input
                         type="number"
                         name="cookTime"
@@ -188,6 +212,21 @@ export default function Edit({ auth, cake }) {
                             setCookTime(parseInt(e.value));
                         }}
                         required
+                    />
+                </div>
+                <div>
+                    <Label forInput="ingredient" value={t('Ingredient')} />
+                    <Select
+                        mode="multiple"
+                        size={'middle'}
+                        className="mt-1 block w-full"
+                        placeholder={t('PleaseSelect') + ' ...'}
+                        defaultValue={defaultIngredient}
+                        onChange={handleChange}
+                        style={{
+                            width: '100%'
+                        }}
+                        options={ingredients}
                     />
                 </div>
                 <div className=" mt-5">
