@@ -90,5 +90,10 @@
     "CakeAdmin":"Quản lý bánh",
     "TimeCook":"Thời gian nướng",
     "Min":"{{min}} Phút",
-    "Images":"Danh sách ảnh"
+    "Images":"Danh sách ảnh",
+    "Picture":"Ảnh",
+    "Upload":"Tải lên",
+    "MyCart":"Giỏ hàng",
+    "Ingredient":"Nguyên liệu",
+    "PleaseSelect":"Vui lòng chọn"
 }

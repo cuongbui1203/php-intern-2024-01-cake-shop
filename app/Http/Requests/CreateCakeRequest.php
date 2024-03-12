@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckIngredient;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateCakeRequest extends FormRequest
@@ -29,6 +30,11 @@ class CreateCakeRequest extends FormRequest
             'price' => 'required|min:0|numeric',
             'cookTime' => 'required|min:0|numeric|max:200',
             'idCakeType' => 'required|exists:cake_types,id',
+            'ingredients' => [
+                'required',
+                'json',
+                new CheckIngredient(),
+            ],
         ];
     }
 }

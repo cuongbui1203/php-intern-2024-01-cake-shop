@@ -56,7 +56,7 @@ class CakeController extends Controller
      */
     public function show(Cake $cake)
     {
-        $cake->load(['type', 'pictures']);
+        $cake->load(['type', 'pictures', 'ingredients']);
 
         return Inertia::render('Cake/Details', compact('cake')); //phpcs:ignore
     }
@@ -69,7 +69,7 @@ class CakeController extends Controller
      */
     public function edit(Cake $cake)
     {
-        $cake->load('pictures');
+        $cake->load('pictures', 'ingredients');
 
         return Inertia::render('Cake/Edit', compact('cake')); //phpcs:ignore
     }

@@ -194,5 +194,6 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'IngredientError' => 'Nguyên liệu không tồn tại',
     ],
 ];

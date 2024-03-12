@@ -19,6 +19,12 @@ export default function Create({ auth }) {
     const [idCakeType, setIdCakeType] = useState(1);
     const [price, setPrice] = useState(0);
     const [cookTime, setCookTime] = useState(0);
+    const [ingredients, setIngredients] = useState([]);
+    const [ingredientSelected, setIngredientSelected] = useState('');
+
+    const handleChange = (value) => {
+        setIngredientSelected(JSON.stringify(value));
+    };
     const submit = async (e) => {
         e.preventDefault();
         try {
@@ -27,7 +33,8 @@ export default function Create({ auth }) {
                 description: desc,
                 idCakeType: idCakeType,
                 price: price,
-                cookTime: cookTime
+                cookTime: cookTime,
+                ingredients: ingredientSelected
             };
             const res = await axios.post(route('api.cakes.store'), data, {
                 headers: {
@@ -50,6 +57,19 @@ export default function Create({ auth }) {
                         'X-localization': i18n.language
                     }
                 });
+                const res2 = await axios.get(route('api.ingredient.index'), {
+                    headers: {
+                        'X-localization': i18n.language
+                    }
+                });
+                const dataIngredients = [];
+                res2.data.data.map((e) => {
+                    dataIngredients.push({
+                        label: e.name,
+                        value: e.id
+                    });
+                });
+                setIngredients(dataIngredients);
                 setCakeTypes(res.data.data);
             } catch (e) {}
         };
@@ -82,7 +102,7 @@ export default function Create({ auth }) {
                         className="mt-1 block w-full rounded"
                         isFocused={true}
                         onChange={(e) => {
-                            setName(e.value);
+                            setName(e.target.value);
                         }}
                         required
                     />
@@ -97,7 +117,7 @@ export default function Create({ auth }) {
                         style={{ height: '100px' }}
                         className="mt-1 block w-full rounded"
                         onChange={(e) => {
-                            setDesc(e.value);
+                            setDesc(e.target.value);
                         }}
                         required
                     />
@@ -123,7 +143,7 @@ export default function Create({ auth }) {
                         value={price}
                         className="mt-1 block w-full rounded"
                         onChange={(e) => {
-                            setPrice(e.value);
+                            setPrice(e.target.value);
                         }}
                         required
                     />
@@ -136,9 +156,22 @@ export default function Create({ auth }) {
                         value={cookTime}
                         className="mt-1 block w-full rounded"
                         onChange={(e) => {
-                            setCookTime(e.value);
+                            setCookTime(e.target.value);
                         }}
                         required
+                    />
+                </div>
+                <div>
+                    <Label forInput="ingredient" value={t('Ingredient')} />
+                    <Select
+                        mode="multiple"
+                        size={'middle'}
+                        placeholder={t('PleaseSelect') + ' ...'}
+                        onChange={handleChange}
+                        style={{
+                            width: '100%'
+                        }}
+                        options={ingredients}
                     />
                 </div>
                 <div className=" d-flex justify-center m-2">

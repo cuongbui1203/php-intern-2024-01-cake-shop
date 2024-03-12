@@ -34,6 +34,7 @@ class CakeController extends BaseApiController
             'price' => $request->price,
             'cook_time' => $request->cookTime,
         ]);
+        $cake->ingredients()->sync(json_decode($request->ingredients));
 
         return response()->json([
             'success' => true,
