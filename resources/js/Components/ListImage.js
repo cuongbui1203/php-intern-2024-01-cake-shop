@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 export default function ListImage({ image }) {
     const [t] = useTranslation();
     return (
-        <>
+        <div>
             {image?.length != 0 ? <p>{t('Images')}:</p> : <></>}
             <div
                 style={{
@@ -33,6 +33,6 @@ export default function ListImage({ image }) {
                     );
                 })}
             </div>
-        </>
+        </div>
     );
 }

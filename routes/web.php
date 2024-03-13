@@ -4,6 +4,7 @@ use App\Http\Controllers\CakeController;
 use App\Http\Controllers\CakeTypeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,4 +47,11 @@ Route::name('cake-types.')
             ->name('create');
         Route::get('/{cakeType}/edit', [CakeTypeController::class, 'edit'])
             ->name('edit');
+    });
+
+Route::name('users.')
+    ->prefix('users')
+    ->group(function () {
+        Route::get('/{user}', [UserController::class, 'show'])
+            ->name('show');
     });

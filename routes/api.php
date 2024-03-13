@@ -68,7 +68,6 @@ Route::name('cake-types.')->prefix('cake-types')->group(function () {
         });
 });
 
-
 Route::name('ingredient.')
     ->prefix('ingredients')
     ->group(function () {
