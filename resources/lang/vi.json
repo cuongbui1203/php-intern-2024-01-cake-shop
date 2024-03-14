@@ -100,5 +100,11 @@
     "changePass":"Đổi mật khẩu",
     "changeInfo":"Thay đổi thông tin",
     "Role":"Quyền",
-    "UserInfo":"Thông tin người dùng"
+    "UserInfo":"Thông tin người dùng",
+    "ChangePass":"Thay đổi mật khẩu",
+    "currentPass":"Mật khẩu hiện tại",
+    "newPass":"Mật khẩu mới",
+    "confirmPass":"Xác nhận mật khẩu",
+    "Confirm":"Xác Nhận",
+    "ChangePassSuccess":"Thay đổi mật khẩu thành công"
 }

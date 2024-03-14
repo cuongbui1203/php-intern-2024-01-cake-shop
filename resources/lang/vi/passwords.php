@@ -6,4 +6,5 @@ return [
     'throttled' => 'Vui lòng đợi trước khi thử lại.',
     'token'     => 'Mã khôi phục mật khẩu không hợp lệ.',
     'user'      => 'Không tìm thấy người dùng với địa chỉ email này.',
+    'notMatch'  => 'Password bạn nhập không trùng với password cũ'
 ];

@@ -74,3 +74,11 @@ Route::name('ingredient.')
         Route::get('/', [IngredientController::class, 'index'])
             ->name('index');
     });
+
+Route::name('users.')
+    ->prefix('users')
+    ->middleware(['auth:sanctum', 'lang'])
+    ->group(function () {
+        Route::post('/{user}', [UserController::class, 'updatePassword'])
+            ->name('updatePassword');
+    });
