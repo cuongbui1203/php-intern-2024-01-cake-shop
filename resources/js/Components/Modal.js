@@ -1,65 +1,69 @@
-import React, { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useContext, useState } from 'react';
+import { Modal as AntdModal } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { Link } from '@inertiajs/inertia-react';
-import Button from './Button';
 
-const ModalContainer = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    #modal {
-        background: var(--mainWhite);
-    }
-`;
+const ModalContext = React.createContext();
 
-const Modal = () => {
-    const [t] = useTranslation();
-    const [isOpen, setIsOpen] = useState(false);
-
-    useEffect(() => {
-        setIsOpen(modalOpen);
-    }, [modalOpen]);
-
-    if (!isOpen) {
-        return null;
-    }
-
-    const { img, title, price } = useContext(ProductConsumer).modalProduct;
-
+function Modal({ onOk, onCancel, children }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const handleOk = () => {
+        onOk();
+        setIsModalOpen(false);
+    };
+    const handleCancel = () => {
+        onCancel();
+        setIsModalOpen(false);
+    };
     return (
-        <ModalContainer>
-            <div className="container">
-                <div className="row">
-                    <div
-                        id="modal"
-                        className="col-8 mx-auto col-md-6 col-lg-4 text-center text-capitalize p-5"
-                    >
-                        <h5>{t('ItemAddedCard')}</h5>
-                        <img src={img} alt="" className="img-fluid" />
-                        <h5>{title}</h5>
-                        <h5 className="text-muted">
-                            {t('Price')}: ${price}
-                        </h5>
-                        <Link to="/">
-                            <Button onClick={closeModal}>store</Button>
-                        </Link>
-                        <Link to="/cart">
-                            <Button cart onClick={closeModal}>
-                                go to cart
-                            </Button>
-                        </Link>
-                    </div>
-                </div>
-            </div>
-        </ModalContainer>
+        <ModalContext.Provider
+            value={{ isModalOpen, setIsModalOpen, handleCancel, handleOk }}
+        >
+            <div>{children}</div>
+        </ModalContext.Provider>
+    );
+}
+const Trigger = ({ children }) => {
+    const { isModalOpen, setIsModalOpen } = useContext(ModalContext);
+    return (
+        <>
+            <div onClick={() => setIsModalOpen(true)}>{children}</div>
+        </>
     );
 };
+
+const Content = ({ children }) => {
+    const { isModalOpen, handleCancel, handleOk } = useContext(ModalContext);
+    const [t] = useTranslation();
+    return (
+        <AntdModal
+            open={isModalOpen}
+            onCancel={handleCancel}
+            footer={
+                <>
+                    <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded"
+                        onClick={handleOk}
+                    >
+                        {t('ok')}
+                    </button>
+                    <button
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
+                        onClick={handleCancel}
+                    >
+                        {t('Cancel')}
+                    </button>
+                </>
+            }
+        >
+            {children}
+        </AntdModal>
+    );
+};
+
+Modal.Trigger = Trigger;
+Modal.Content = Content;
 
 export default Modal;

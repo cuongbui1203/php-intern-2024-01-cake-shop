@@ -106,5 +106,12 @@
     "newPass":"Mật khẩu mới",
     "confirmPass":"Xác nhận mật khẩu",
     "Confirm":"Xác Nhận",
-    "ChangePassSuccess":"Thay đổi mật khẩu thành công"
+    "ChangePassSuccess":"Thay đổi mật khẩu thành công",
+    "ListAccount":"Danh sách tài khoản",
+    "admin":"Quản trị viên",
+    "user":"Người Dùng",
+    "employee":"Nhân Viên",
+    "ChangeRole":"Thay đổi quyền",
+    "Cancel":"Hủy",
+    "ConfirmDeleteAccount":"Bạn có muốn xóa tài khoản này không?"
 }

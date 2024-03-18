@@ -81,4 +81,9 @@ Route::name('users.')
     ->group(function () {
         Route::post('/{user}', [UserController::class, 'updatePassword'])
             ->name('updatePassword');
+        Route::middleware('admin')
+            ->group(function () {
+                Route::delete('/{user}', [UserController::class, 'destroy'])
+                    ->name('destroy');
+            });
     });

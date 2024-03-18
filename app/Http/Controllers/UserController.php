@@ -15,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
+        $users = User::with('role')->get(['id', 'name', 'email', 'role_id']);
+
+        return Inertia::render('Admin/ListAccount', compact('users')); //phpcs:ignore
     }
 
     /**
@@ -25,7 +27,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Auth/RegisterEmployee');
     }
 
     /**

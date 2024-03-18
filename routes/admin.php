@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\UserController as ApiUserController;
 use App\Http\Controllers\CakeController;
 use App\Http\Controllers\CakeTypeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::name('.cakes')
@@ -24,4 +26,17 @@ Route::name('.cake-types')
             ->name('.create');
         Route::get('/{cakeType}/edit', [CakeTypeController::class, 'edit'])
             ->name('.edit');
+    });
+
+Route::name('.users')
+    ->prefix('users')
+    ->group(function () {
+        Route::get('/', [UserController::class, 'index'])
+            ->name('.index');
+        Route::get('/register', [UserController::class, 'create'])
+            ->name('.register');
+        Route::post('/register', [ApiUserController::class, 'storeEmployee'])
+            ->name('.store');
+        Route::put('/{user}/change-role', [ApiUserController::class, 'changeUserRole'])
+            ->name('.changeRole');
     });

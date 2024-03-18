@@ -51,6 +51,7 @@ Route::name('cake-types.')
 
 Route::name('users.')
     ->prefix('users')
+    ->middleware(['auth:sanctum', 'lang'])
     ->group(function () {
         Route::get('/{user}', [UserController::class, 'show'])
             ->name('show');
