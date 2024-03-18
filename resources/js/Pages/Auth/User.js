@@ -45,7 +45,12 @@ export default function User({ auth, user }) {
                 >
                     <Button>{t('changePass')}</Button>
                 </Link>
-                <Link className="mx-2">
+                <Link
+                    href={route('users.edit', {
+                        user: user.id
+                    })}
+                    className="mx-2"
+                >
                     <Button>{t('changeInfo')}</Button>
                 </Link>
             </div>

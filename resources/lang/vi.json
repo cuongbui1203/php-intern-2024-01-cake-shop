@@ -113,5 +113,6 @@
     "employee":"Nhân Viên",
     "ChangeRole":"Thay đổi quyền",
     "Cancel":"Hủy",
-    "ConfirmDeleteAccount":"Bạn có muốn xóa tài khoản này không?"
+    "ConfirmDeleteAccount":"Bạn có muốn xóa tài khoản này không?",
+    "Ingredients":"Danh sách các nguyên liệu"
 }

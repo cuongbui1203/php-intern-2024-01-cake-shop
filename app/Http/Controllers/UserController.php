@@ -67,7 +67,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return Inertia::render('Auth/Edit', compact('user')); //phpcs:ignore
     }
 
     /**
