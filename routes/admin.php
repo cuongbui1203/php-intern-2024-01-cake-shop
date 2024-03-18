@@ -50,4 +50,6 @@ Route::name('.ingredients.')
             ->name('index');
         Route::get('/create', [IngredientController::class, 'create'])
             ->name('create');
+        Route::get('/{ingredient}/edit', [IngredientController::class, 'edit'])
+            ->name('edit');
     });
