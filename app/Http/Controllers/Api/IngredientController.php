@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CreateIngredientRequest;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 
@@ -26,12 +27,17 @@ class IngredientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Ingredient\CreateIngredientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateIngredientRequest $request)
     {
-        //
+        $ingredient = new Ingredient();
+        $ingredient->name = $request->name;
+
+        $ingredient->save();
+
+        return response()->json(['success' => true]);
     }
 
     /**
