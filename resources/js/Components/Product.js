@@ -3,9 +3,12 @@ import styled from 'styled-components';
 import { router } from '@inertiajs/react';
 import img from '@/img/no_image.png';
 import { useTranslation } from 'react-i18next';
+import { useNotification } from './Notification';
+import { CloseCircleFilled } from '@ant-design/icons';
 
 const Product = ({ product }) => {
     const { id, name, price, pictures } = product;
+    const [api, pushNoti] = useNotification();
     const inCart = false;
     const handleImageClick = () => {
         router.visit('cakes/' + id);
@@ -23,7 +26,18 @@ const Product = ({ product }) => {
             cakeId: id,
             amount: 1
         };
-        const res = await axios.post(route('api.orders.addItem'), data);
+        try {
+            const res = await axios.post(route('api.orders.addItem'), data);
+            if (res.data.success) {
+                pushNoti(t('Success'), t('AddToCartSuccess', { name: name }));
+            }
+        } catch (e) {
+            pushNoti(
+                t('Fail'),
+                t('AddToCartFail', { name: name }),
+                <CloseCircleFilled className=" text-red-500" />
+            );
+        }
     };
 
     return (

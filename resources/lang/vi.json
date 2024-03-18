@@ -121,5 +121,8 @@
     "Cart":"Giỏ hàng",
     "Order":"Đặt hàng",
     "Nothing":"Chưa đặt hàng",
-    "TotalAmount":"Tổng tiền"
+    "TotalAmount":"Tổng tiền",
+    "AddToCartSuccess":"Thêm {{name}} vào giỏ hàng thành công",
+    "AddToCartFail":"Thêm {{name}} vào giỏ hàng thất bại",
+    "Fail":"Thất Bại"
 }

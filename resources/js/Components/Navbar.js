@@ -96,54 +96,56 @@ const Navbar = ({ auth }) => {
                 <div className=" inline-flex">
                     <LanguageSwitcher className=" mx-2 rounded-md border-slate-200 cursor-pointer" />
                     {auth?.user ? (
-                        <Dropdown>
-                            <Dropdown.Trigger>
-                                <span className="inline-flex rounded-md mt-1 mx-2">
-                                    <button
-                                        type="button"
-                                        className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                    >
-                                        {auth.user.name}
-
-                                        <svg
-                                            className="ml-2 -mr-0.5 h-4 w-4"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            viewBox="0 0 20 20"
-                                            fill="currentColor"
+                        <>
+                            <Dropdown>
+                                <Dropdown.Trigger>
+                                    <span className="inline-flex rounded-md mt-1 mx-2">
+                                        <button
+                                            type="button"
+                                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                         >
-                                            <path
-                                                fillRule="evenodd"
-                                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                clipRule="evenodd"
-                                            />
-                                        </svg>
-                                    </button>
-                                </span>
-                            </Dropdown.Trigger>
+                                            {auth.user.name}
 
-                            <Dropdown.Content>
-                                <div className="d-flex justify-content-center m-2">
-                                    <Link
-                                        href={route('users.show', {
-                                            user: auth.user.id
-                                        })}
-                                    >
-                                        <Button>{t('Account')}</Button>
-                                    </Link>
-                                </div>
-                                <div className="d-flex justify-content-center m-2">
-                                    <Button onClick={handelLogout}>
-                                        {t('Logout')}
-                                    </Button>
-                                </div>
-                            </Dropdown.Content>
-                        </Dropdown>
+                                            <svg
+                                                className="ml-2 -mr-0.5 h-4 w-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </button>
+                                    </span>
+                                </Dropdown.Trigger>
+
+                                <Dropdown.Content>
+                                    <div className="d-flex justify-content-center m-2">
+                                        <Link
+                                            href={route('users.show', {
+                                                user: auth.user.id
+                                            })}
+                                        >
+                                            <Button>{t('Account')}</Button>
+                                        </Link>
+                                    </div>
+                                    <div className="d-flex justify-content-center m-2">
+                                        <Button onClick={handelLogout}>
+                                            {t('Logout')}
+                                        </Button>
+                                    </div>
+                                </Dropdown.Content>
+                            </Dropdown>
+                            <Cart className="mx-2 mt-1" />
+                        </>
                     ) : (
-                        <Button className=" mx-2">
+                        <Button className=" inline-flex rounded-md mt-1 mx-2">
                             <Link href={route('login')}>{t('Login')}</Link>
                         </Button>
                     )}
-                    <Cart className="mx-2 mt-1" />
                 </div>
             </NavWrapper>
             <div className="h-px bg-black mb-5"></div>
