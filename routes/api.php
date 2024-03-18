@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CakeController;
 use App\Http\Controllers\Api\CakeTypeController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\IngredientController;
 use App\Http\Controllers\Api\PictureController;
 use App\Http\Controllers\Api\UserController;
@@ -96,4 +97,11 @@ Route::name('users.')
                 Route::delete('/{user}', [UserController::class, 'destroy'])
                     ->name('destroy');
             });
+    });
+
+Route::name('orders.')
+    ->prefix('orders')
+    ->middleware(['auth:sanctum', 'lang'])
+    ->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('index');
     });

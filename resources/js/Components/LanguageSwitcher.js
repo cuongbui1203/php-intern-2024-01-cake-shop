@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import { setCookie } from './Cookies';
 
-function LanguageSwitcher() {
+function LanguageSwitcher({ className }) {
     const [_, i18n] = useTranslation();
     const [locale, setLocale] = useState(i18n.language);
 
@@ -14,7 +14,7 @@ function LanguageSwitcher() {
     };
 
     return (
-        <select value={locale} onChange={handleChange}>
+        <select value={locale} onChange={handleChange} className={className}>
             <option value="vi">Tiếng Việt</option>
             <option value="en">English</option>
         </select>

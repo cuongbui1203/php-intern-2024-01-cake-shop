@@ -116,5 +116,10 @@
     "ConfirmDeleteAccount":"Bạn có muốn xóa tài khoản này không?",
     "Ingredients":"Danh sách các nguyên liệu",
     "DeleteIngredient":"Bạn có muốn xóa nguyên liệu này không?",
-    "Error":"Có lỗi xảy ra"
+    "Error":"Có lỗi xảy ra",
+    "Manage":"Quản lý",
+    "Cart":"Giỏ hàng",
+    "Order":"Đặt hàng",
+    "Nothing":"Chưa đặt hàng",
+    "TotalAmount":"Tổng tiền"
 }

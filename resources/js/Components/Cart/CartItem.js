@@ -1,54 +1,53 @@
+import { Button, Image, InputNumber } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import img from '@/img/no_image.png';
+import { DeleteFilled } from '@ant-design/icons';
 
-export default function CartItem({ item, value }) {
+export default function CartItem({ item }) {
     const [t] = useTranslation();
-    const { id, title, img, price, total, count } = item;
-    const { increment, decrement, removeItem } = value;
+    const { amount, cake } = item;
+    const { name, price, pictures } = cake;
+    const imgLink =
+        cake.pictures.length != 0
+            ? route('api.image.show', { picture: pictures[0].id })
+            : img;
+
     return (
-        <div className="row my-2 text-capitalize text-center">
-            <div className="col-10 mx-auto col-lg-2">
-                <img
-                    src={img}
-                    alt="product"
-                    style={{ width: '5rem', height: '5rem' }}
-                    className="img-fluid"
-                />
+        <div className="flex space-x-3 w-[100%]">
+            <div>
+                <Image src={imgLink} width={80} />
             </div>
-            <div className="col-10 mx-auto col-lg-2">
-                <span className="d-lg-none">{t('Cake Type')}: </span>
-                {title}
-            </div>
-            <div className="col-10 mx-auto col-lg-2">
-                <span className="d-lg-none">{t('Price')}: </span>
-                {price}
-            </div>
-            <div className="col-10 mx-auto col-lg-2 my-2 my-lg-0">
-                <div className="d-flex justify-content-center">
-                    <div>
-                        <span
-                            className="btn btn-black mx-1"
-                            onClick={() => decrement(id)}
-                        >
-                            -
-                        </span>
-                        <span className="btn btn-black mx-1">{count}</span>
-                        <span
-                            className="btn btn-black mx-1"
-                            onClick={() => increment(id)}
-                        >
-                            +
-                        </span>
-                    </div>
+            <div className=" w-[80%]">
+                <div className=" text-lg">
+                    {t('Name')}: {name}
                 </div>
-            </div>
-            <div className="col-10 mx-auto col-lg-2">
-                <div className="cart-icon" onClick={() => removeItem(id)}>
-                    <i className="fas fa-trash"></i>
+                <div className=" text-base text-red-500 font-bold">
+                    {t('Price')}:{' '}
+                    {new Intl.NumberFormat('vi-VN', {
+                        style: 'currency',
+                        currency: 'VND'
+                    }).format(price)}
                 </div>
-            </div>
-            <div className="col-10 mx-auto col-lg-2">
-                <strong>item total: ${total}</strong>
+                <div>
+                    {t('Amount')}: {amount}
+                </div>
+                <div className=" flex space-x-2 justify-content-end">
+                    <Button
+                        style={{
+                            backgroundColor: 'red'
+                        }}
+                    >
+                        <DeleteFilled
+                            className=" relative text-white"
+                            style={{
+                                paddingBottom: '2px',
+                                top: '-2px',
+                                fontSize: '1,25rem'
+                            }}
+                        />
+                    </Button>
+                </div>
             </div>
         </div>
     );

@@ -36,6 +36,11 @@ class Cake extends Model
         return $this->hasMany(Picture::class);
     }
 
+    public function avatar()
+    {
+        return $this->pictures->first();
+    }
+
     protected $cast = [
         'updated_at' => 'timestamp',
         'created_at' => 'timestamp',
