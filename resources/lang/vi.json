@@ -114,5 +114,7 @@
     "ChangeRole":"Thay đổi quyền",
     "Cancel":"Hủy",
     "ConfirmDeleteAccount":"Bạn có muốn xóa tài khoản này không?",
-    "Ingredients":"Danh sách các nguyên liệu"
+    "Ingredients":"Danh sách các nguyên liệu",
+    "DeleteIngredient":"Bạn có muốn xóa nguyên liệu này không?",
+    "Error":"Có lỗi xảy ra"
 }
