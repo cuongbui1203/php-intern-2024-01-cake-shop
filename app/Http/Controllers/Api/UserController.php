@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Auth\AdminRegisterRequest;
 use App\Http\Requests\Auth\ChangeRoleRequest;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -65,6 +66,21 @@ class UserController extends BaseApiController
     public function changeUserRole(ChangeRoleRequest $request, User $user)
     {
         $user->role_id = $request->roleId;
+        $user->save();
+
+        return response()->json(['success' => true]);
+    }
+
+    public function update(UpdateUserRequest $request, User $user)
+    {
+        $user->name = $request->name;
+        $user->dob = $request->dob;
+        $user->address = $request->address;
+        $user->phone = $request->phone;
+        if ($request->changeMail) {
+            $user->email = $request->email;
+        }
+
         $user->save();
 
         return response()->json(['success' => true]);
