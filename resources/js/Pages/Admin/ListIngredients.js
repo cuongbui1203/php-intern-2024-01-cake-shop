@@ -30,6 +30,7 @@ export default function ListIngredients({ auth, ingredients }) {
                 );
                 if (res.data.success) {
                     alert(t('Success'));
+                    location.pathname = location.pathname;
                 } else {
                     alert(t('Error'));
                 }
@@ -43,6 +44,15 @@ export default function ListIngredients({ auth, ingredients }) {
             name: e.name,
             action: (
                 <>
+                    <Link
+                        as="button"
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                        href={route('admin.ingredients.show', {
+                            ingredient: e.id
+                        })}
+                    >
+                        {t('View')}
+                    </Link>
                     <Link
                         as="button"
                         href={route('admin.ingredients.edit', {
