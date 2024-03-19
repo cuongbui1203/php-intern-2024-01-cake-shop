@@ -57,4 +57,6 @@ Route::name('users.')
             ->name('show');
         Route::get('{user}/change-pass', [UserController::class, 'changePass'])
             ->name('changePass');
+        Route::get('/{user}/edit', [UserController::class, 'edit'])
+            ->name('edit');
     });

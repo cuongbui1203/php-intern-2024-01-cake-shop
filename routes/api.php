@@ -79,7 +79,9 @@ Route::name('users.')
     ->prefix('users')
     ->middleware(['auth:sanctum', 'lang'])
     ->group(function () {
-        Route::post('/{user}', [UserController::class, 'updatePassword'])
+        Route::put('/{user}', [UserController::class, 'update'])
+            ->name('update');
+        Route::post('/{user}/password', [UserController::class, 'updatePassword'])
             ->name('updatePassword');
         Route::middleware('admin')
             ->group(function () {
