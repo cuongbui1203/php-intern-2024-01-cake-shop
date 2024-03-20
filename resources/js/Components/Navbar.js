@@ -59,6 +59,14 @@ const Navbar = ({ auth }) => {
                             </li>
                             <li className="nav-item ml-5">
                                 <Link
+                                    href={route('admin.ingredients.index')}
+                                    className="nav-link"
+                                >
+                                    {t('Ingredients')}
+                                </Link>
+                            </li>
+                            <li className="nav-item ml-5">
+                                <Link
                                     href={route('admin.users.index')}
                                     className="nav-link"
                                 >

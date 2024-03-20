@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class IngredientController extends Controller
 {
@@ -14,7 +15,9 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        //
+        $ingredients = Ingredient::all();
+
+        return Inertia::render('Admin/ListIngredients', compact('ingredients')); //phpcs:ignore
     }
 
     /**

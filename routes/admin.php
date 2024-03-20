@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\UserController as ApiUserController;
 use App\Http\Controllers\CakeController;
 use App\Http\Controllers\CakeTypeController;
+use App\Http\Controllers\IngredientController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +40,12 @@ Route::name('.users')
             ->name('.store');
         Route::put('/{user}/change-role', [ApiUserController::class, 'changeUserRole'])
             ->name('.changeRole');
+    });
+
+Route::name('.ingredients.')
+    ->prefix('ingredients')
+    ->middleware(['auth:sanctum', 'lang'])
+    ->group(function () {
+        Route::get('/', [IngredientController::class, 'index'])
+            ->name('index');
     });
