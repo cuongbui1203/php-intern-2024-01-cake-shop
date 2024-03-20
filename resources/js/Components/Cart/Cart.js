@@ -1,6 +1,5 @@
 import { Button, Popover } from 'antd';
 import React, { useEffect, useState } from 'react';
-
 import CartItem from './CartItem';
 import { useTranslation } from 'react-i18next';
 
@@ -34,11 +33,23 @@ const Cart = ({ className }) => {
     const [open, setOpen] = useState(false);
     const [data, setData] = useState(null);
     const [content, setContent] = useState(<></>);
+    const loadData = async () => {
+        const res = await axios.get(route('api.orders.index'));
+        setData(res.data);
+    };
+    const deleteItem = async (orderId, itemId) => {
+        const res = await axios.delete(
+            route('api.orders.deleteItem', {
+                order: orderId,
+                orderDetail: itemId
+            })
+        );
+        if (res.data.success) {
+            await loadData();
+        }
+    };
+
     useEffect(() => {
-        const loadData = async () => {
-            const res = await axios.get(route('api.orders.index'));
-            setData(res.data);
-        };
         if (open) {
             loadData();
             setOpen(false);
@@ -52,7 +63,14 @@ const Cart = ({ className }) => {
                 var total = 0;
                 data.details.map((e) => {
                     total += parseInt(e.amount) * parseInt(e.cake.price);
-                    temp.push(<CartItem item={e} />);
+                    temp.push(
+                        <CartItem
+                            item={e}
+                            onDelete={() => {
+                                deleteItem(data.id, e.id);
+                            }}
+                        />
+                    );
                 });
                 setContent(<CartLayout total={total}>{temp}</CartLayout>);
             } else {
