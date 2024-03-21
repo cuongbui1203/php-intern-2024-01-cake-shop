@@ -73,9 +73,12 @@ Route::name('ingredient.')
     ->group(function () {
         Route::get('/', [IngredientController::class, 'index'])
             ->name('index');
-        Route::post('/', [IngredientController::class, 'store'])
-            ->name('store')
-            ->middleware(['auth:sanctum', 'lang', 'admin']);
+        Route::middleware(['auth:sanctum', 'lang', 'admin'])->group(function () {
+            Route::post('/', [IngredientController::class, 'store'])
+                ->name('store');
+            Route::delete('/{ingredient}', [IngredientController::class, 'destroy'])
+                ->name('destroy');
+        });
     });
 
 Route::name('users.')

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CreateIngredientRequest;
+use App\Http\Requests\Ingredient\CreateIngredientRequest;
 use App\Models\Ingredient;
 use Illuminate\Http\Request;
 
@@ -71,6 +71,12 @@ class IngredientController extends Controller
      */
     public function destroy(Ingredient $ingredient)
     {
-        //
+        if (count($ingredient->cakes) === 0) {
+            $ingredient->delete();
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
     }
 }

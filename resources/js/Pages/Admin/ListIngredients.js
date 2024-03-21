@@ -19,6 +19,24 @@ export default function ListIngredients({ auth, ingredients }) {
             width: '25%'
         }
     ];
+
+    const handleDelete = async (id) => {
+        try {
+            if (confirm(t('DeleteIngredient'))) {
+                const res = await window.axios.delete(
+                    route('api.ingredient.destroy', {
+                        ingredient: id
+                    })
+                );
+                if (res.data.success) {
+                    alert(t('Success'));
+                } else {
+                    alert(t('Error'));
+                }
+            }
+        } catch (e) {}
+    };
+
     const data = [];
     ingredients.map((e) => {
         data.push({
@@ -28,7 +46,10 @@ export default function ListIngredients({ auth, ingredients }) {
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2">
                         {t('Edit')}
                     </button>
-                    <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2">
+                    <button
+                        onClick={() => handleDelete(e.id)}
+                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    >
                         {t('Delete')}
                     </button>
                 </>
