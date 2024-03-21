@@ -73,6 +73,9 @@ Route::name('ingredient.')
     ->group(function () {
         Route::get('/', [IngredientController::class, 'index'])
             ->name('index');
+        Route::post('/', [IngredientController::class, 'store'])
+            ->name('store')
+            ->middleware(['auth:sanctum', 'lang', 'admin']);
     });
 
 Route::name('users.')

@@ -48,4 +48,6 @@ Route::name('.ingredients.')
     ->group(function () {
         Route::get('/', [IngredientController::class, 'index'])
             ->name('index');
+        Route::get('/create', [IngredientController::class, 'create'])
+            ->name('create');
     });

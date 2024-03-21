@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class IngredientController extends Controller
@@ -27,18 +26,7 @@ class IngredientController extends Controller
      */
     public function create()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        return Inertia::render('Ingredient/Create');
     }
 
     /**
@@ -59,29 +47,6 @@ class IngredientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Ingredient $ingredient)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Ingredient $ingredient)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Ingredient $ingredient)
     {
         //
     }

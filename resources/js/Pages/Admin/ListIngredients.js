@@ -1,5 +1,6 @@
 import Navbar from '@/Components/Navbar';
 import Title from '@/Components/Title';
+import { Link } from '@inertiajs/inertia-react';
 import { Table } from 'antd';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -43,9 +44,13 @@ export default function ListIngredients({ auth, ingredients }) {
                 <Title name={t('Ingredients')} />
                 <div className=" h-7 "></div>
                 <span className=" w-full flex justify-end pr-[10%] my-4">
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2">
+                    <Link
+                        as="button"
+                        href={route('admin.ingredients.create')}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    >
                         {t('Add')}
-                    </button>
+                    </Link>
                 </span>
                 <div className="flex justify-center">
                     <Table
