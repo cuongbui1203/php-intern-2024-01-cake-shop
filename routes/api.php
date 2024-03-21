@@ -76,6 +76,8 @@ Route::name('ingredient.')
         Route::middleware(['auth:sanctum', 'lang', 'admin'])->group(function () {
             Route::post('/', [IngredientController::class, 'store'])
                 ->name('store');
+            Route::put('/{ingredient}', [IngredientController::class, 'update'])
+                ->name('update');
             Route::delete('/{ingredient}', [IngredientController::class, 'destroy'])
                 ->name('destroy');
         });

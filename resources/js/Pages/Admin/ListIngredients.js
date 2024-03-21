@@ -43,9 +43,15 @@ export default function ListIngredients({ auth, ingredients }) {
             name: e.name,
             action: (
                 <>
-                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2">
+                    <Link
+                        as="button"
+                        href={route('admin.ingredients.edit', {
+                            ingredient: e.id
+                        })}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    >
                         {t('Edit')}
-                    </button>
+                    </Link>
                     <button
                         onClick={() => handleDelete(e.id)}
                         className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"

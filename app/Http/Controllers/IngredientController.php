@@ -48,6 +48,6 @@ class IngredientController extends Controller
      */
     public function edit(Ingredient $ingredient)
     {
-        //
+        return Inertia::render("Ingredient/Edit", compact('ingredient')); //phpcs:ignore
     }
 }

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Ingredient\CreateIngredientRequest;
+use App\Http\Requests\Ingredient\UpdateIngredientRequest;
 use App\Models\Ingredient;
-use Illuminate\Http\Request;
 
 class IngredientController extends Controller
 {
@@ -54,13 +54,16 @@ class IngredientController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\Ingredient\UpdateIngredientRequest  $request
      * @param  \App\Models\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ingredient $ingredient)
+    public function update(UpdateIngredientRequest $request, Ingredient $ingredient)
     {
-        //
+        $ingredient->name = $request->name;
+        $ingredient->save();
+
+        return response()->json(['success' => true]);
     }
 
     /**
