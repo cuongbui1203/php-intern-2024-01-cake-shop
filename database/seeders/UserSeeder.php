@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => 'admin',
-            'email' => 'admin' . Str::random(5) . '@example.com',
+            'email' => 'admin@admin.com',
             'email_verified_at' => now(),
             'dob' => '2002-03-12',
             'phone' => $fakePhone,

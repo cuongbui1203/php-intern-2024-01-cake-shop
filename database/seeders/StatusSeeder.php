@@ -49,5 +49,10 @@ class StatusSeeder extends Seeder
             'name' => 'cancel',
             'description' => 'huy don',
         ]);
+        DB::table('statuses')->insert([
+            'id' => config('statuses.buying'),
+            'name' => 'buying',
+            'description' => 'dang mua',
+        ]);
     }
 }
