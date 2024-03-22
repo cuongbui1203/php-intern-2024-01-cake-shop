@@ -37,7 +37,9 @@ class IngredientController extends Controller
      */
     public function show(Ingredient $ingredient)
     {
-        //
+        $ingredient->load('cakes');
+
+        return Inertia::render('Ingredient/Detail', compact('ingredient')); //phpcs:ignore
     }
 
     /**
