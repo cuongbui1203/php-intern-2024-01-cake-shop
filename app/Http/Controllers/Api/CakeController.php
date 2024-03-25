@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\AddCakeRequest;
 use App\Http\Requests\CreateCakeRequest;
 use App\Models\Cake;
-use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class CakeController extends BaseApiController

@@ -8,4 +8,5 @@ return [
     'done' => 5,
     'fail' => 6,
     'cancel' => 7,
+    'buying' => 8,
 ];
