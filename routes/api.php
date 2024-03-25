@@ -106,4 +106,6 @@ Route::name('orders.')
         Route::get('/', [CartController::class, 'index'])->name('index');
         Route::delete('/{order}/{orderDetail}', [CartController::class, 'deleteItem'])
             ->name('deleteItem');
+        Route::post('/', [CartController::class, 'addItem'])
+            ->name('addItem');
     });

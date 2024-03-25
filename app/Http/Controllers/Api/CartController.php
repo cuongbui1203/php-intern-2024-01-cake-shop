@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddItemToCartRequest;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -38,5 +40,30 @@ class CartController extends Controller
         }
 
         return response()->json(['success' => false]);
+    }
+
+    public function addItem(AddItemToCartRequest $request)
+    {
+        $user = Auth::user();
+        $order = Order::where('user_id', $user->id)->where('status_id', config('statuses.buying'))->first();
+        $details = $order->details;
+        foreach ($details as $e) {
+            if ($e->cake_id === $request->cakeId) {
+                $e->amount++;
+                $e->save();
+
+                return response()->json(['success' => true]);
+            }
+        }
+
+        $orderDetail = new OrderDetail([
+            'order_id' => $order->id,
+            'cake_id' => $request->cakeId,
+            'amount' => $request->amount,
+        ]);
+
+        $orderDetail->save();
+
+        return response()->json(['success' => true], Response::HTTP_CREATED);
     }
 }

@@ -18,15 +18,24 @@ const Product = ({ product }) => {
               })
             : img;
 
-    const handleAddToCart = () => {
-        // Implement your cart-related logic here
+    const handleAddToCart = async () => {
+        const data = {
+            cakeId: id,
+            amount: 1
+        };
+        const res = await axios.post(route('api.orders.addItem'), data);
     };
 
     return (
         <ProductWrapper className="col-9 col-md-6 col-lg-3 my-3">
             <div className="card">
-                <div className="img-container" onClick={handleImageClick}>
-                    <img src={imgLink} alt="product" className="card-img-top" />
+                <div className="img-container">
+                    <img
+                        src={imgLink}
+                        alt="product"
+                        className="card-img-top"
+                        onClick={handleImageClick}
+                    />
                     <button
                         className="cart-btn"
                         disabled={inCart}
