@@ -6,7 +6,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function ListIngredients({ auth, ingredients }) {
-    console.log(ingredients);
     const [t] = useTranslation();
     const col = [
         {

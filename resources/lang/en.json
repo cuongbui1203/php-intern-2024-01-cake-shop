@@ -114,5 +114,10 @@
     "ConfirmDeleteAccount":"Do you want to delete this account?",
     "Ingredients":"List of Ingredients",
     "DeleteIngredient":"Do you want to delete this ingredient?",
-    "Error":"Error"
+    "Error":"Error",
+    "Manage":"Manage",
+    "Cart":"Cart",
+    "Order":"Order",
+    "Nothing":"Nothing",
+    "TotalAmount":"Total Amount"
 }
