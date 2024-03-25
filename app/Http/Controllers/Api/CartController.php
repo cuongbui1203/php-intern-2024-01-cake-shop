@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderDetail;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -26,5 +27,16 @@ class CartController extends Controller
         $order->load(['details', 'details.cake', 'details.cake.pictures']);
 
         return response()->json($order);
+    }
+
+    public function deleteItem(Order $order, OrderDetail $orderDetail)
+    {
+        if ($orderDetail->order_id === $order->id) {
+            $orderDetail->delete();
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
     }
 }

@@ -63,7 +63,7 @@ const Navbar = ({ auth }) => {
                         <>
                             <Dropdown className="nav-item">
                                 <Dropdown.Trigger>
-                                    <div className="ml-5 hover:bg-gray-200 py-2 text-xl px-1">
+                                    <div className="ml-5 hover:bg-gray-200 py-2 text-xl px-1 hover:cursor-pointer">
                                         {t('Manage')}
                                     </div>
                                 </Dropdown.Trigger>

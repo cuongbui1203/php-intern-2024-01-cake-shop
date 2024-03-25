@@ -104,4 +104,6 @@ Route::name('orders.')
     ->middleware(['auth:sanctum', 'lang'])
     ->group(function () {
         Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::delete('/{order}/{orderDetail}', [CartController::class, 'deleteItem'])
+            ->name('deleteItem');
     });

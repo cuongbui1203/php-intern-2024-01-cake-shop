@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import img from '@/img/no_image.png';
 import { DeleteFilled } from '@ant-design/icons';
 
-export default function CartItem({ item }) {
+export default function CartItem({ item, onDelete = () => {} }) {
     const [t] = useTranslation();
     const { amount, cake } = item;
     const { name, price, pictures } = cake;
@@ -37,6 +37,7 @@ export default function CartItem({ item }) {
                         style={{
                             backgroundColor: 'red'
                         }}
+                        onClick={onDelete}
                     >
                         <DeleteFilled
                             className=" relative text-white"
