@@ -119,5 +119,8 @@
     "Cart":"Cart",
     "Order":"Order",
     "Nothing":"Nothing",
-    "TotalAmount":"Total Amount"
+    "TotalAmount":"Total Amount",
+    "AddToCartSuccess":"Add {{name}} to cart success",
+    "AddToCartFail":"Add {{name}} to cart fail",
+    "Fail":"Fail"
 }

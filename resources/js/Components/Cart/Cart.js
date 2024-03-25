@@ -31,7 +31,7 @@ const CartLayout = ({ children, total = 0 }) => {
 const Cart = ({ className }) => {
     const [t] = useTranslation();
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
     const [content, setContent] = useState(<></>);
     const loadData = async () => {
         const res = await axios.get(route('api.orders.index'));
