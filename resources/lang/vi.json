@@ -140,5 +140,7 @@
     "OrderId":"Mã đơn hàng",
     "CakeName":"Tên bánh",
     "Account":"Tài khoản",
-    "OrderHistory":"Lịch sử mua hàng"
+    "OrderHistory":"Lịch sử mua hàng",
+    "UpdateStatus":"Cập nhật trạng thái",
+    "SelectStatus":"Chọn trạng thái"
 }
