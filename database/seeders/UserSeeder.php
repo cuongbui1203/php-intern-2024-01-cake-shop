@@ -48,6 +48,19 @@ class UserSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'name' => 'user',
+                'email' => 'user@admin.com',
+                'email_verified_at' => now(),
+                'dob' => '2002-03-12',
+                'phone' => $fakePhone,
+                'address' => 'Ha noi',
+                'role_id' => config('roles.user'),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ];
         DB::table('users')->insert($users);
 

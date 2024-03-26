@@ -136,5 +136,7 @@
     "CustomerName":"Customer name",
     "Status":"Status",
     "OrderId":"Order code",
-    "CakeName":"Cake name"
+    "CakeName":"Cake name",
+    "Account":"Account",
+    "OrderHistory":"Order history"
 }

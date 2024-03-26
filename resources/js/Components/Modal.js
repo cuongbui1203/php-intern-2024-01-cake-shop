@@ -42,7 +42,9 @@ const Trigger = ({ children }) => {
     const { setIsModalOpen } = useContext(ModalContext);
     return (
         <>
-            <div onClick={() => setIsModalOpen(true)}>{children}</div>
+            <div onClick={() => setIsModalOpen(true)} className="w-fit">
+                {children}
+            </div>
         </>
     );
 };

@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\UploadPictureRequest;
 use App\Models\Picture;
 use Exception;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Storage;
 
-class PictureController extends Controller
+class PictureController extends BaseApiController
 {
     /**
      * Store a newly created resource in storage.
