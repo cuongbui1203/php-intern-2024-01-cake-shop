@@ -32,17 +32,17 @@ const Navbar = ({ auth }) => {
     };
     return (
         <>
-            <NavWrapper className="navbar navbar-expand-sm navbar-dark px-sm-5 flex justify-content-between min-h-fit">
+            <NavWrapper className="flex navbar navbar-expand-sm navbar-dark px-sm-5 justify-content-between min-h-fit">
                 <ul className="navbar-nav align-items-center">
-                    <li className="nav-item ml-5">
+                    <li className="ml-5 nav-item">
                         <span
-                            className=" font-extrabold text-3xl cursor-default"
+                            className="text-3xl font-extrabold cursor-default"
                             onClick={() => (location.pathname = '/')}
                         >
                             CakeShop
                         </span>
                     </li>
-                    <li className="nav-item ml-5 hover:bg-gray-200">
+                    <li className="ml-5 nav-item hover:bg-gray-200">
                         <Link
                             href={route('cake-types.index')}
                             className="nav-link"
@@ -51,7 +51,7 @@ const Navbar = ({ auth }) => {
                         </Link>
                     </li>
 
-                    <li className="nav-item ml-5">
+                    <li className="ml-5 nav-item">
                         <Link
                             href={route('landing')}
                             className="nav-link hover:bg-gray-200"
@@ -63,7 +63,7 @@ const Navbar = ({ auth }) => {
                         <>
                             <Dropdown className="nav-item">
                                 <Dropdown.Trigger>
-                                    <div className="ml-5 hover:bg-gray-200 py-2 text-xl px-1 hover:cursor-pointer">
+                                    <div className="px-1 py-2 ml-5 text-xl hover:bg-gray-200 hover:cursor-pointer">
                                         {t('Manage')}
                                     </div>
                                 </Dropdown.Trigger>
@@ -96,7 +96,7 @@ const Navbar = ({ auth }) => {
                         <>
                             <Dropdown className="nav-item">
                                 <Dropdown.Trigger>
-                                    <div className="ml-5 hover:bg-gray-200 py-2 text-xl px-1 hover:cursor-pointer">
+                                    <div className="px-1 py-2 ml-5 text-xl hover:bg-gray-200 hover:cursor-pointer">
                                         {t('Manage')}
                                     </div>
                                 </Dropdown.Trigger>
@@ -115,7 +115,7 @@ const Navbar = ({ auth }) => {
                     )}
                     {roleId != ROLE.USER ? (
                         <>
-                            <li className="nav-item ml-5">
+                            <li className="ml-5 nav-item">
                                 <Link
                                     href={route('orders.adminIndex')}
                                     className="nav-link hover:bg-gray-200"
@@ -128,16 +128,16 @@ const Navbar = ({ auth }) => {
                         <></>
                     )}
                 </ul>
-                <div className=" inline-flex">
-                    <LanguageSwitcher className=" mx-2 rounded-md border-slate-200 cursor-pointer" />
+                <div className="inline-flex">
+                    <LanguageSwitcher className="mx-2 rounded-md cursor-pointer border-slate-200" />
                     {auth?.user ? (
                         <>
                             <Dropdown>
                                 <Dropdown.Trigger>
-                                    <span className="inline-flex rounded-md mt-1 mx-2">
+                                    <span className="inline-flex mx-2 mt-1 rounded-md">
                                         <button
                                             type="button"
-                                            className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                            className="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-md hover:text-gray-700 focus:outline-none"
                                         >
                                             {auth.user.name}
 
@@ -158,7 +158,7 @@ const Navbar = ({ auth }) => {
                                 </Dropdown.Trigger>
 
                                 <Dropdown.Content>
-                                    <div className="d-flex justify-content-center m-2">
+                                    <div className="m-2 d-flex justify-content-center">
                                         <Link
                                             href={route('users.show', {
                                                 user: auth.user.id
@@ -167,7 +167,7 @@ const Navbar = ({ auth }) => {
                                             <Button>{t('Account')}</Button>
                                         </Link>
                                     </div>
-                                    <div className="d-flex justify-content-center m-2">
+                                    <div className="m-2 d-flex justify-content-center">
                                         <Button onClick={handelLogout}>
                                             {t('Logout')}
                                         </Button>
@@ -177,13 +177,13 @@ const Navbar = ({ auth }) => {
                             <Cart className="mx-2 mt-1" />
                         </>
                     ) : (
-                        <Button className=" inline-flex rounded-md mt-1 mx-2">
+                        <Button className="inline-flex mx-2 mt-1 rounded-md">
                             <Link href={route('login')}>{t('Login')}</Link>
                         </Button>
                     )}
                 </div>
             </NavWrapper>
-            <div className="h-px bg-black mb-5"></div>
+            <div className="h-px mb-5 bg-black"></div>
         </>
     );
 };

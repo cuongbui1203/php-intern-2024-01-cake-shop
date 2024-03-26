@@ -130,5 +130,11 @@
     "Details":"Details",
     "HomePage":"Home Page",
     "ViewMore":"More",
-    "ConfirmBuy":"Do you want buy {{name}}?"
+    "ConfirmBuy":"Do you want buy {{name}}?",
+    "OrderDetail":"Order Detail",
+    "ListOrders":"List orders",
+    "CustomerName":"Customer name",
+    "Status":"Status",
+    "OrderId":"Order code",
+    "CakeName":"Cake name"
 }
