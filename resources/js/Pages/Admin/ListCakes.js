@@ -51,13 +51,13 @@ const renderAction = (role, id, name) => {
                         cake: id
                     })}
                     as="button"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                 >
                     <span>{t('View')}</span>
                 </Link>
                 <Link
                     as="button"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                     href={route('admin.cakes.edit', {
                         cake: id
                     })}
@@ -65,7 +65,7 @@ const renderAction = (role, id, name) => {
                     <span>{t('Edit')}</span>
                 </Link>
                 <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                     onClick={showModal}
                 >
                     <span>{t('addNewCake')}</span>
@@ -74,7 +74,7 @@ const renderAction = (role, id, name) => {
                     onClick={() => {
                         handleDelete(id);
                     }}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-red-500 rounded hover:bg-red-700"
                 >
                     <span>{t('Delete')}</span>
                 </button>
@@ -88,12 +88,12 @@ const renderAction = (role, id, name) => {
                         cake: id
                     })}
                     as="button"
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                 >
                     <span>{t('View')}</span>
                 </Link>
                 <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                    className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                     onClick={showModal}
                 >
                     <span>{t('addNewCake')}</span>
@@ -176,11 +176,11 @@ export default function ListCakes({ cakes, auth }) {
                 }}
             >
                 {roleId == ROLE.ADMIN ? (
-                    <div className="d-flex justify-content-end mr-4 mb-5">
+                    <div className="mb-5 mr-4 d-flex justify-content-end">
                         <Link
                             href={route('admin.cakes.create')}
                             as="button"
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                            className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                         >
                             {t('Add')}
                         </Link>
