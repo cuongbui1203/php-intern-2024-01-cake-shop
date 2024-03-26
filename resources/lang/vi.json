@@ -142,5 +142,9 @@
     "Account":"Tài khoản",
     "OrderHistory":"Lịch sử mua hàng",
     "UpdateStatus":"Cập nhật trạng thái",
-    "SelectStatus":"Chọn trạng thái"
+    "SelectStatus":"Chọn trạng thái",
+    "Statistical":"Thống kê",
+    "Revenue":"Doanh thu",
+    "Start":"Bắt đầu",
+    "End":"Kết thúc"
 }

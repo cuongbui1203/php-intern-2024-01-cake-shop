@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 Route::middleware('auth:sanctum')->get('/user', [UserController::class, 'currentUser']);
 
@@ -40,14 +40,14 @@ Route::name('cakes.')
             ->name('index');
         Route::get('/group', [CakeController::class, 'groupCakeByType'])
             ->name('groupByType');
+        Route::post('/{cake}/add-cake', [CakeController::class, 'addCake'])
+            ->name('addCake');
         Route::middleware(['admin', 'auth:sanctum'])
             ->group(function () {
                 Route::post('/', [CakeController::class, 'store'])
                     ->name('store');
                 Route::put('{cake}', [CakeController::class, 'update'])
                     ->name('update');
-                Route::post('/{cake}/add-cake', [CakeController::class, 'addCake'])
-                    ->name('addCake');
                 Route::delete('/{cake}', [CakeController::class, 'destroy'])
                     ->name('destroy');
             });
@@ -119,10 +119,13 @@ Route::name('orders.')
             });
     });
 
-Route::name('Revenue.')
-    ->prefix('Revenue')
-    ->middleware('admin')
+
+Route::name('statistical.')
+    ->prefix('statistical')
+    ->middleware(['auth:sanctum', 'admin'])
     ->group(function () {
         Route::get('/', [RevenueController::class, 'index'])
             ->name('index');
+        Route::get('/revenue', [RevenueController::class, 'getTotalAmountPerMonth'])
+            ->name('revenue');
     });

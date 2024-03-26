@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Order;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -47,6 +48,72 @@ class RevenueController extends BaseApiController
             'success' => true,
             'ordersPerMonth' => $ordersPerMonth->toArray(),
             'orders' => $orders->toArray(),
+        ]);
+    }
+
+    public function getTotalAmountPerMonth(Request $request)
+    {
+        $start = new Carbon();
+        $end = new Carbon();
+        if ($request->startMonth) {
+            $start->setMonth($request->startMonth);
+        }
+
+        if ($request->startYear) {
+            $start->setYear($request->startYear);
+        }
+
+        if ($request->endMonth) {
+            $end->setMonth($request->endMonth);
+        }
+
+        if ($request->endYear) {
+            $end->setYear($request->endYear);
+        }
+
+        $start->startOfDay()->startOfMonth();
+        $end->endOfDay()->endOfMonth();
+        $totals = new Collection();
+
+        $orders = Order::where('finished_at', '>=', $start)
+            ->where('finished_at', '<=', $end)
+            ->with('details', 'details.cake:id,price', 'user:id,name')
+            ->orderBy('finished_at')
+            ->get()
+            ->each(function ($order) {
+                $total = 0;
+                $order->details->each(function ($detail) use (&$total) {
+                    $total += $detail->amount * $detail->cake->price;
+                });
+                $order->{'total'} = $total;
+            })
+            ->groupBy(function ($order) {
+                return $order->finished_at->format('m/Y');
+            })
+            ->each(function ($ordersPerMonth) use (&$totals) {
+                $total = 0;
+                $ordersPerMonth->each(function ($order) use (&$total) {
+                    $total += $order->total;
+                });
+                $totals->add($total);
+            });
+        $totals = $totals->reverse();
+        $resTotals = [];
+        $resLabels = [];
+        for ($i = new Carbon($start); $i <= $end; $i->addMonth()) {
+            if ($orders->has($i->format('m/Y'))) {
+                array_push($resTotals, $totals->pop());
+            } else {
+                array_push($resTotals, 0);
+            }
+
+            array_push($resLabels, $i->format('m/Y'));
+        }
+
+        return response()->json([
+            'success' => true,
+            'totals' => $resTotals,
+            'labels' => $resLabels,
         ]);
     }
 }
