@@ -3,10 +3,27 @@ import Context from './Context';
 
 const useNotification = () => {
     const api = useContext(Context);
-    const pushNoti = (title = '', desc = '', icon = null) => {
+    const pushNoti = (title = '', desc, icon = null) => {
+        const convertArrayToJsx = (array) => {
+            const res = [];
+            array.forEach((e) => {
+                res.push(
+                    <>
+                        {e}
+                        <br />
+                    </>
+                );
+            });
+            return res;
+        };
+
+        const descContent = Array.isArray(desc)
+            ? convertArrayToJsx(desc)
+            : desc;
+        console.log(Array.isArray(desc));
         api.success({
             message: title,
-            description: <div>{desc}</div>,
+            description: <div>{descContent}</div>,
             placement: 'topRight',
             icon: icon ?? icon
         });

@@ -122,5 +122,10 @@
     "TotalAmount":"Total Amount",
     "AddToCartSuccess":"Add {{name}} to cart success",
     "AddToCartFail":"Add {{name}} to cart fail",
-    "Fail":"Fail"
+    "Fail":"Fail",
+    "Note":"Note",
+    "Pay":"Pay",
+    "TotalPay":"Amount to be paid",
+    "Info":"Information",
+    "Details":"Details"
 }

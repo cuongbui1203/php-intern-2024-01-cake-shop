@@ -124,5 +124,10 @@
     "TotalAmount":"Tổng tiền",
     "AddToCartSuccess":"Thêm {{name}} vào giỏ hàng thành công",
     "AddToCartFail":"Thêm {{name}} vào giỏ hàng thất bại",
-    "Fail":"Thất Bại"
+    "Fail":"Thất Bại",
+    "Note":"Ghi chú",
+    "Pay":"Thanh toán",
+    "TotalPay":"Số tiền cần thanh toán",
+    "Info":"Thông tin",
+    "Details":"Các sản phẩm"
 }

@@ -110,6 +110,12 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
+                    <Link
+                        href={route('register')}
+                        className="underline text-sm text-gray-600 hover:text-gray-900 mr-auto"
+                    >
+                        {t('Register')}
+                    </Link>
                     {canResetPassword && (
                         <Link
                             href={route('password.request')}
@@ -118,7 +124,6 @@ export default function Login({ status, canResetPassword }) {
                             {t('Forgot Your Password?')}
                         </Link>
                     )}
-
                     <Button className="ml-4" processing={processing}>
                         Login
                     </Button>
