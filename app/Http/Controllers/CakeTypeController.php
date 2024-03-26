@@ -52,4 +52,11 @@ class CakeTypeController extends Controller
     {
         return Inertia::render('CakeType/Edit', compact('cakeType')); // phpcs:ignore
     }
+
+    public function listCakes(CakeType $cakeType)
+    {
+        $cakeType->load('cakes');
+
+        return Inertia::render('CakeType/ListCakesByType', compact('cakeType')); //phpcs:ignore
+    }
 }

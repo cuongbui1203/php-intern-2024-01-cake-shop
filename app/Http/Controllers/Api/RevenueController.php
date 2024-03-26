@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Order;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class RevenueController extends BaseApiController

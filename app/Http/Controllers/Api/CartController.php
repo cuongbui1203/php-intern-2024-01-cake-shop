@@ -7,6 +7,7 @@ use App\Http\Requests\ConfirmOrderRequest;
 use App\Http\Requests\UpdateStatusOrderRequest;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -46,7 +47,19 @@ class CartController extends BaseApiController
     public function addItem(AddItemToCartRequest $request)
     {
         $user = Auth::user();
-        $order = Order::where('user_id', $user->id)->where('status_id', config('statuses.buying'))->first();
+        try {
+            $order = Order::where('user_id', $user->id)
+                ->where('status_id', config('statuses.buying'))
+                ->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            $order = new Order();
+            $order->user_id = $user->id;
+            $order->shipping_address = $user->address;
+            $order->shipping_phone = $user->phone;
+            $order->status_id = config('statuses.buying');
+            $order->save();
+        }
+
         $details = $order->details;
         foreach ($details as $e) {
             if ($e->cake_id === $request->cakeId) {
@@ -73,16 +86,18 @@ class CartController extends BaseApiController
         $details = (array) json_decode($request->details);
 
         foreach ($details as $key => $value) {
-            OrderDetail::where('id', $key)->update([
-                'amount' => $value,
-            ]);
+            $detail = OrderDetail::find($key);
+            $detail->amount = $value;
+            $detail->cake->buy_count++;
+            $detail->cake->amount -= $value;
+            $detail->cake->save();
+            $detail->save();
         }
 
         $order->shipping_address = $request->shipping_address;
         $order->shipping_phone = $request->shipping_phone;
         $order->note = $request->note;
         $order->status_id = config('statuses.pending');
-        $order->buy_count += 1;
         $order->save();
 
         return response()->json([

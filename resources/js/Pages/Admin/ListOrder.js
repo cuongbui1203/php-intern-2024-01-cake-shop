@@ -163,7 +163,7 @@ export default function ListOrder({ auth, orders }) {
             ],
             filterMode: 'tree',
             // filterDropdown: <>test</>,
-            onFilter: (value, record) => value === record.status.props.value
+            onFilter: (value, record) => value === record.status.props.type
         },
         {
             title: t('Action'),

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\AddCakeRequest;
 use App\Http\Requests\CreateCakeRequest;
 use App\Models\Cake;
+use App\Models\CakeType;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +13,16 @@ use Illuminate\Support\Facades\Storage;
 
 class CakeController extends BaseApiController
 {
+    public function getCakeByType(Request $request, CakeType $cakeType)
+    {
+        $page = $request->page ?? 1;
+        $cakes = DB::table('cakes')
+            ->where('type_id', $cakeType->id)
+            ->paginateAnother($page, config('paginate.pageSize.cakes'));
+
+        return response()->json($cakes);
+    }
+
     public function getAllCakes(Request $request)
     {
         $page = $request->page ?? 1;

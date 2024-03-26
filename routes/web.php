@@ -43,6 +43,8 @@ Route::name('cakes.')
             ->name('index');
         Route::get('/{cake}', [CakeController::class, 'show'])
             ->name('show');
+        Route::get('/types/{cakeType}', [CakeTypeController::class, 'listCakes'])
+            ->name('listCakes');
     });
 
 Route::name('cake-types.')
