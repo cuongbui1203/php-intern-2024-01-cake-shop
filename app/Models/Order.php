@@ -35,8 +35,7 @@ class Order extends Model
         return $this->belongsTo(Status::class);
     }
 
-    protected $cast = [
-        'updated_at' => 'timestamp',
-        'created_at' => 'timestamp',
+    protected $casts = [
+        'finished_at' => 'datetime:Y/m/d H:i',
     ];
 }
