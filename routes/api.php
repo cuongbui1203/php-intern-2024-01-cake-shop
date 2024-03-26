@@ -108,4 +108,6 @@ Route::name('orders.')
             ->name('deleteItem');
         Route::post('/', [CartController::class, 'addItem'])
             ->name('addItem');
+        Route::put('/{order}', [CartController::class, 'buy'])
+            ->name('buy');
     });

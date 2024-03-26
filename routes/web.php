@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CakeController;
 use App\Http\Controllers\CakeTypeController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\UserController;
@@ -59,4 +60,12 @@ Route::name('users.')
             ->name('changePass');
         Route::get('/{user}/edit', [UserController::class, 'edit'])
             ->name('edit');
+    });
+
+Route::name('orders.')
+    ->prefix('order')
+    ->middleware(['auth:sanctum', 'lang'])
+    ->group(function () {
+        Route::get('/', [CartController::class, 'index'])
+            ->name('index');
     });

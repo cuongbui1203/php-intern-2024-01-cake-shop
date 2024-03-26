@@ -194,6 +194,7 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
-        'IngredientError' => 'Ingredient doesn\'t exist.'
+        'IngredientError' => 'Ingredient doesn\'t exist.',
+        'outOfRange' => 'The :amount of :name out of range',
     ],
 ];

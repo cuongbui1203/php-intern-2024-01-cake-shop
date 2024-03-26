@@ -2,6 +2,7 @@ import { Button, Popover } from 'antd';
 import React, { useEffect, useState } from 'react';
 import CartItem from './CartItem';
 import { useTranslation } from 'react-i18next';
+import { Link } from '@inertiajs/inertia-react';
 
 const CartLayout = ({ children, total = 0 }) => {
     const [t] = useTranslation();
@@ -22,7 +23,9 @@ const CartLayout = ({ children, total = 0 }) => {
                 }).format(total)}
             </div>
             <div className=" text-right mt-4">
-                <Button>{t('Order')}</Button>
+                <Button>
+                    <Link href={route('orders.index')}>{t('Order')}</Link>
+                </Button>
             </div>
         </div>
     );

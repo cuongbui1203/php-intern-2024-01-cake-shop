@@ -195,5 +195,7 @@ return [
             'rule-name' => 'custom-message',
         ],
         'IngredientError' => 'Nguyên liệu không tồn tại',
+        'outOfRange' => 'The :amount of :attribute out of range',
+        'outOfRange' => ':amount của trường :name vượt quá số lượng cho phép',
     ],
 ];

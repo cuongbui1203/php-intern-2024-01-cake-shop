@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddItemToCartRequest;
+use App\Http\Requests\ConfirmOrderRequest;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Response;
@@ -65,5 +66,26 @@ class CartController extends Controller
         $orderDetail->save();
 
         return response()->json(['success' => true], Response::HTTP_CREATED);
+    }
+
+    public function buy(ConfirmOrderRequest $request, Order $order)
+    {
+        $details = (array) json_decode($request->details);
+
+        foreach ($details as $key => $value) {
+            OrderDetail::where('id', $key)->update([
+                'amount' => $value,
+            ]);
+        }
+
+        $order->shipping_address = $request->shipping_address;
+        $order->shipping_phone = $request->shipping_phone;
+        $order->note = $request->note;
+        $order->status_id = config('statuses.pending');
+        $order->save();
+
+        return response()->json([
+            'success' => true,
+        ], 200);
     }
 }
