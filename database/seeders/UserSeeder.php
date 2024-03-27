@@ -21,19 +21,36 @@ class UserSeeder extends Seeder
             $fakePhone .= mt_rand(0, 9);
         }
 
-        DB::table('users')->insert([
-            'name' => 'admin',
-            'email' => 'admin@admin.com',
-            'email_verified_at' => now(),
-            'dob' => '2002-03-12',
-            'phone' => $fakePhone,
-            'address' => 'Ha noi',
-            'role_id' => 1,
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        $users = [
+            [
+                'name' => 'admin',
+                'email' => 'admin@admin.com',
+                'email_verified_at' => now(),
+                'dob' => '2002-03-12',
+                'phone' => $fakePhone,
+                'address' => 'Ha noi',
+                'role_id' => config('roles.admin'),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'employee',
+                'email' => 'employee@admin.com',
+                'email_verified_at' => now(),
+                'dob' => '2002-03-12',
+                'phone' => $fakePhone,
+                'address' => 'Ha noi',
+                'role_id' => config('roles.employee'),
+                'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+                'remember_token' => Str::random(10),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ];
+        DB::table('users')->insert($users);
+
         User::factory(10)->create([
             'role_id' => 3,
         ]);
