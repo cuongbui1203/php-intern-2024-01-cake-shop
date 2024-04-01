@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 export default function Welcome(props) {
     const [data, setData] = useState(null);
     const [t] = useTranslation();
+
     useEffect(() => {
         const loadData = async () => {
             const res = await axios.get(route('api.cakes.groupByType'));
@@ -15,11 +16,13 @@ export default function Welcome(props) {
         loadData();
     }, []);
     const content = [];
+
     if (data) {
         for (const [key, value] of Object.entries(data)) {
             content.push(<ListItemInCategory items={value} key={key} />);
         }
     }
+
     return (
         <Authenticated auth={props.auth}>
             <Head title={t('HomePage')} />
