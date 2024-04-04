@@ -111,4 +111,9 @@ Route::name('orders.')
             ->name('addItem');
         Route::put('/{order}', [CartController::class, 'buy'])
             ->name('buy');
+        Route::middleware('employeeAdmin')
+            ->group(function () {
+                Route::put('{order}/change-status', [CartController::class, 'updateStatus'])
+                    ->name('updateStatus');
+            });
     });

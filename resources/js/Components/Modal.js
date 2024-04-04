@@ -34,7 +34,7 @@ function Modal({
                 title
             }}
         >
-            <div>{children}</div>
+            <>{children}</>
         </ModalContext.Provider>
     );
 }

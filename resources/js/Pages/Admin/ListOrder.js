@@ -5,9 +5,36 @@ import Title from '@/Components/Title';
 import Authenticated from '@/Layouts/Authenticated';
 import { STATUS } from '@/const/status';
 import { Head } from '@inertiajs/inertia-react';
-import { Table, Tag } from 'antd';
-import React from 'react';
+import { Select, Table, Tag } from 'antd';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+const otps = [
+    {
+        label: 'Accept',
+        value: STATUS.ACCEPT
+    },
+    {
+        label: 'Pending',
+        value: STATUS.PENDING
+    },
+    {
+        label: 'Shipping',
+        value: STATUS.SHIPPING
+    },
+    {
+        label: 'Done',
+        value: STATUS.DONE
+    },
+    {
+        label: 'Fail',
+        value: STATUS.FAIL
+    },
+    {
+        label: 'Cancel',
+        value: STATUS.CANCEL
+    }
+];
 
 const RenderStatusTag = ({ type, text }) => {
     const tagTypes = ['lime', 'green', 'gold', 'green', 'red', 'orange'];
@@ -29,8 +56,10 @@ const RenderStatusTag = ({ type, text }) => {
 
 const renderAction = (order) => {
     const [t] = useTranslation();
+    const [status, setStatus] = useState(order.status_id);
     return (
         <Modal
+            key={order.id}
             title={
                 <div className=" capitalize font-bold text-[30px]">
                     {t('OrderDetail')}
@@ -38,14 +67,45 @@ const renderAction = (order) => {
             }
             width={800}
             footer={
-                <>
-                    <button className="px-4 py-2 mx-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                        {t('Action')}
-                    </button>
+                <div className="flex justify-end w-full space-x-3">
+                    <Modal
+                        onOk={async () => {
+                            const res = await axios.put(
+                                route('api.orders.updateStatus', {
+                                    order: order.id
+                                }),
+                                {
+                                    status_id: status
+                                }
+                            );
+                            if (res.data.success) {
+                                location.pathname = location.pathname;
+                            }
+                        }}
+                    >
+                        <Modal.Trigger>
+                            <button className="px-4 py-2 mx-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
+                                {t('Action')}
+                            </button>
+                        </Modal.Trigger>
+                        <Modal.Content>
+                            <div>
+                                <Title name={t('UpdateStatus')} />
+                                <label className="mr-2">
+                                    {t('SelectStatus')}
+                                </label>
+                                <Select
+                                    options={otps}
+                                    defaultValue={status}
+                                    onChange={(e) => setStatus(e)}
+                                />
+                            </div>
+                        </Modal.Content>
+                    </Modal>
                     <button className="px-4 py-2 mx-2 font-bold text-white bg-red-500 rounded hover:bg-red-700">
                         {t('Cancel')}
                     </button>
-                </>
+                </div>
             }
         >
             <Modal.Trigger>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\AddItemToCartRequest;
 use App\Http\Requests\ConfirmOrderRequest;
+use App\Http\Requests\UpdateStatusOrderRequest;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use Illuminate\Http\Response;
@@ -86,5 +87,13 @@ class CartController extends BaseApiController
         return response()->json([
             'success' => true,
         ], 200);
+    }
+
+    public function updateStatus(UpdateStatusOrderRequest $request, Order $order)
+    {
+        $order->status_id = $request->status_id;
+        $order->save();
+
+        return response()->json(['success' => true]);
     }
 }

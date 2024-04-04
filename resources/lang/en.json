@@ -138,5 +138,7 @@
     "OrderId":"Order code",
     "CakeName":"Cake name",
     "Account":"Account",
-    "OrderHistory":"Order history"
+    "OrderHistory":"Order history",
+    "UpdateStatus":"Update status",
+    "SelectStatus":"Select Status"
 }
