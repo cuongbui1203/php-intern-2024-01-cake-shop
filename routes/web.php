@@ -80,4 +80,6 @@ Route::name('orders.')
                 Route::get('/admin', [CartController::class, 'adminIndex'])
                     ->name('adminIndex');
             });
+        Route::get('/history', [CartController::class, 'history'])
+            ->name('history');
     });

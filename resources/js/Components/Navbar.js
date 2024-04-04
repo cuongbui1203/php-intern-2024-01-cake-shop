@@ -168,6 +168,11 @@ const Navbar = ({ auth }) => {
                                         </Link>
                                     </div>
                                     <div className="m-2 d-flex justify-content-center">
+                                        <Link href={route('orders.history')}>
+                                            <Button>{t('OrderHistory')}</Button>
+                                        </Link>
+                                    </div>
+                                    <div className="m-2 d-flex justify-content-center">
                                         <Button onClick={handelLogout}>
                                             {t('Logout')}
                                         </Button>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\AddItemToCartRequest;
 use App\Http\Requests\ConfirmOrderRequest;
 use App\Models\Order;
@@ -10,7 +9,7 @@ use App\Models\OrderDetail;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
-class CartController extends Controller
+class CartController extends BaseApiController
 {
     public function index()
     {

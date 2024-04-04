@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Ingredient\CreateIngredientRequest;
 use App\Http\Requests\Ingredient\UpdateIngredientRequest;
 use App\Models\Ingredient;
 
-class IngredientController extends Controller
+class IngredientController extends BaseApiController
 {
     /**
      * Display a listing of the resource.

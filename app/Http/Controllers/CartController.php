@@ -25,4 +25,14 @@ class CartController extends Controller
 
         return Inertia::render('Admin/ListOrder', compact('orders')); //phpcs:ignore
     }
+
+    public function history()
+    {
+        $orders = Order::with('user:id,name', 'status:id,name', 'details', 'details.cake:id,name,price')
+            ->where('user_id', auth()->user()->id)
+            ->where('status_id', '!=', config('statuses.buying'))
+            ->get();
+
+        return Inertia::render('Cart/History', compact('orders')); // phpcs:ignore
+    }
 }

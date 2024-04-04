@@ -138,5 +138,7 @@
     "CustomerName":"Tên khách hàng",
     "Status":"Trạng thái",
     "OrderId":"Mã đơn hàng",
-    "CakeName":"Tên bánh"
+    "CakeName":"Tên bánh",
+    "Account":"Tài khoản",
+    "OrderHistory":"Lịch sử mua hàng"
 }
