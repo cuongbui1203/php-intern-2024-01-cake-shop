@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\CakeTypeController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\IngredientController;
 use App\Http\Controllers\Api\PictureController;
+use App\Http\Controllers\Api\RevenueController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -116,4 +117,12 @@ Route::name('orders.')
                 Route::put('{order}/change-status', [CartController::class, 'updateStatus'])
                     ->name('updateStatus');
             });
+    });
+
+Route::name('Revenue.')
+    ->prefix('Revenue')
+    ->middleware('admin')
+    ->group(function () {
+        Route::get('/', [RevenueController::class, 'index'])
+            ->name('index');
     });

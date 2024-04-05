@@ -82,6 +82,7 @@ class CartController extends BaseApiController
         $order->shipping_phone = $request->shipping_phone;
         $order->note = $request->note;
         $order->status_id = config('statuses.pending');
+        $order->buy_count += 1;
         $order->save();
 
         return response()->json([
@@ -91,7 +92,23 @@ class CartController extends BaseApiController
 
     public function updateStatus(UpdateStatusOrderRequest $request, Order $order)
     {
+        if (
+            $order->status_id === config('statuses.done')
+            || $order->status_id === config('statuses.cancel')
+            || $order->status_id === config('statuses.fail')
+        ) {
+            return response()->json(['success' => false]);
+        }
+
         $order->status_id = $request->status_id;
+        if (
+            $request->status_id === config('statuses.done')
+            || $request->status_id === config('statuses.cancel')
+            || $request->status_id === config('statuses.fail')
+        ) {
+            $order->finished_at = now();
+        }
+
         $order->save();
 
         return response()->json(['success' => true]);
