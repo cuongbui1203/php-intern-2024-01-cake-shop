@@ -5,6 +5,7 @@ use App\Http\Controllers\CakeTypeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\RevenueController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -82,4 +83,12 @@ Route::name('orders.')
             });
         Route::get('/history', [CartController::class, 'history'])
             ->name('history');
+    });
+
+Route::name('statistical.')
+    ->prefix('statistical')
+    ->middleware(['admin'])
+    ->group(function () {
+        Route::get('/', [RevenueController::class, 'index'])
+            ->name('index');
     });

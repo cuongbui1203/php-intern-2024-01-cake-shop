@@ -140,5 +140,9 @@
     "Account":"Account",
     "OrderHistory":"Order history",
     "UpdateStatus":"Update status",
-    "SelectStatus":"Select Status"
+    "SelectStatus":"Select Status",
+    "Statistical":"Statistical",
+    "Revenue":"Revenue",
+    "Start":"Start",
+    "End":"End"
 }

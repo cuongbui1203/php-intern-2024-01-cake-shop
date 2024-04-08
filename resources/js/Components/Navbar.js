@@ -127,6 +127,20 @@ const Navbar = ({ auth }) => {
                     ) : (
                         <></>
                     )}
+                    {roleId === ROLE.ADMIN ? (
+                        <>
+                            <li className="ml-5 nav-item">
+                                <Link
+                                    href={route('statistical.index')}
+                                    className="nav-link hover:bg-gray-200"
+                                >
+                                    {t('Statistical')}
+                                </Link>
+                            </li>
+                        </>
+                    ) : (
+                        <></>
+                    )}
                 </ul>
                 <div className="inline-flex">
                     <LanguageSwitcher className="mx-2 rounded-md cursor-pointer border-slate-200" />
