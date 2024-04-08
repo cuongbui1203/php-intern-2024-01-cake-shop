@@ -4,16 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\AddCakeRequest;
 use App\Http\Requests\CreateCakeRequest;
+use App\Http\Requests\GetListCakeRequest;
+use App\Http\Requests\GetListRequest;
 use App\Models\Cake;
 use App\Models\CakeType;
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class CakeController extends BaseApiController
 {
-    public function getCakeByType(Request $request, CakeType $cakeType)
+    public function getCakeByType(GetListRequest $request, CakeType $cakeType)
     {
         $page = $request->page ?? 1;
         $cakes = DB::table('cakes')
@@ -23,16 +24,30 @@ class CakeController extends BaseApiController
         return response()->json($cakes);
     }
 
-    public function getAllCakes(Request $request)
+    public function getAllCakes(GetListCakeRequest $request)
     {
         $page = $request->page ?? 1;
-        $cakes = DB::table('cakes')
-            ->paginateAnother($page, config('paginate.pageSize.cakes'));
+        $cakeType = json_decode($request->cakeType) ?? [];
+        $cakes = DB::table('cakes');
+        if (count($cakeType) > 0) {
+            $cakes->whereIn('type_id', $cakeType);
+        }
 
-        return response()->json($cakes);
+        if ($request->min) {
+            $cakes->where('price', '>=', $request->min);
+        }
+
+        if ($request->max) {
+            $cakes->where('price', '<=', $request->max);
+        }
+
+        // dd($cakes->r)
+        $res = $cakes->paginateAnother($page, config('paginate.pageSize.cakes'));
+
+        return response()->json($res);
     }
 
-    public function groupCakeByType(Request $request)
+    public function groupCakeByType()
     {
         $cakes = DB::table('cakes')
             ->leftJoin('cake_types', 'type_id', '=', 'cake_types.id')

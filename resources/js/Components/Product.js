@@ -5,6 +5,7 @@ import img from '@/img/no_image.png';
 import { useTranslation } from 'react-i18next';
 import { useNotification } from './Notification';
 import { CloseCircleFilled } from '@ant-design/icons';
+import { formatCurrencyVN } from './FormatCurrency';
 
 const Product = ({ product }) => {
     const { id, name, price, pictures } = product;
@@ -35,13 +36,13 @@ const Product = ({ product }) => {
             pushNoti(
                 t('Fail'),
                 t('AddToCartFail', { name: name }),
-                <CloseCircleFilled className=" text-red-500" />
+                <CloseCircleFilled className="text-red-500 " />
             );
         }
     };
 
     return (
-        <ProductWrapper className="col-9 col-md-6 col-lg-3 my-3">
+        <ProductWrapper className="my-3 col-9 col-md-6 col-lg-3">
             <div className="card">
                 <div className="img-container">
                     <img
@@ -50,24 +51,11 @@ const Product = ({ product }) => {
                         className="card-img-top"
                         onClick={handleImageClick}
                     />
-                    <button
-                        className="cart-btn"
-                        disabled={inCart}
-                        onClick={handleAddToCart}
-                    >
-                        {inCart ? (
-                            <p className="text-capitalize mb-0">in cart</p>
-                        ) : (
-                            <i className="fas fa-cart-plus"></i>
-                        )}
-                    </button>
                 </div>
                 <div className="card-footer d-flex justify-content-between">
-                    <p className="align-seft-center mb-0">{name}</p>
-                    <h5 className="text-blue font-italic mb-0">
-                        {t('price2', {
-                            gia: price
-                        })}
+                    <p className="mb-0 align-seft-center">{name}</p>
+                    <h5 className="mb-0 text-blue font-italic">
+                        {formatCurrencyVN(price)}
                     </h5>
                 </div>
             </div>

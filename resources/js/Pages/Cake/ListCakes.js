@@ -8,7 +8,7 @@ import { Link } from '@inertiajs/inertia-react';
 import { ROLE } from '@/const/role';
 import i18n from '@/i18n';
 
-export default function ListCakes({ auth }) {
+export default function ListCakes({ auth, filter={} }) {
     const [t] = useTranslation();
     const [cakes, setCakes] = useState([]);
     const [current_page, setCurrent_page] = useState(1);
@@ -27,7 +27,8 @@ export default function ListCakes({ auth }) {
                 route('api.cakes.index'),
                 {
                     params: {
-                        page: current_page
+                        page: current_page,
+                        ...filter
                     }
                 },
                 {
@@ -41,7 +42,7 @@ export default function ListCakes({ auth }) {
             setPageSize(res.data.pageSize);
         };
         loadData();
-    }, [current_page, total, pageSize]);
+    }, [current_page, total, pageSize,filter]);
 
     const RenderData = () => {
         if (cakes.length != 0) {
@@ -72,13 +73,12 @@ export default function ListCakes({ auth }) {
                 }}
             >
                 <div className="py-5">
-                    <Title title="Cakes" />
                     <div className="d-flex justify-content-end w-100">
                         {roleId === ROLE.ADMIN ? (
                             <Link
                                 as="button"
                                 href={route('admin.cakes.create')}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                                className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
                             >
                                 {t('Create')}
                             </Link>
