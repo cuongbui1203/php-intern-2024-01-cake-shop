@@ -119,7 +119,6 @@ Route::name('orders.')
             });
     });
 
-
 Route::name('statistical.')
     ->prefix('statistical')
     ->middleware(['auth:sanctum', 'admin'])

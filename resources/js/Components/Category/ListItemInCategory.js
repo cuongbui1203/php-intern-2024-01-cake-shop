@@ -77,16 +77,14 @@ export default function ListItemInCategory({ items }) {
                         </div>
                     }
                     description={
-                        <div className=" w-full min-w-[100px] text-lg text-red-500 font-bold text-center">
-                            {formatCurrencyVN(e.price)}
+                        <div className="w-full min-w-[100px] text-lg text-red-500 font-bold flex flex-col justify-center items-center">
+                            <span>{formatCurrencyVN(e.price)}</span>
                             <Modal onOk={() => handleAddToCart(e.id, e.name)}>
                                 <Modal.Trigger>
                                     <Tooltip placement="bottom" title={'buy'}>
-                                        <button>
-                                            <span>
-                                                <i className="fas fa-cart-plus"></i>
-                                            </span>
-                                        </button>
+                                        <span>
+                                            <i className="fas fa-cart-plus"></i>
+                                        </span>
                                     </Tooltip>
                                 </Modal.Trigger>
                                 <Modal.Content>
@@ -109,7 +107,7 @@ export default function ListItemInCategory({ items }) {
                     {categoryName}
                 </h3>
                 <Link
-                    href={route('cake-types.show', {
+                    href={route('cakes.listCakes', {
                         cakeType: items[0].type_id
                     })}
                     className="mr-[30px] text-black hover:text-[#b5145a] hover:no-underline text-[16px] hover:font-bold"
