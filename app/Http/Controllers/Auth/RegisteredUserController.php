@@ -42,6 +42,7 @@ class RegisteredUserController extends Controller
         $user->dob = $request->dob;
         $user->password = Hash::make($request->password);
         $user->role_id = config('roles.user');
+        $user->promotion = $request->promotion;
 
         $user->save();
 

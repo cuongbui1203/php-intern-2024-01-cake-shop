@@ -29,6 +29,7 @@ class User extends Authenticatable
         'dob',
         'address',
         'role_id',
+        'promotion',
     ];
 
     /**
