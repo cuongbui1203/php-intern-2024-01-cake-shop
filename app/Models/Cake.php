@@ -41,6 +41,21 @@ class Cake extends Model
         return $this->pictures->first();
     }
 
+    public function buyers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function getRatingAttribute()
+    {
+        return $this->reviews->avg('rating');
+    }
+
     protected $cast = [
         'updated_at' => 'timestamp',
         'created_at' => 'timestamp',

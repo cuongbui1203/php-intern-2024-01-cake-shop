@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Cake;
+use App\Models\Review;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -64,8 +66,30 @@ class UserSeeder extends Seeder
         ];
         DB::table('users')->insert($users);
 
+        $cakeIds = Cake::all('id')->pluck('id');
+
         User::factory(10)->create([
             'role_id' => 3,
         ]);
+        User::all()->each(function ($e) use ($cakeIds) {
+            $n = rand(2, 5);
+            $cakeBuy = [];
+            for ($i = 0; $i < $n; $i++) {
+                $cakeId = $cakeIds->random();
+                $cakeIds->filter(function ($e) use ($cakeId) {
+                    return $e !== $cakeId;
+                });
+                array_push($cakeBuy, $cakeId);
+                (new Review([
+                    'user_id' => $e->id,
+                    'cake_id' => $cakeId,
+                    'rating' => random_int(0, 5),
+                    'comment' => Str::random(),
+                ]))->save();
+            }
+
+            $e->cakes()->sync($cakeBuy);
+            $e->save();
+        });
     }
 }
