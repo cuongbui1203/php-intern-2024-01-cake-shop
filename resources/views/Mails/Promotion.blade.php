@@ -4,7 +4,7 @@
 
 <head>
     <title>
-        {{ __('mail.title') }}
+        {{ __('mail.titleMostCake') }}
     </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -167,7 +167,7 @@
                                         <td align="left" style="font-size:0px;padding:16px 0;word-break:break-word;">
                                             <div
                                                 style="font-family:Poppins ExtraBold, sans-serif;font-size:20px;font-weight:800;letter-spacing:0.64px;line-height:32px;text-align:left;color:#ffffff;">
-                                                {{ __('mail.review.new') }}
+                                                {{ __('mail.titleMostCake') }}
                                             </div>
                                         </td>
                                     </tr>
@@ -193,10 +193,11 @@
                                             style="font-size:0px;padding:0;padding-bottom:18px;word-break:break-word;">
                                             <div
                                                 style="font-family:IBM Plex Sans, sans-serif;font-size:20px;font-weight:800;letter-spacing:0.64px;line-height:32px;text-align:left;color:#02003B;">
-                                                {{ __('mail.details') }}
+                                                {{ __('mail.greeting', ['name' => $name]) }}
                                             </div>
                                         </td>
                                     </tr>
+
                                     <tr>
                                         <td align="left"
                                             style="font-size:0px;padding:0 0 15px;word-break:break-word;">
@@ -204,49 +205,30 @@
                                                 style="font-family:IBM Plex Sans, sans-serif;font-size:16px;line-height:24px;text-align:left;color:#203048;">
                                                 <div class="receipt"
                                                     style="font-size: 16px; line-height: 24px; color: #203048;">
-
-                                                    <div class="w-100" style="margin-bottom: 32px; width: 100%;">
-                                                        <h5
-                                                            style="margin: 0; color: rgba(32,48,72,0.4); font-size: 12px; font-weight: 600; line-height: 18px;">
-                                                            {{ __('mail.cake.reviewed') }}</h5>
-                                                        <div>
-                                                            {{ __('mail.cake.name') }}: {{ $cake->name }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-100" style="margin-bottom: 32px; width: 100%;">
-                                                        <h5
-                                                            style="margin: 0; color: rgba(32,48,72,0.4); font-size: 12px; font-weight: 600; line-height: 18px;">
-                                                            {{ __('mail.at') }}
-                                                        </h5>
-                                                        <div>{{ $review->created_at->format('H:i d/m/Y') }}</div>
-                                                    </div>
-                                                    <div class="w-100" style="margin-bottom: 32px; width: 100%;">
-                                                        <h5
-                                                            style="margin: 0; color: rgba(32,48,72,0.4); font-size: 12px; font-weight: 600; line-height: 18px;">
-                                                            {{ __('mail.by') }}</h5>
-                                                        <div>
-                                                            {{ __('mail.name') }}: {{ $name }}
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-100" style="margin-bottom: 32px; width: 100%;">
-                                                        <h5
-                                                            style="margin: 0; color: rgba(32,48,72,0.4); font-size: 12px; font-weight: 600; line-height: 18px;">
-                                                            {{ __('mail.review.info') }}</h5>
-                                                        <div>
-                                                            <table>
-                                                                <tbody>
+                                                    <!-- loop -->
+                                                    @for ($i = 0; $i < 3; $i++)
+                                                        <div class="w-100" style="margin-bottom: 32px; width: 100%;">
+                                                            <h5
+                                                                style="margin: 0; color: rgba(32,48,72,0.4); font-size: 12px; font-weight: 600; line-height: 18px;">
+                                                                top {{ $i + 1 }}
+                                                            </h5>
+                                                            <div>
+                                                                <table>
                                                                     <tr>
-                                                                        <td>{{ __('mail.review.rating') }}:</td>
-                                                                        <td>{{ $review->rating }}</td>
+                                                                        <td>
+                                                                            <img src={{ route('api.image.show', ['picture' => '1']) }}
+                                                                                style="width: 70px; height: 100px;" />
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{{ __('mail.review.comment') }}:</td>
-                                                                        <td>{{ $review->comment }}</td>
+                                                                        <td>
+                                                                            {{ $cakes[$i]['name'] }}
+                                                                        </td>
                                                                     </tr>
-                                                                </tbody>
-                                                            </table>
+                                                                </table>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endfor
                                                 </div>
                                             </div>
                                         </td>
