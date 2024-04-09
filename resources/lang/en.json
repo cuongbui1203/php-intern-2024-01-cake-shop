@@ -146,5 +146,6 @@
     "Start":"Start",
     "End":"End",
     "Review":"Review",
-    "Comment":"Comment"
+    "Comment":"Comment",
+    "DontHaveRating":"Don't have rating"
 }
