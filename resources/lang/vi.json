@@ -149,5 +149,7 @@
     "End":"Kết thúc",
     "Review":"Đánh giá",
     "Comment":"Nhận xét",
-    "DontHaveRating":"Chưa có đánh giá"
+    "DontHaveRating":"Chưa có đánh giá",
+    "Comments":"Các nhận xét",
+    "NoReview":"Không có nhận xét nào."
 }

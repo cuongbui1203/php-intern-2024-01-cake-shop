@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { useNotification } from '@/Components/Notification';
 import { CloseCircleFilled } from '@ant-design/icons';
 import i18n from '@/i18n';
+import Comments from '@/Components/Comments';
 
 const Detail = ({ cake, auth, canReview }) => {
     const [t] = useTranslation();
@@ -125,6 +126,10 @@ const Detail = ({ cake, auth, canReview }) => {
                             columns={col}
                             dataSource={data}
                         />
+                    </div>
+                </div>
+                <div className="flex flex-col items-end w-full">
+                    <div className="flex justify-between w-[500px]">
                         <button
                             onClick={() => setOpenModal(true)}
                             className={clsx(
@@ -134,7 +139,9 @@ const Detail = ({ cake, auth, canReview }) => {
                         >
                             {t('Review')}
                         </button>
+                        <label>{t('Comments')}</label>
                     </div>
+                    <Comments comments={cake.reviews ?? []} />
                 </div>
             </div>
             <Modal
