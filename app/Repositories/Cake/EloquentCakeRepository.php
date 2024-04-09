@@ -90,4 +90,15 @@ class EloquentCakeRepository extends EloquentBaseRepository implements CakeRepos
 
         return true;
     }
+
+    public function getTop3()
+    {
+        return $this->model
+            ->with('pictures')
+            ->where(DB::raw('MONTH(updated_at)'), '=', now()->month)
+            ->where(DB::raw('YEAR(updated_at)'), '=', now()->year)
+            ->orderBy('buy_count')
+            ->limit(3)
+            ->get();
+    }
 }
