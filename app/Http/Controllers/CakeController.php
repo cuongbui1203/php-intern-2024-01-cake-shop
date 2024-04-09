@@ -45,8 +45,9 @@ class CakeController extends Controller
     public function show(Cake $cake)
     {
         $cake->load(['type', 'pictures', 'ingredients']);
+        $canReview = true;
 
-        return Inertia::render('Cake/Details', compact('cake')); //phpcs:ignore
+        return Inertia::render('Cake/Details', compact('cake', 'canReview')); //phpcs:ignore
     }
 
     /**

@@ -5,14 +5,15 @@ import { useTranslation } from 'react-i18next';
 export default function ListImage({ image }) {
     const [t] = useTranslation();
     return (
-        <div>
+        <div className=' max-w-[600px]'>
             {image?.length != 0 ? <p>{t('Images')}:</p> : <></>}
+            <Image.PreviewGroup>
             <div
-                style={{
+            style={{
                     display: 'flex',
                     overflow: 'auto'
                 }}
-            >
+                >
                 {image?.map((e) => {
                     return (
                         <>
@@ -32,7 +33,8 @@ export default function ListImage({ image }) {
                         </>
                     );
                 })}
-            </div>
+                </div>
+            </Image.PreviewGroup>
         </div>
     );
 }
