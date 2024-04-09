@@ -62,7 +62,7 @@ export default function ListCakeType({ cakeTypes, auth }) {
                             cakeType: e.id
                         })}
                         as="button"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                        className="btn"
                     >
                         <span>{t('View')}</span>
                     </Link>
@@ -70,7 +70,7 @@ export default function ListCakeType({ cakeTypes, auth }) {
                         <>
                             <Link
                                 as="button"
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                                className="btn"
                                 href={route('cake-types.edit', {
                                     cakeType: e.id
                                 })}
@@ -83,7 +83,7 @@ export default function ListCakeType({ cakeTypes, auth }) {
                                 onClick={() => {
                                     handleDelete(e.id);
                                 }}
-                                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                                className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-red-500 rounded hover:bg-red-700"
                             >
                                 <span>{t('Delete')}</span>
                             </button>
@@ -101,12 +101,12 @@ export default function ListCakeType({ cakeTypes, auth }) {
         <>
             <Navbar auth={auth} />
             <Title title={t('Cake Type')} />
-            <div className="d-flex justify-content-end mr-4">
+            <div className="mr-4 d-flex justify-content-end">
                 {roleId == 1 ? (
                     <Link
                         href={route('admin.cake-types.create')}
                         as="button"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                        className="btn"
                     >
                         {t('Add')}
                     </Link>

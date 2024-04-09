@@ -45,7 +45,7 @@ export default function ListIngredients({ auth, ingredients }) {
                 <>
                     <Link
                         as="button"
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                        className="btn"
                         href={route('admin.ingredients.show', {
                             ingredient: e.id
                         })}
@@ -57,13 +57,13 @@ export default function ListIngredients({ auth, ingredients }) {
                         href={route('admin.ingredients.edit', {
                             ingredient: e.id
                         })}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                        className="btn"
                     >
                         {t('Edit')}
                     </Link>
                     <button
                         onClick={() => handleDelete(e.id)}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                        className="btn-danger"
                     >
                         {t('Delete')}
                     </button>
@@ -76,14 +76,14 @@ export default function ListIngredients({ auth, ingredients }) {
         <>
             <Navbar auth={auth} />
             <div>
-                <div className=" h-1 "></div>
+                <div className="h-1 "></div>
                 <Title name={t('Ingredients')} />
-                <div className=" h-7 "></div>
+                <div className=" h-7"></div>
                 <span className=" w-full flex justify-end pr-[10%] my-4">
                     <Link
                         as="button"
                         href={route('admin.ingredients.create')}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                        className="btn"
                     >
                         {t('Add')}
                     </Link>

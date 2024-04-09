@@ -85,7 +85,7 @@ export default function FilterCake({ onChangeData = () => {} }) {
             <div className="flex justify-center w-full my-2">
                 <button
                     onClick={handle}
-                    className="px-4 py-2 ml-3 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+                    className="btn"
                 >
                     {t('ok')}
                 </button>

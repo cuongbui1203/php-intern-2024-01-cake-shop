@@ -62,16 +62,10 @@ const Content = ({ children }) => {
             footer={
                 footer == null ? (
                     <>
-                        <button
-                            className="px-4 py-2 mx-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
-                            onClick={handleOk}
-                        >
+                        <button className="btn" onClick={handleOk}>
                             {t('ok')}
                         </button>
-                        <button
-                            className="px-4 py-2 mx-2 font-bold text-white bg-red-500 rounded hover:bg-red-700"
-                            onClick={handleCancel}
-                        >
+                        <button className="btn-danger" onClick={handleCancel}>
                             {t('Cancel')}
                         </button>
                     </>

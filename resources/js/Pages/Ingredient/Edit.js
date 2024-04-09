@@ -33,20 +33,17 @@ export default function Edit({ auth, ingredient }) {
             <Navbar auth={auth} />
             <>
                 <Title name={'Edit'} />
-                <div className=" flex justify-center">
-                    <div className=" w-80">
-                        <div className=" my-4">
+                <div className="flex justify-center ">
+                    <div className="w-80">
+                        <div className="my-4">
                             <Label value={'Name'} />
                             <Input
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             />
                         </div>
-                        <div className=" flex justify-center">
-                            <button
-                                onClick={handle}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
-                            >
+                        <div className="flex justify-center">
+                            <button onClick={handle} className="btn">
                                 {t('ok')}
                             </button>
                         </div>

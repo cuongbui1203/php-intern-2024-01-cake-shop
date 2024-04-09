@@ -32,7 +32,7 @@ export default function CakeTypeDetail({ cakeType, auth }) {
                         cake: e.id
                     })}
                     as="button"
-                    className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+                    className="btn"
                 >
                     {t('View')}
                 </Link>
@@ -50,7 +50,7 @@ export default function CakeTypeDetail({ cakeType, auth }) {
                 <Link
                     href={route('cake-types.index')}
                     as="button"
-                    className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+                    className="btn"
                 >
                     {t('Back')}
                 </Link>

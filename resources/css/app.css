@@ -11,3 +11,11 @@
 .ant-modal-footer > :nth-child(2):hover {
     background-color: #4995ff !important;
 }
+
+.btn-danger {
+    @apply px-4 py-2 ml-3 font-bold text-white bg-red-500 rounded hover:bg-red-700 !important;
+}
+
+.btn {
+    @apply px-4 py-2 ml-3 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 !important;
+}

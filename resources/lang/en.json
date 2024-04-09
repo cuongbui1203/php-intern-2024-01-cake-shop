@@ -149,5 +149,8 @@
     "Comment":"Comment",
     "DontHaveRating":"Don't have rating",
     "Comments":"Comments",
-    "NoReview":"There are no reviews yet"
+    "NoReview":"There are no reviews yet",
+    "NewNotifications":"New notifications",
+    "Cake":"Cake",
+    "Clear":"Clear all"
 }

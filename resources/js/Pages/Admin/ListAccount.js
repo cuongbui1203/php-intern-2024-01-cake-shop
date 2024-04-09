@@ -73,7 +73,7 @@ export default function ListAccount({ auth, users }) {
             email: e.email,
             roleName: t(e.role.name),
             action: (
-                <div className=" flex">
+                <div className="flex">
                     <Modal
                         onOk={() => {
                             handleEditAccount(e.id);
@@ -81,9 +81,7 @@ export default function ListAccount({ auth, users }) {
                         onCancel={() => {}}
                     >
                         <Modal.Trigger>
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 ml-3 rounded">
-                                {t('ChangeRole')}
-                            </button>
+                            <button className="btn">{t('ChangeRole')}</button>
                         </Modal.Trigger>
                         <Modal.Content>
                             <div style={{ width: '90%' }}>
@@ -114,7 +112,7 @@ export default function ListAccount({ auth, users }) {
                         </Modal.Content>
                     </Modal>
                     <button
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-3 rounded"
+                        className="px-4 py-2 mx-3 font-bold text-white bg-red-500 rounded hover:bg-red-700"
                         onClick={() => {
                             if (confirm(t('ConfirmDeleteAccount')))
                                 deleteAccount(e.id);
@@ -129,14 +127,11 @@ export default function ListAccount({ auth, users }) {
     return (
         <>
             <Navbar auth={auth} />
-            <div className=" m-auto w-2/3 flex flex-col align-middle ">
+            <div className="flex flex-col w-2/3 m-auto align-middle">
                 <Title name="ListAccount" />
-                <div className=" my-5"></div>
-                <div className=" d-flex justify-end my-2 mx-7">
-                    <Link
-                        href={route('admin.users.register')}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
+                <div className="my-5"></div>
+                <div className="justify-end my-2 d-flex mx-7">
+                    <Link href={route('admin.users.register')} className="btn">
                         {t('Add')}
                     </Link>
                 </div>
