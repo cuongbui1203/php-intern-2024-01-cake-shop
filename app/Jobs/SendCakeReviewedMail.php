@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\CakeReviewedEvent;
 use App\Mail\CakeReviewed;
 use App\Models\Cake;
 use App\Models\Review;
@@ -23,6 +24,7 @@ class SendCakeReviewedMail implements ShouldQueue
 
     protected CakeReviewed $mail;
     protected Collection $users;
+    protected Review $review;
 
     /**
      * Create a new job instance.
@@ -33,6 +35,7 @@ class SendCakeReviewedMail implements ShouldQueue
     {
         $this->users = User::where('role_id', '=', config('roles.admin'))->get();
         $this->mail = new CakeReviewed($cake, $name, $review);
+        $this->review = $review;
     }
 
     /**
@@ -43,6 +46,7 @@ class SendCakeReviewedMail implements ShouldQueue
     public function handle()
     {
         $mail = $this->mail;
+        event(new CakeReviewedEvent($this->review));
         $this->users->each(function ($user) use ($mail) {
             Mail::to($user)->send($mail);
         });

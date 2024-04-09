@@ -2,6 +2,7 @@ import {
     NEW_NOTI,
     REMOVE_ALL_NOTI,
     REMOVE_NOTI,
+    SEEN_ALL_NOTI,
     SEEN_NOTI
 } from '@/const/contains';
 
@@ -37,4 +38,10 @@ const removeAllNoti = () => {
     };
 };
 
-export { newNoti, seenNoti, removeAllNoti, removeNoti };
+const seenAllNoti = () => {
+    return {
+        type: SEEN_ALL_NOTI
+    };
+};
+
+export { newNoti, seenNoti, removeAllNoti, removeNoti, seenAllNoti };
