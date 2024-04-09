@@ -30,6 +30,7 @@ class RegistrationTest extends TestCase
             'promotion' => true,
             'password_confirmation' => 'password1',
             'dob' => Carbon::now(),
+            'promotion' => true,
         ]);
 
         $this->assertAuthenticated();
