@@ -84,9 +84,7 @@ const renderAction = (order) => {
                         }}
                     >
                         <Modal.Trigger>
-                            <button className="px-4 py-2 mx-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                                {t('Action')}
-                            </button>
+                            <button className="btn">{t('Action')}</button>
                         </Modal.Trigger>
                         <Modal.Content>
                             <div>
@@ -102,16 +100,12 @@ const renderAction = (order) => {
                             </div>
                         </Modal.Content>
                     </Modal>
-                    <button className="px-4 py-2 mx-2 font-bold text-white bg-red-500 rounded hover:bg-red-700">
-                        {t('Cancel')}
-                    </button>
+                    <button className="btn-danger">{t('Cancel')}</button>
                 </div>
             }
         >
             <Modal.Trigger>
-                <button className="px-4 py-2 mx-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
-                    {t('View')}
-                </button>
+                <button className="btn">{t('View')}</button>
             </Modal.Trigger>
             <Modal.Content>
                 <OrderInfo order={order} />

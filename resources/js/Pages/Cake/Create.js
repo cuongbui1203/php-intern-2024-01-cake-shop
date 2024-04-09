@@ -99,7 +99,7 @@ export default function Create({ auth }) {
                         type="text"
                         name="name"
                         value={name}
-                        className="mt-1 block w-full rounded"
+                        className="block w-full mt-1 rounded"
                         isFocused={true}
                         onChange={(e) => {
                             setName(e.target.value);
@@ -115,7 +115,7 @@ export default function Create({ auth }) {
                         value={desc}
                         cols={5}
                         style={{ height: '100px' }}
-                        className="mt-1 block w-full rounded"
+                        className="block w-full mt-1 rounded"
                         onChange={(e) => {
                             setDesc(e.target.value);
                         }}
@@ -126,7 +126,7 @@ export default function Create({ auth }) {
                     <Label forInput="cakeType" value={t('Cake Type')} />
                     <Select
                         name="cakeType"
-                        className="mt-1 block w-full rounded"
+                        className="block w-full mt-1 rounded"
                         onChange={(e) => {
                             setIdCakeType(e);
                         }}
@@ -141,7 +141,7 @@ export default function Create({ auth }) {
                         type="number"
                         name="price"
                         value={price}
-                        className="mt-1 block w-full rounded"
+                        className="block w-full mt-1 rounded"
                         onChange={(e) => {
                             setPrice(e.target.value);
                         }}
@@ -154,7 +154,7 @@ export default function Create({ auth }) {
                         type="number"
                         name="cookTime"
                         value={cookTime}
-                        className="mt-1 block w-full rounded"
+                        className="block w-full mt-1 rounded"
                         onChange={(e) => {
                             setCookTime(e.target.value);
                         }}
@@ -174,11 +174,8 @@ export default function Create({ auth }) {
                         options={ingredients}
                     />
                 </div>
-                <div className=" d-flex justify-center m-2">
-                    <button
-                        onClick={submit}
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
-                    >
+                <div className="justify-center m-2 d-flex">
+                    <button onClick={submit} class="btn">
                         {t('Create')}
                     </button>
                 </div>

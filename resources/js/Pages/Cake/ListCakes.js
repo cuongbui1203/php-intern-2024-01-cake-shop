@@ -78,7 +78,7 @@ export default function ListCakes({ auth, filter = {} }) {
                             <Link
                                 as="button"
                                 href={route('admin.cakes.create')}
-                                className="px-3 py-1 ml-2 mr-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700"
+                                className="btn"
                             >
                                 {t('Create')}
                             </Link>

@@ -35,7 +35,7 @@ export default function Detail({ auth, ingredient }) {
                         href={route('cakes.show', {
                             cake: e.id
                         })}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                        className="btn"
                     >
                         {t('View')}
                     </Link>

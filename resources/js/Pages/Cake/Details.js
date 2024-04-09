@@ -137,10 +137,7 @@ const Detail = ({ cake, auth, canReview }) => {
                     >
                         <button
                             onClick={() => setOpenModal(true)}
-                            className={clsx(
-                                !canReview && 'hidden',
-                                'px-4 py-2 mx-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
-                            )}
+                            className={clsx(!canReview && 'hidden', 'btn')}
                         >
                             {t('Review')}
                         </button>
