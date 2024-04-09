@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cake;
+use App\Repositories\Cake\CakeRepository;
 use Inertia\Inertia;
 
 class CakeController extends Controller
 {
+    protected CakeRepository $cakeRepository;
+
+    public function __construct(CakeRepository $cakeRepository)
+    {
+        $this->cakeRepository = $cakeRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,14 +21,14 @@ class CakeController extends Controller
      */
     public function index()
     {
-        $cakes = Cake::paginate(config('paginate.pageSize.cakes'));
+        $cakes = $this->cakeRepository->paginate(config('paginate.pageSize.cakes'));
 
         return Inertia::render('Cake/ListCakes', compact('cakes')); //phpcs:ignore
     }
 
     public function adminIndex()
     {
-        $cakes = Cake::paginate(config('paginate.pageSize.cakes'));
+        $cakes = $this->cakeRepository->paginate(config('paginate.pageSize.cakes'));
 
         return Inertia::render('Admin/ListCakes', compact('cakes')); //phpcs:ignore
     }
@@ -39,13 +46,14 @@ class CakeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Cake  $cake
+     * @param  string  $cake
      * @return \Illuminate\Http\Response
      */
-    public function show(Cake $cake)
+    public function show(string $cake)
     {
         /** @var \App\Models\User $user */
         $user = auth()->user();
+        $cake = $this->cakeRepository->find($cake);
         $cake->load(['type', 'pictures', 'ingredients:id,name', 'reviews.reviewer:id,name']);
         $canReview = !is_null($user) && ($user->cakes->contains($cake->id) || $user->role_id === config('roles.admin')); //phpcs:ignore
 
@@ -55,11 +63,12 @@ class CakeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Cake  $cake
+     * @param  string  $cake
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cake $cake)
+    public function edit(string $cake)
     {
+        $cake = $this->cakeRepository->find($cake);
         $cake->load(['pictures', 'ingredients']);
 
         return Inertia::render('Cake/Edit', compact('cake')); //phpcs:ignore

@@ -1,7 +1,7 @@
 <?php
 
 return [
-
+    'sendPromotionAt' => env('SEND_PROMOTION_AT', '10:00'),
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -174,7 +174,7 @@ return [
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        App\Providers\RepositoryServiceProvider::class,
     ],
 
     /*
