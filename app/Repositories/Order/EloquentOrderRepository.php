@@ -24,6 +24,7 @@ class EloquentOrderRepository extends EloquentBaseRepository implements OrderRep
             $order->shipping_address = $user->address;
             $order->shipping_phone = $user->phone;
             $order->status_id = config('statuses.buying');
+
             $order->save();
         }
 
@@ -35,6 +36,7 @@ class EloquentOrderRepository extends EloquentBaseRepository implements OrderRep
     public function updateStatus(string $id, string $statusId)
     {
         $order = $this->model->find($id);
+
         if (
             $order->status_id === config('statuses.done')
             || $order->status_id === config('statuses.cancel')
