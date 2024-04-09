@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
-import { Link } from '@inertiajs/inertia-react';
 import { useTranslation } from 'react-i18next';
 import img from '@/img/no_image.png';
 import Navbar from '@/Components/Navbar';
 import ListImage from '@/Components/ListImage';
-import { Button, Image, Table } from 'antd';
-import { ROLE } from '@/const/role';
+import { Button, Image, Input, Modal, Rate, Table, Tooltip } from 'antd';
+import { formatCurrencyVN } from '@/Components/FormatCurrency';
+import clsx from 'clsx';
 
-const Detail = ({ cake, auth }) => {
+const Detail = ({ cake, auth, canReview }) => {
     const [t] = useTranslation();
-    const [inCart, setInCart] = useState(false);
-    const roleId = auth.user?.role_id ? auth.user.role_id : ROLE.USER;
+    const [openModal, setOpenModal] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
+
+    const handleComment = (e) => {
+        console.log(e.target.value);
+        setComment(e.target.value);
+    };
+    const handleChangeRating = (e) => {
+        setRating(e);
+    };
     const imgLink =
         cake.pictures.length != 0
             ? route('api.image.show', { picture: cake.pictures[0].id })
             : img;
 
-    const handleAddToCart = () => {
-        setInCart(true); // Update button state after cart addition
-    };
     const col = [
         {
             title: t('Ingredient'),
@@ -45,52 +51,78 @@ const Detail = ({ cake, auth }) => {
                     {t('Back')}
                 </Button>
                 <div className="row">
-                    <div className="col-10 mx-auto text-center text-slanted text-blue my-5">
+                    <div className="mx-auto my-5 text-center col-10 text-slanted text-blue">
                         <h1>{cake.name}</h1>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-10 mx-auto col-md-6 my-3">
+                    <div className="mx-auto my-3 space-y-5 col-10 col-md-6">
                         <Image src={imgLink} alt="product" width={500} />
+                        <ListImage image={cake.pictures} />
                     </div>
-                    <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
+                    <div className="mx-auto my-3 col-10 col-md-6 text-capitalize">
                         <h2>
                             {t('Cake Type')}: {cake.type.name}
                         </h2>
-                        <h4 className="text-blue">
-                            <strong>
-                                {t('Price')}: {cake.price} <span>VND</span>
-                            </strong>
-                        </h4>
-                        <p className="text-capitalize font-weight-bold mt-3 mb-0">
-                            {t('InfoCake')}:
-                        </p>
-                        <p className="text-muted lead">{cake.description}</p>
+                        <div className="flex items-center space-x-8">
+                            <span className="text-3xl font-bold text-red-500">
+                                {formatCurrencyVN(cake.price)}
+                            </span>
+                            <Tooltip title="2.8">
+                                <Rate allowHalf value={2.8} disabled />
+                            </Tooltip>
+                        </div>
                         <p>
                             {t('TimeCook')}:{' '}
                             {t('Min', {
                                 min: cake.cook_time
                             })}
                         </p>
-                        <Table columns={col} dataSource={data} />
+                        <p className="mt-3 mb-0 text-capitalize font-weight-bold">
+                            {t('InfoCake')}:
+                        </p>
+                        <p className="text-muted lead">{cake.description}</p>
+                        <Table
+                            pagination={{
+                                pageSize: 4
+                            }}
+                            columns={col}
+                            dataSource={data}
+                        />
+                        <button
+                            onClick={() => setOpenModal(true)}
+                            className={clsx(
+                                !canReview && 'hidden',
+                                'px-4 py-2 mx-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700'
+                            )}
+                        >
+                            {t('Review')}
+                        </button>
                     </div>
                 </div>
-                <ListImage image={cake.pictures} />
-                {roleId === ROLE.USER ? (
-                    <div className="d-flex w-100 justify-content-center">
-                        <Link>
-                            <Button
-                                onClick={handleAddToCart}
-                                className=" mr-2 ml-2"
-                            >
-                                {inCart ? t('inCart') : t('Add to card')}
-                            </Button>
-                        </Link>
-                    </div>
-                ) : (
-                    <></>
-                )}
             </div>
+            <Modal
+                open={openModal}
+                onOk={() => setOpenModal(false)}
+                onCancel={() => setOpenModal(false)}
+                title={t('Review')}
+            >
+                <div className="mt-2 space-y-3">
+                    <Rate
+                        className="text-[30px]"
+                        allowHalf
+                        onChange={handleChangeRating}
+                        value={rating}
+                    />
+                    <div>
+                        <label>{t('Comment')}</label>
+                        <Input.TextArea
+                            onChange={handleComment}
+                            value={comment}
+                        />
+                    </div>
+                </div>
+            </Modal>
         </>
     );
 };
