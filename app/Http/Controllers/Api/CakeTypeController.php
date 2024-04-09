@@ -4,11 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\CreateCakeTypeRequest;
 use App\Http\Requests\UpdateCakeTypeRequest;
-use App\Models\CakeType;
-use Exception;
+use App\Repositories\CakeType\CakeTypeRepository;
 
 class CakeTypeController extends BaseApiController
 {
+    protected CakeTypeRepository $cakeTypeRepository;
+
+    public function __construct(CakeTypeRepository $cakeTypeRepository)
+    {
+        $this->cakeTypeRepository = $cakeTypeRepository;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -17,10 +23,7 @@ class CakeTypeController extends BaseApiController
      */
     public function store(CreateCakeTypeRequest $request)
     {
-        $cakeType = new CakeType();
-        $cakeType->name = $request->name;
-        $cakeType->description = $request->description;
-        $cakeType->save();
+        $cakeType = $this->cakeTypeRepository->create($request->only(['name', 'description']));
 
         return response()->json([
             'success' => true,
@@ -32,47 +35,46 @@ class CakeTypeController extends BaseApiController
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateCakeTypeRequest  $request
-     * @param  \App\Models\CakeType  $cakeType
+     * @param  string  $cakeType
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCakeTypeRequest $request, CakeType $cakeType)
+    public function update(UpdateCakeTypeRequest $request, string $cakeType)
     {
-        $cakeType->name = $request->name;
-        $cakeType->description = $request->description;
-        $cakeType->save();
+        $res = $this->cakeTypeRepository->update($cakeType, $request->only(['name', 'description']));
+        if ($res) {
+            return response()->json([
+                'success' => true,
+                'message' => __('responseMessage.updateSuccess'),
+            ]);
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => __('responseMessage.updateSuccess'),
-        ]);
+        return response()->json(['success' => false], 404);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CakeType  $cakeType
+     * @param  string  $cakeType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CakeType $cakeType)
+    public function destroy(string $cakeType)
     {
-        try {
-            $cakeType->deleteOrFail();
-
+        $res = $this->cakeTypeRepository->delete($cakeType);
+        if ($res) {
             return response()->json([
                 'success' => true,
             ]);
-        } catch (Exception $e) {
-            return response()->json([
-                'success' => false,
-                'errors' => $e->getMessage(),
-                'message' => __('responseMessage.deleteFail'),
-            ]);
         }
+
+        return response()->json([
+            'success' => false,
+            'message' => __('responseMessage.deleteFail'),
+        ]);
     }
 
     public function getListCakeType()
     {
-        $cakeTypes = CakeType::all(['id', 'name']);
+        $cakeTypes = $this->cakeTypeRepository->getAll(['id', 'name']);
 
         return response()->json([
             'success' => true,
