@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from '@inertiajs/inertia-react';
 import { Button } from 'antd';
@@ -36,12 +36,12 @@ const Navbar = ({ auth }) => {
             <NavWrapper className="flex navbar navbar-expand-sm navbar-dark px-sm-5 justify-content-between min-h-fit">
                 <ul className="navbar-nav align-items-center">
                     <li className="ml-5 nav-item">
-                        <span
-                            className="text-3xl font-extrabold cursor-default"
-                            onClick={() => (location.pathname = '/')}
+                        <Link
+                            href={route('landing')}
+                            className="text-3xl font-extrabold text-black cursor-default hover:no-underline hover:text-black hover:cursor-pointer"
                         >
-                            CakeShop
-                        </span>
+                            {process.env.MIX_APP_NAME}
+                        </Link>
                     </li>
                     <li className="ml-5 nav-item hover:bg-gray-200">
                         <Link

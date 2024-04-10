@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useMemo, useReducer } from 'react';
 import AdminContext from '../Contexts/AdminContext';
 import initState, { UpdateNotiState } from '../Hooks/Reducer';
 import { newNoti } from '../Actions/action';
@@ -6,7 +6,7 @@ import { ROLE } from '@/const/role';
 
 export default function Provider({ auth, children }) {
     const [noti, dispatch] = useReducer(UpdateNotiState, initState);
-    useEffect(() => {
+    useMemo(() => {
         if (auth.user) {
             if (
                 (!noti.hasListener || noti.reConnect) &&
@@ -22,7 +22,7 @@ export default function Provider({ auth, children }) {
         }
     }, []);
 
-    useEffect(() => {
+    useMemo(() => {
         localStorage.setItem('noti', JSON.stringify(noti));
     }, [noti]);
 

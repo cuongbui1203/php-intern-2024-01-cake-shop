@@ -2,6 +2,7 @@ import {
     NEW_NOTI,
     REMOVE_ALL_NOTI,
     REMOVE_NOTI,
+    SEEN_ALL_NOTI,
     SEEN_NOTI
 } from '@/const/contains';
 
@@ -34,6 +35,13 @@ const UpdateNotiState = (state, action) => {
                 if (e.id === action.data) {
                     e.seen = true;
                 }
+            });
+            return {
+                ...state
+            };
+        case SEEN_ALL_NOTI:
+            state.noti.map((e) => {
+                e.seen = true;
             });
             return {
                 ...state
