@@ -9,7 +9,7 @@ import { ROLE } from '@/const/role';
 import axios from 'axios';
 import i18n from '@/i18n';
 import Cart from './Cart/Cart';
-import Notification from './Notifications/Notification';
+import { Notification } from './Notification';
 
 const NavWrapper = styled.nav`
     background: var(--mainBlue);
