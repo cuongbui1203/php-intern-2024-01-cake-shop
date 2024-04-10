@@ -60,15 +60,14 @@ const Detail = ({ cake, auth, canReview }) => {
                 }
             );
             pushNoti(t('Success', t('SendReviewSuccess')));
+            location.pathname = location.pathname;
         } catch (e) {
-            console.log(e.response.data.errors);
             pushNoti(
                 t('Error'),
                 e.response.data.errors,
                 <CloseCircleFilled className="text-red-500" />
             );
         }
-        location.pathname = location.pathname;
     };
     return (
         <>
@@ -129,7 +128,13 @@ const Detail = ({ cake, auth, canReview }) => {
                     </div>
                 </div>
                 <div className="flex flex-col items-end w-full">
-                    <div className="flex justify-between w-[500px]">
+                    <div
+                        className={clsx(
+                            'flex w-[500px]',
+                            canReview && 'justify-between',
+                            !canReview && 'justify-end'
+                        )}
+                    >
                         <button
                             onClick={() => setOpenModal(true)}
                             className={clsx(
@@ -139,7 +144,7 @@ const Detail = ({ cake, auth, canReview }) => {
                         >
                             {t('Review')}
                         </button>
-                        <label>{t('Comments')}</label>
+                        <div>{t('Comments')}</div>
                     </div>
                     <Comments comments={cake.reviews ?? []} />
                 </div>

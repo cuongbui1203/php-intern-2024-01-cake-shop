@@ -7,6 +7,7 @@ use App\Http\Requests\CreateCakeRequest;
 use App\Http\Requests\GetListCakeRequest;
 use App\Http\Requests\GetListRequest;
 use App\Http\Requests\ReviewCakeRequest;
+use App\Jobs\SendCakeReviewedMail;
 use App\Models\Cake;
 use App\Models\CakeType;
 use App\Models\Review;
@@ -136,13 +137,16 @@ class CakeController extends BaseApiController
 
     public function review(ReviewCakeRequest $request, Cake $cake)
     {
+        $user = auth()->user();
         $review = new Review([
             'cake_id' => $cake->id,
-            'user_id' => auth()->user()->id,
+            'user_id' => $user->id,
             'rating' => $request->rating,
             'comment' => $request->comment ?? '',
         ]);
+        $username = $user->name;
         $review->save();
+        dispatch(new SendCakeReviewedMail($cake, $username, $review));
 
         return response()->json(['success' => true]);
     }
