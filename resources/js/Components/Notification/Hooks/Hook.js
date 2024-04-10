@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import Context from './Context';
-
+import Context from '../Contexts/Context';
+import AdminContext from '../Contexts/AdminContext';
 const useNotification = () => {
     const api = useContext(Context);
     const pushNoti = (title = '', desc, icon = null) => {
@@ -41,4 +41,8 @@ const useNotification = () => {
     return [api, pushNoti];
 };
 
-export { useNotification };
+const useAdminNotification = () => {
+    return useContext(AdminContext);
+};
+
+export { useNotification, useAdminNotification };

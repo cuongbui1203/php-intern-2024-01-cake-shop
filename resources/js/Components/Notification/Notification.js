@@ -3,8 +3,6 @@ import { Popover, Badge } from 'antd';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useTranslation } from 'react-i18next';
 import NotificationItem from './NotificationItem';
-import { rating } from '@material-tailwind/react';
-import Comments from '../Comments';
 
 export default function Notification() {
     const [t] = useTranslation();
