@@ -21,6 +21,8 @@ class Cake extends Model
         'cook_time',
     ];
 
+    protected $appends = ['rating'];
+
     public function type(): BelongsTo
     {
         return $this->belongsTo(CakeType::class, 'type_id');
@@ -53,7 +55,7 @@ class Cake extends Model
 
     public function getRatingAttribute()
     {
-        return $this->reviews->avg('rating');
+        return $this->reviews->count() === 0 ? 0 : $this->reviews->avg('rating');
     }
 
     protected $cast = [

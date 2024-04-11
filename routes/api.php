@@ -42,6 +42,9 @@ Route::name('cakes.')
             ->name('groupByType');
         Route::post('/{cake}/add-cake', [CakeController::class, 'addCake'])
             ->name('addCake');
+        Route::post('/{cake}/review', [CakeController::class, 'review'])
+            ->middleware('auth:sanctum')
+            ->name('review');
         Route::middleware(['admin', 'auth:sanctum'])
             ->group(function () {
                 Route::post('/', [CakeController::class, 'store'])

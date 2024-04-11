@@ -6,8 +6,10 @@ use App\Http\Requests\AddCakeRequest;
 use App\Http\Requests\CreateCakeRequest;
 use App\Http\Requests\GetListCakeRequest;
 use App\Http\Requests\GetListRequest;
+use App\Http\Requests\ReviewCakeRequest;
 use App\Models\Cake;
 use App\Models\CakeType;
+use App\Models\Review;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -130,5 +132,18 @@ class CakeController extends BaseApiController
         return response()->json([
             'success' => true,
         ]);
+    }
+
+    public function review(ReviewCakeRequest $request, Cake $cake)
+    {
+        $review = new Review([
+            'cake_id' => $cake->id,
+            'user_id' => auth()->user()->id,
+            'rating' => $request->rating,
+            'comment' => $request->comment ?? '',
+        ]);
+        $review->save();
+
+        return response()->json(['success' => true]);
     }
 }

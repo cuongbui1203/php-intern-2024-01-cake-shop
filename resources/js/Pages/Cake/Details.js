@@ -6,20 +6,16 @@ import ListImage from '@/Components/ListImage';
 import { Button, Image, Input, Modal, Rate, Table, Tooltip } from 'antd';
 import { formatCurrencyVN } from '@/Components/FormatCurrency';
 import clsx from 'clsx';
+import { useNotification } from '@/Components/Notification';
+import { CloseCircleFilled } from '@ant-design/icons';
+import i18n from '@/i18n';
 
 const Detail = ({ cake, auth, canReview }) => {
     const [t] = useTranslation();
+    const [api, pushNoti] = useNotification();
     const [openModal, setOpenModal] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
-
-    const handleComment = (e) => {
-        console.log(e.target.value);
-        setComment(e.target.value);
-    };
-    const handleChangeRating = (e) => {
-        setRating(e);
-    };
     const imgLink =
         cake.pictures.length != 0
             ? route('api.image.show', { picture: cake.pictures[0].id })
@@ -35,10 +31,44 @@ const Detail = ({ cake, auth, canReview }) => {
     const data = [];
     cake.ingredients.map((e) => {
         data.push({
+            key: e.id,
             name: e.name
         });
     });
-
+    const handleComment = (e) => {
+        setComment(e.target.value);
+    };
+    const handleChangeRating = (e) => {
+        setRating(e);
+    };
+    const handleReview = async () => {
+        const data = {
+            rating: rating,
+            comment: comment
+        };
+        try {
+            const res = await axios.post(
+                route('api.cakes.review', {
+                    cake: cake.id
+                }),
+                data,
+                {
+                    headers: {
+                        'X-localization': i18n.language
+                    }
+                }
+            );
+            pushNoti(t('Success', t('SendReviewSuccess')));
+        } catch (e) {
+            console.log(e.response.data.errors);
+            pushNoti(
+                t('Error'),
+                e.response.data.errors,
+                <CloseCircleFilled className="text-red-500" />
+            );
+        }
+        location.pathname = location.pathname;
+    };
     return (
         <>
             <Navbar auth={auth} />
@@ -68,8 +98,14 @@ const Detail = ({ cake, auth, canReview }) => {
                             <span className="text-3xl font-bold text-red-500">
                                 {formatCurrencyVN(cake.price)}
                             </span>
-                            <Tooltip title="2.8">
-                                <Rate allowHalf value={2.8} disabled />
+                            <Tooltip
+                                title={
+                                    cake.rating === 0
+                                        ? t('DontHaveRating')
+                                        : cake.rating
+                                }
+                            >
+                                <Rate allowHalf value={cake.rating} disabled />
                             </Tooltip>
                         </div>
                         <p>
@@ -103,7 +139,7 @@ const Detail = ({ cake, auth, canReview }) => {
             </div>
             <Modal
                 open={openModal}
-                onOk={() => setOpenModal(false)}
+                onOk={handleReview}
                 onCancel={() => setOpenModal(false)}
                 title={t('Review')}
             >
@@ -119,6 +155,7 @@ const Detail = ({ cake, auth, canReview }) => {
                         <Input.TextArea
                             onChange={handleComment}
                             value={comment}
+                            rows={4}
                         />
                     </div>
                 </div>

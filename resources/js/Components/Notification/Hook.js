@@ -17,8 +17,18 @@ const useNotification = () => {
             return res;
         };
 
+        const convertObToJsx = (ob) => {
+            const res = [];
+            for (const [key, value] of Object.entries(ob)) {
+                res.push(convertArrayToJsx(value));
+            }
+            return res;
+        };
+
         const descContent = Array.isArray(desc)
             ? convertArrayToJsx(desc)
+            : desc instanceof Object
+            ? convertObToJsx(desc)
             : desc;
         api.success({
             message: title,
