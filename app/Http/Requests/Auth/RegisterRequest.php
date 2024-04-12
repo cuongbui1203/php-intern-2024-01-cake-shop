@@ -31,6 +31,7 @@ class RegisterRequest extends FormRequest
             'phone' => 'string|max:11',
             'address' => 'string',
             'password' => ['required', 'confirmed', Rules\Password::min(6)->letters()->numbers()],
+            'promotion' => 'required|boolean',
         ];
     }
 }
