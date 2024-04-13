@@ -20,7 +20,7 @@ class Status extends Model
         return $this->hasMany(Order::class);
     }
 
-    protected $cast = [
+    protected $casts = [
         'updated_at' => 'timestamp',
         'created_at' => 'timestamp',
     ];

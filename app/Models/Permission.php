@@ -20,7 +20,7 @@ class Permission extends Model
         return $this->belongsToMany(Role::class);
     }
 
-    protected $cast = [
+    protected $casts = [
         'updated_at' => 'timestamp',
         'created_at' => 'timestamp',
     ];
