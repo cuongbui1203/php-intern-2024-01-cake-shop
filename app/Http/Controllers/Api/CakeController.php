@@ -9,19 +9,23 @@ use App\Http\Requests\GetListRequest;
 use App\Http\Requests\ReviewCakeRequest;
 use App\Jobs\SendCakeReviewedMail;
 use App\Models\Cake;
-use App\Models\CakeType;
 use App\Models\Review;
-use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
+use App\Repositories\Cake\CakeRepository;
 
 class CakeController extends BaseApiController
 {
-    public function getCakeByType(GetListRequest $request, CakeType $cakeType)
+    protected CakeRepository $cakeRepository;
+
+    public function __construct(CakeRepository $cakeRepository)
+    {
+        $this->cakeRepository = $cakeRepository;
+    }
+
+    public function getCakeByType(GetListRequest $request, string $cakeType)
     {
         $page = $request->page ?? 1;
-        $cakes = DB::table('cakes')
-            ->where('type_id', $cakeType->id)
+        $cakes = $this->cakeRepository
+            ->getCakeByType($cakeType)
             ->paginateAnother($page, config('paginate.pageSize.cakes'));
 
         return response()->json($cakes);
@@ -31,20 +35,8 @@ class CakeController extends BaseApiController
     {
         $page = $request->page ?? 1;
         $cakeType = json_decode($request->cakeType) ?? [];
-        $cakes = DB::table('cakes');
-        if (count($cakeType) > 0) {
-            $cakes->whereIn('type_id', $cakeType);
-        }
 
-        if ($request->min) {
-            $cakes->where('price', '>=', $request->min);
-        }
-
-        if ($request->max) {
-            $cakes->where('price', '<=', $request->max);
-        }
-
-        // dd($cakes->r)
+        $cakes = $this->cakeRepository->getAllCakesByFilter($cakeType, $request->min, $request->max);
         $res = $cakes->paginateAnother($page, config('paginate.pageSize.cakes'));
 
         return response()->json($res);
@@ -52,46 +44,35 @@ class CakeController extends BaseApiController
 
     public function groupCakeByType()
     {
-        $cakes = DB::table('cakes')
-            ->leftJoin('cake_types', 'type_id', '=', 'cake_types.id')
-            ->leftJoin('pictures', 'pictures.cake_id', '=', 'cakes.id')
-            ->get([
-                'cakes.*',
-                DB::raw('cake_types.name as type'),
-                DB::raw('pictures.id as img_id'),
-            ])
-            ->unique('id')
-            ->groupBy('type_id');
+        $cakes = $this->cakeRepository->groupCakeByType();
 
         return response()->json($cakes);
     }
 
-    public function getCake(Cake $cake)
+    public function getCake(string $cake)
     {
-        return response()->json($cake);
+        return response()->json($this->cakeRepository->find($cake));
     }
 
-    public function update(CreateCakeRequest $request, Cake $cake)
+    public function update(CreateCakeRequest $request, string $cake)
     {
-        DB::table('cakes')->where('id', '=', $cake->id)->update([
+        $this->cakeRepository->update($cake, [
             'name' => $request->name,
             'description' => $request->description,
             'type_id' => $request->idCakeType,
             'price' => $request->price,
             'cook_time' => $request->cookTime,
         ]);
-        $cake->ingredients()->sync(json_decode($request->ingredients));
+        $this->cakeRepository->updateIngredients($cake, json_decode($request->ingredients));
 
         return response()->json([
             'success' => true,
         ]);
     }
 
-    public function addCake(AddCakeRequest $request, Cake $cake)
+    public function addCake(AddCakeRequest $request, string $cake)
     {
-        DB::table('cakes')->where('id', '=', $cake->id)->update([
-            'amount' => $cake->amount + $request->amount,
-        ]);
+        $this->cakeRepository->updateCakeAmount($cake, $request->amount);
 
         return response()->json([
             'success' => true,
@@ -100,7 +81,7 @@ class CakeController extends BaseApiController
 
     public function store(CreateCakeRequest $request)
     {
-        DB::table('cakes')->insert([
+        $this->cakeRepository->create([
             'name' => $request->name,
             'description' => $request->description,
             'type_id' => $request->idCakeType,
@@ -114,21 +95,9 @@ class CakeController extends BaseApiController
         ]);
     }
 
-    public function destroy(Cake $cake)
+    public function destroy(string $cake)
     {
-        $pictures = $cake->pictures;
-        foreach ($pictures as $picture) {
-            try {
-                Storage::get($picture->link);
-                Storage::delete($picture->link);
-            } catch (Exception $e) {
-                dd($e);
-            }
-
-            DB::table('pictures')->where('id', '=', $picture->id)->delete();
-        }
-
-        DB::table('cakes')->where('id', '=', $cake->id)->delete();
+        $this->cakeRepository->destroy($cake);
 
         return response()->json([
             'success' => true,
