@@ -43,7 +43,7 @@ Route::name('cakes.')
         Route::post('/{cake}/add-cake', [CakeController::class, 'addCake'])
             ->name('addCake');
         Route::post('/{cake}/review', [CakeController::class, 'review'])
-            ->middleware('auth:sanctum')
+            ->middleware(['auth:sanctum', 'lang'])
             ->name('review');
         Route::middleware(['admin', 'auth:sanctum'])
             ->group(function () {
