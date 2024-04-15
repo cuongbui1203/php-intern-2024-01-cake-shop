@@ -8,7 +8,7 @@ import { Link } from '@inertiajs/inertia-react';
 import { ROLE } from '@/const/role';
 import i18n from '@/i18n';
 
-export default function ListCakes({ auth, filter={} }) {
+export default function ListCakes({ auth, filter = {} }) {
     const [t] = useTranslation();
     const [cakes, setCakes] = useState([]);
     const [current_page, setCurrent_page] = useState(1);
@@ -42,7 +42,7 @@ export default function ListCakes({ auth, filter={} }) {
             setPageSize(res.data.pageSize);
         };
         loadData();
-    }, [current_page, total, pageSize,filter]);
+    }, [current_page, total, pageSize, filter]);
 
     const RenderData = () => {
         if (cakes.length != 0) {
@@ -63,7 +63,7 @@ export default function ListCakes({ auth, filter={} }) {
     }, [cakes]);
 
     return (
-        <>
+        <div>
             <div
                 style={{
                     marginLeft: '0px',
@@ -95,6 +95,6 @@ export default function ListCakes({ auth, filter={} }) {
                     onChange={handelChangePage}
                 />
             </div>
-        </>
+        </div>
     );
 }

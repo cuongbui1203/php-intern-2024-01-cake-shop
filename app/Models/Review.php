@@ -19,7 +19,7 @@ class Review extends Model
 
     public function reviewer(): BelongsTo
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
     public function cake(): BelongsTo

@@ -19,7 +19,7 @@ export default function Welcome(props) {
         };
         loadData();
     }, []);
-    useEffect(()=>{
+    useEffect(() => {
         if (data) {
             const tem = [];
             for (const [key, value] of Object.entries(data)) {
@@ -27,22 +27,26 @@ export default function Welcome(props) {
             }
             setContent(tem);
         }
-    },[data]);
-    
+    }, [data]);
+
     return (
         <Authenticated auth={props.auth}>
             <Head title={t('HomePage')} />
-            <FilterCake onChangeData={(data)=>{
-                setFilter(data);
-                setState(2);
-            }} />
-            {state === 1 ?
-            <div className="flex flex-col align-items-center space-y-7">
-                {content}
-            </div>:<>
-                <ListCakes auth={props.auth} filter={filter} />
-            </>
-            }
+            <FilterCake
+                onChangeData={(data) => {
+                    setFilter(data);
+                    setState(2);
+                }}
+            />
+            {state === 1 ? (
+                <div className="flex flex-col align-items-center space-y-7">
+                    {content}
+                </div>
+            ) : (
+                <>
+                    <ListCakes auth={props.auth} filter={filter} />
+                </>
+            )}
         </Authenticated>
     );
 }

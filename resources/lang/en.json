@@ -147,5 +147,7 @@
     "End":"End",
     "Review":"Review",
     "Comment":"Comment",
-    "DontHaveRating":"Don't have rating"
+    "DontHaveRating":"Don't have rating",
+    "Comments":"Comments",
+    "NoReview":"There are no reviews yet"
 }
