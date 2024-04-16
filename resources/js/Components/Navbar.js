@@ -9,6 +9,7 @@ import { ROLE } from '@/const/role';
 import axios from 'axios';
 import i18n from '@/i18n';
 import Cart from './Cart/Cart';
+import Notification from './Notifications/Notification';
 
 const NavWrapper = styled.nav`
     background: var(--mainBlue);
@@ -146,6 +147,7 @@ const Navbar = ({ auth }) => {
                     <LanguageSwitcher className="mx-2 rounded-md cursor-pointer border-slate-200" />
                     {auth?.user ? (
                         <>
+                            {roleId === ROLE.ADMIN ? <Notification /> : <></>}
                             <Dropdown>
                                 <Dropdown.Trigger>
                                     <span className="inline-flex mx-2 mt-1 rounded-md">

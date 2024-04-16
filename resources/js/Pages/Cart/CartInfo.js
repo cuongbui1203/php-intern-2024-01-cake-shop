@@ -86,7 +86,7 @@ export default function CartInfo({ auth, order }) {
             pushNoti(
                 t('Error'),
                 errorsMessage,
-                <CloseCircleFilled className=" text-red-500" />
+                <CloseCircleFilled className="text-red-500" />
             );
         }
     };
@@ -128,7 +128,7 @@ export default function CartInfo({ auth, order }) {
             ),
             action: (
                 <DeleteFilled
-                    className=" text-red-500 text-2xl cursor-pointer"
+                    className="text-2xl text-red-500 cursor-pointer"
                     onClick={() => handleDeleteDetail(e.id)}
                 />
             )
@@ -144,7 +144,7 @@ export default function CartInfo({ auth, order }) {
     return (
         <Authenticated auth={auth}>
             <Title name={'Cart'} />
-            <div className=" flex flex-col">
+            <div className="flex flex-col ">
                 <div className="flex justify-center space-x-4 w-[80%] m-auto">
                     <div className=" w-[55%]">
                         <div className="mx-auto my-2 text-center text-title">
@@ -156,18 +156,18 @@ export default function CartInfo({ auth, order }) {
                         <Input
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            className=" rounded-[6px]"
+                            className="rounded-[6px]"
                         />
                         <Label value={'Address'} />
                         <Input
                             value={address}
-                            className=" rounded-[6px]"
+                            className="rounded-[6px]"
                             onChange={(e) => setAddress(e.target.value)}
                         />
                         <Label value={'Phone'} />
                         <Input
                             value={phone}
-                            className=" rounded-[6px]"
+                            className="rounded-[6px]"
                             onChange={(e) => setPhone(e.target.value)}
                         />
                         <Label value={'Note'} />
@@ -178,7 +178,7 @@ export default function CartInfo({ auth, order }) {
                             autoSize={false}
                         />
                     </div>
-                    <div className=" w-[45%]">
+                    <div className="w-[45%]">
                         <div className="mx-auto my-2 text-center text-title">
                             <h2 className="text-capitalize font-weight-bold">
                                 {t('Details')}
@@ -191,7 +191,7 @@ export default function CartInfo({ auth, order }) {
                         />
                     </div>
                 </div>
-                <div className=" m-auto text-2xl text-red-500 font-extrabold">
+                <div className="m-auto text-2xl font-extrabold text-red-500">
                     {new Intl.NumberFormat('vi-VN', {
                         style: 'currency',
                         currency: 'VND'
@@ -210,7 +210,7 @@ export default function CartInfo({ auth, order }) {
                         paddingTop: '10px',
                         paddingBottom: '10px'
                     }}
-                    className=" bg-[#b5145a] hover:opacity-50 rounded-3xl"
+                    className="bg-[#b5145a] hover:opacity-50 rounded-3xl"
                     onClick={showModal}
                 >
                     {t('Order')}
@@ -222,16 +222,10 @@ export default function CartInfo({ auth, order }) {
                 onCancel={handleCancel}
                 footer={
                     <>
-                        <button
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded"
-                            onClick={handleBuy}
-                        >
+                        <button className="btn" onClick={handleBuy}>
                             {t('ok')}
                         </button>
-                        <button
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
-                            onClick={handleCancel}
-                        >
+                        <button className="btn-danger" onClick={handleCancel}>
                             {t('Cancel')}
                         </button>
                     </>
@@ -239,7 +233,7 @@ export default function CartInfo({ auth, order }) {
             >
                 <p className="m-auto text-2xl">
                     {t('TotalPay')}
-                    <div className="  text-red-500 font-extrabold">
+                    <div className="font-extrabold text-red-500">
                         {formatCurrencyVN(total)}
                     </div>
                 </p>

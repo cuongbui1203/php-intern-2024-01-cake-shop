@@ -51,11 +51,7 @@ export default function Edit({ cakeType, auth }) {
     return (
         <>
             <Navbar auth={auth} />
-            <Link
-                href={route('cake-types.index')}
-                as="button"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
-            >
+            <Link href={route('cake-types.index')} as="button" className="btn">
                 {t('Back')}
             </Link>
             <Head title={t('Create')} />
@@ -68,7 +64,7 @@ export default function Edit({ cakeType, auth }) {
                         type="text"
                         name="name"
                         value={data.name}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         isFocused={true}
                         handleChange={onHandleChange}
                         required
@@ -84,11 +80,8 @@ export default function Edit({ cakeType, auth }) {
                         required
                     />
                 </div>
-                <div className=" d-flex justify-center m-2">
-                    <button
-                        onClick={submit}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
-                    >
+                <div className="justify-center m-2 d-flex">
+                    <button onClick={submit} className="btn">
                         {t('Update')}
                     </button>
                 </div>

@@ -29,7 +29,7 @@ export default function AddCake({ id, name, onOk, onCancel }) {
     return (
         <div className=" h-[13rem]">
             <Title title={t('addCake')} />
-            <div className="d-flex flex-column w-50 h-20 m-auto">
+            <div className="h-20 m-auto d-flex flex-column w-50">
                 <div className="mb-[5px]">
                     {t('Name')}: {name}
                 </div>
@@ -41,7 +41,7 @@ export default function AddCake({ id, name, onOk, onCancel }) {
                 <InputNumber
                     name="amount"
                     value={amount}
-                    className="mt-1 block w-full m-2"
+                    className="block w-full m-2 mt-1"
                     isFocused={true}
                     min={0}
                     onChange={(e) => {
@@ -49,17 +49,11 @@ export default function AddCake({ id, name, onOk, onCancel }) {
                     }}
                     required
                 />
-                <div className="w-full flex justify-between mt-2">
-                    <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mx-2 rounded"
-                        onClick={submit}
-                    >
+                <div className="flex justify-between w-full mt-2">
+                    <button className="btn" onClick={submit}>
                         {t('ok')}
                     </button>
-                    <button
-                        onClick={onCancel}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mx-2 rounded"
-                    >
+                    <button onClick={onCancel} className="btn-danger">
                         {t('Cancel')}
                     </button>
                 </div>

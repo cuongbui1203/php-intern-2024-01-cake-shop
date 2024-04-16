@@ -41,8 +41,8 @@ export default function Create({ auth }) {
             <Navbar auth={auth} />
             <div>
                 <Title name={t('Create') + ' ' + t('Ingredient')} />
-                <span className=" h-7 "> </span>
-                <div className="w-full flex justify-center">
+                <span className=" h-7"> </span>
+                <div className="flex justify-center w-full">
                     <div className="w-80">
                         <ValidationErrors errors={errors} />
                         <div>
@@ -52,10 +52,10 @@ export default function Create({ auth }) {
                                 onChange={(e) => setName(e.target.value)}
                             />
                         </div>
-                        <div className="w-full flex justify-center my-3">
+                        <div className="flex justify-center w-full my-3">
                             <button
                                 onClick={() => handle()}
-                                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
+                                className="btn"
                             >
                                 {t('ok')}
                             </button>

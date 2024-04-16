@@ -154,7 +154,7 @@ export default function Edit({ auth, cake }) {
                         type="text"
                         name="name"
                         value={name}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         isFocused={true}
                         onChange={(e) => {
                             setName(e.value);
@@ -168,7 +168,7 @@ export default function Edit({ auth, cake }) {
                         type="text"
                         name="description"
                         value={desc}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         onChange={(e) => {
                             setDesc(e.value);
                         }}
@@ -179,7 +179,7 @@ export default function Edit({ auth, cake }) {
                     <Label forInput="cakeType" value={t('Cake Type')} />
                     <Select
                         name="cakeType"
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         onChange={(e) => {
                             setIdCakeType(e);
                         }}
@@ -194,7 +194,7 @@ export default function Edit({ auth, cake }) {
                         type="number"
                         name="price"
                         value={price}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         onChange={(e) => {
                             setPrice(parseInt(e.value));
                         }}
@@ -207,7 +207,7 @@ export default function Edit({ auth, cake }) {
                         type="number"
                         name="cookTime"
                         value={cookTime}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         onChange={(e) => {
                             setCookTime(parseInt(e.value));
                         }}
@@ -219,7 +219,7 @@ export default function Edit({ auth, cake }) {
                     <Select
                         mode="multiple"
                         size={'middle'}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         placeholder={t('PleaseSelect') + ' ...'}
                         defaultValue={defaultIngredient}
                         onChange={handleChange}
@@ -229,7 +229,7 @@ export default function Edit({ auth, cake }) {
                         options={ingredients}
                     />
                 </div>
-                <div className=" mt-5">
+                <div className="mt-5">
                     <Label>{t('Images')}</Label>
                     <div className="d-flex">
                         <Upload
@@ -249,11 +249,8 @@ export default function Edit({ auth, cake }) {
                         />
                     </div>
                 </div>
-                <div className=" d-flex justify-center m-2">
-                    <button
-                        onClick={submit}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded mr-2 ml-2"
-                    >
+                <div className="justify-center m-2 d-flex">
+                    <button onClick={submit} className="btn">
                         {t('Edit')}
                     </button>
                 </div>
