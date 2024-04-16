@@ -17,24 +17,29 @@ class OrderSeeder extends Seeder
     {
         Order::factory(rand(10, 50))
             ->create()->each(function ($order) {
-                OrderDetail::factory(rand(1, 10))
-                    ->create(['order_id' => 1])
-                    ->each(function ($detail) use ($order) {
-                        $detail->order_id = $order->id;
-                        $detail->save();
-                    });
-            });
+            if ($order->status_id === config('statuses.done')) {
+                $order->finished_at = now();
+            }
+
+            OrderDetail::factory(rand(1, 10))
+                ->create(['order_id' => 1])
+                ->each(function ($detail) use ($order) {
+                    $detail->order_id = $order->id;
+                    $detail->save();
+                });
+            $order->save();
+        });
         Order::factory(1)
             ->create([
                 'status_id' => config('statuses.buying'),
                 'user_id' => 1,
             ])->each(function ($order) {
-                OrderDetail::factory(rand(1, 10))
-                    ->create(['order_id' => 1])
-                    ->each(function ($detail) use ($order) {
-                        $detail->order_id = $order->id;
-                        $detail->save();
-                    });
-            });
+            OrderDetail::factory(rand(1, 10))
+                ->create(['order_id' => 1])
+                ->each(function ($detail) use ($order) {
+                    $detail->order_id = $order->id;
+                    $detail->save();
+                });
+        });
     }
 }

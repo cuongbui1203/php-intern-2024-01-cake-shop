@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Order;
+use App\Repositories\Order\OrderRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
 
 class RevenueController extends BaseApiController
 {
+    protected OrderRepository $orderRepository;
+
+    public function __construct(OrderRepository $orderRepository)
+    {
+        $this->orderRepository = $orderRepository;
+    }
+
     public function index(Request $request)
     {
         $now = new Carbon();
@@ -21,12 +27,12 @@ class RevenueController extends BaseApiController
             $now->setYear($request->year);
         }
 
-        $totalOrders = Order::where(DB::raw('YEAR(created_at)'), '=', $now->year)
-            ->get();
+        $totalOrders = $this->orderRepository->whereYear($now->year);
 
         $ordersPerMonth = $totalOrders->groupBy(function ($order) {
             return $order->created_at->format('m/Y');
         });
+
         $orders = $totalOrders->where('status_id', '!=', config('statuses.buying'))
             ->whereNotNull('finished_at')
             ->filter(function ($order) use ($now) {
@@ -75,11 +81,7 @@ class RevenueController extends BaseApiController
         $end->endOfDay()->endOfMonth();
         $totals = new Collection();
 
-        $orders = Order::where('finished_at', '>=', $start)
-            ->where('finished_at', '<=', $end)
-            ->with('details', 'details.cake:id,price', 'user:id,name')
-            ->orderBy('finished_at')
-            ->get()
+        $orders = $this->orderRepository->getTotalAmountPerMonth($start, $end)
             ->each(function ($order) {
                 $total = 0;
                 $order->details->each(function ($detail) use (&$total) {
