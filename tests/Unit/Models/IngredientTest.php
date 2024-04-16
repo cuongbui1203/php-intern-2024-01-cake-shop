@@ -21,6 +21,12 @@ class IngredientTest extends ModelTestCase
     {
         $ingredient = new Ingredient();
         $cakes = $ingredient->cakes();
-        $this->assertBelongsToManyRelation($cakes, $ingredient, new Cake(), 'cake_ingredient.ingredient_id', 'cake_ingredient.cake_id');
+        $this->assertBelongsToManyRelation(
+            $cakes,
+            $ingredient,
+            new Cake(),
+            'cake_ingredient.ingredient_id',
+            'cake_ingredient.cake_id'
+        );
     }
 }
