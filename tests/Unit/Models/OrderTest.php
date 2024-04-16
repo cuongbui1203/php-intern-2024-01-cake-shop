@@ -38,6 +38,7 @@ class OrderTest extends ModelTestCase
         $status = $order->status();
         $this->assertBelongsToRelation($status, $order, new Status(), 'status_id', 'id');
     }
+
     public function test_order_has_many_order_details()
     {
         $order = new Order();
