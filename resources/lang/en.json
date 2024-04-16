@@ -152,5 +152,7 @@
     "NoReview":"There are no reviews yet",
     "NewNotifications":"New notifications",
     "Cake":"Cake",
-    "Clear":"Clear all"
+    "Clear":"Clear all",
+    "NoNoti":"Don't have new notifications",
+    "seenAll":"Seen all"
 }

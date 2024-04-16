@@ -15,7 +15,7 @@ class CakeReviewed extends Mailable implements ShouldQueue
     use SerializesModels;
 
     protected Cake $cake;
-    protected $name;
+    protected string $name;
     protected Review $review;
 
     /**
@@ -23,10 +23,10 @@ class CakeReviewed extends Mailable implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(Cake $cake, $name, Review $review)
+    public function __construct(Cake $cake, string $name, Review $review)
     {
         $this->cake = $cake;
-        $this->$name = $name;
+        $this->name = $name;
         $this->review = $review;
         $this->locale(app()->getLocale());
     }

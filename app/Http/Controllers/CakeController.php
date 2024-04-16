@@ -47,7 +47,7 @@ class CakeController extends Controller
         /** @var \App\Models\User $user */
         $user = auth()->user();
         $cake->load(['type', 'pictures', 'ingredients:id,name', 'reviews.reviewer:id,name']);
-        $canReview = !is_null($user) && $user->cakes->contains($cake->id); //phpcs:ignore
+        $canReview = !is_null($user) && ($user->cakes->contains($cake->id) || $user->role_id === config('roles.admin')); //phpcs:ignore
 
         return Inertia::render('Cake/Details', compact('cake', 'canReview')); //phpcs:ignore
     }

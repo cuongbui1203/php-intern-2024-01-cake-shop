@@ -13,7 +13,9 @@ class ReviewCakeRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->cakes->contains($this->cake->id);
+        $user = auth()->user();
+
+        return $user->cakes->contains($this->cake->id) || $user->role_id === config('roles.admin');
     }
 
     /**
