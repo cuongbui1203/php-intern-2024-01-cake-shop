@@ -47,6 +47,7 @@ class CakeTypeController extends BaseApiController
                 'message' => __('responseMessage.updateSuccess'),
             ]);
         }
+
         return response()->json(['success' => false], 404);
     }
 
@@ -64,6 +65,7 @@ class CakeTypeController extends BaseApiController
                 'success' => true,
             ]);
         }
+
         return response()->json([
             'success' => false,
             'message' => __('responseMessage.deleteFail'),

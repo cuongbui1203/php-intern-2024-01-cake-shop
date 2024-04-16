@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repositories;
+
 abstract class EloquentBaseRepository implements BaseRepository
 {
     /** @var \Illuminate\Database\Eloquent\Model */

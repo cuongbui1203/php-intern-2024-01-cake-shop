@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CakeType;
 use App\Repositories\CakeType\CakeTypeRepository;
 use Inertia\Inertia;
 

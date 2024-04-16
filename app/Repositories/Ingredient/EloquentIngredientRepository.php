@@ -19,8 +19,10 @@ class EloquentIngredientRepository extends EloquentBaseRepository implements Ing
 
         if (count($ingredient->cakes) === 0) {
             $ingredient->delete();
+
             return true;
         }
+
         return false;
     }
 }

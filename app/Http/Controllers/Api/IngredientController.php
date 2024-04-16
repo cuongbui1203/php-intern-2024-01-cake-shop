@@ -66,6 +66,7 @@ class IngredientController extends BaseApiController
     public function destroy(string $ingredient)
     {
         $res = $this->ingredientRepository->delete($ingredient);
+
         return response()->json(['success' => $res]);
     }
 }

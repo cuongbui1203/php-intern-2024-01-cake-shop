@@ -11,5 +11,4 @@ namespace App\Repositories\CakeType;
  */
 interface CakeTypeRepository
 {
-
 }

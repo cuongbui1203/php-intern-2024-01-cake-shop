@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use App\Repositories\CakeType\CakeTypeRepository;
-use App\Repositories\CakeType\EloquentCakeTypeRepository;
 use App\Repositories\Cake\CakeRepository;
 use App\Repositories\Cake\EloquentCakeRepository;
+use App\Repositories\CakeType\CakeTypeRepository;
+use App\Repositories\CakeType\EloquentCakeTypeRepository;
 use App\Repositories\Ingredient\EloquentIngredientRepository;
 use App\Repositories\Ingredient\IngredientRepository;
-use App\Repositories\OrderDetail\EloquentOrderDetailRepository;
-use App\Repositories\OrderDetail\OrderDetailRepository;
 use App\Repositories\Order\EloquentOrderRepository;
 use App\Repositories\Order\OrderRepository;
+use App\Repositories\OrderDetail\EloquentOrderDetailRepository;
+use App\Repositories\OrderDetail\OrderDetailRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
