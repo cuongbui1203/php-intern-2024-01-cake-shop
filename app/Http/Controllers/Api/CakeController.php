@@ -11,14 +11,17 @@ use App\Jobs\SendCakeReviewedMail;
 use App\Models\Cake;
 use App\Models\Review;
 use App\Repositories\Cake\CakeRepository;
+use App\Repositories\Review\ReviewRepository;
 
 class CakeController extends BaseApiController
 {
     protected CakeRepository $cakeRepository;
+    protected ReviewRepository $reviewRepository;
 
-    public function __construct(CakeRepository $cakeRepository)
+    public function __construct(CakeRepository $cakeRepository, ReviewRepository $reviewRepository)
     {
         $this->cakeRepository = $cakeRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
     public function getCakeByType(GetListRequest $request, string $cakeType)
@@ -107,15 +110,13 @@ class CakeController extends BaseApiController
     public function review(ReviewCakeRequest $request, Cake $cake)
     {
         $user = auth()->user();
-        $review = new Review([
+        $review = $this->reviewRepository->create([
             'cake_id' => $cake->id,
             'user_id' => $user->id,
             'rating' => $request->rating,
             'comment' => $request->comment ?? '',
         ]);
-        $username = $user->name;
-        $review->save();
-        dispatch(new SendCakeReviewedMail($cake, $username, $review));
+        dispatch(new SendCakeReviewedMail($cake, $user->name, $review));
 
         return response()->json(['success' => true]);
     }
