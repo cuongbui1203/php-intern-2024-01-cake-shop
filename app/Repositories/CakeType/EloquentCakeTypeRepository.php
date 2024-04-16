@@ -11,5 +11,4 @@ class EloquentCakeTypeRepository extends EloquentBaseRepository implements CakeT
     {
         return CakeType::class;
     }
-
 }

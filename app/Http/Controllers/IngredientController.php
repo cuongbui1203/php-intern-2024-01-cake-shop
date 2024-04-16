@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Ingredient;
 use App\Repositories\Ingredient\IngredientRepository;
 use Inertia\Inertia;
 
 class IngredientController extends Controller
 {
-
     protected IngredientRepository $ingredientRepository;
 
     public function __construct(IngredientRepository $ingredientRepository)
@@ -61,7 +59,7 @@ class IngredientController extends Controller
     public function edit(string $ingredient)
     {
         $ingredient = $this->ingredientRepository->find($ingredient);
-        
+
         return Inertia::render("Ingredient/Edit", compact('ingredient')); //phpcs:ignore
     }
 }

@@ -3,13 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\UploadPictureRequest;
-use App\Models\Picture;
+use App\Repositories\Picture\PictureRepository;
 use Exception;
 use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\Storage;
 
 class PictureController extends BaseApiController
 {
+    protected PictureRepository $pictureRepository;
+
+    public function __construct(PictureRepository $pictureRepository)
+    {
+        $this->pictureRepository = $pictureRepository;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -20,10 +27,10 @@ class PictureController extends BaseApiController
     {
         $path = Storage::put('cakes' . $request->cakeId, $request->file('image'));
         try {
-            $picture = new Picture();
-            $picture->link = $path;
-            $picture->cake_id = $request->cakeId;
-            $picture->save();
+            $this->pictureRepository->create([
+                'link' => $path,
+                'cake_id' => $request->cakeId,
+            ]);
 
             return response()->json(['success' => true]);
         } catch (Exception $e) {
@@ -39,35 +46,40 @@ class PictureController extends BaseApiController
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Picture $picture
+     * @param  string $picture
      * @return \Illuminate\Http\Response
      */
-    public function show(Picture $picture)
+    public function show(string $picture)
     {
-        // dd(Storage::get($picture->link));
-        try {
+        $picture = $this->pictureRepository->find($picture);
+        if ($picture) {
             Storage::get($picture->link);
 
             return response()->download(Storage::path($picture->link), 'image' . $picture->id);
-        } catch (Exception $e) {
-            abort(404, __('http-statuses.404'));
         }
+
+        abort(404, __('http-statuses.404'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Picture $picture
+     * @param  string $picture
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Picture $picture)
+    public function destroy(string $picture)
     {
+        $picture = $this->pictureRepository->find($picture);
         $error = [];
         try {
             Storage::get($picture->link);
             Storage::delete($picture->link);
         } catch (Exception $e) {
             array_push($error, $e->getMessage());
+        }
+
+        if (count($error) !== 0) {
+            return response()->json(['success' => false]);
         }
 
         $picture->delete();

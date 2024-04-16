@@ -12,6 +12,8 @@ use App\Repositories\OrderDetail\EloquentOrderDetailRepository;
 use App\Repositories\OrderDetail\OrderDetailRepository;
 use App\Repositories\Order\EloquentOrderRepository;
 use App\Repositories\Order\OrderRepository;
+use App\Repositories\Picture\EloquentPictureRepository;
+use App\Repositories\Picture\PictureRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -38,5 +40,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(OrderDetailRepository::class, EloquentOrderDetailRepository::class);
         $this->app->singleton(CakeTypeRepository::class, EloquentCakeTypeRepository::class);
         $this->app->singleton(IngredientRepository::class, EloquentIngredientRepository::class);
+        $this->app->singleton(PictureRepository::class, EloquentPictureRepository::class);
     }
 }
