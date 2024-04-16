@@ -30,11 +30,12 @@ abstract class EloquentBaseRepository implements BaseRepository
 
     /**
      * Get All
+     * @param array $attributes
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getAll()
+    public function getAll(array $attributes = ['*'])
     {
-        return $this->model->all();
+        return $this->model->all($attributes);
     }
 
     public function find($id)

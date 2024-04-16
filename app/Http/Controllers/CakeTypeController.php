@@ -3,10 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\CakeType;
+use App\Repositories\CakeType\CakeTypeRepository;
 use Inertia\Inertia;
 
 class CakeTypeController extends Controller
 {
+    protected CakeTypeRepository $cakeTypeRepository;
+
+    public function __construct(CakeTypeRepository $cakeTypeRepository)
+    {
+        $this->cakeTypeRepository = $cakeTypeRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,7 @@ class CakeTypeController extends Controller
      */
     public function index()
     {
-        $cakeTypes = CakeType::all()->load('cakes');
+        $cakeTypes = $this->cakeTypeRepository->getAll()->load('cakes');
 
         return Inertia::render('CakeType/ListCakeType', compact('cakeTypes')); //phpcs:ignore
     }
@@ -32,12 +40,12 @@ class CakeTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CakeType  $cakeType
+     * @param  string  $cakeType
      * @return \Illuminate\Http\Response
      */
-    public function show(CakeType $cakeType)
+    public function show(string $cakeType)
     {
-        $cakeType->load('cakes');
+        $cakeType = $this->cakeTypeRepository->find($cakeType)->load('cakes');
 
         return Inertia::render('CakeType/CakeTypeDetail', compact('cakeType')); // phpcs:ignore
     }
@@ -45,16 +53,19 @@ class CakeTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CakeType  $cakeType
+     * @param  string  $cakeType
      * @return \Illuminate\Http\Response
      */
-    public function edit(CakeType $cakeType)
+    public function edit(string $cakeType)
     {
+        $cakeType = $this->cakeTypeRepository->find($cakeType);
+
         return Inertia::render('CakeType/Edit', compact('cakeType')); // phpcs:ignore
     }
 
-    public function listCakes(CakeType $cakeType)
+    public function listCakes(string $cakeType)
     {
+        $cakeType = $this->cakeTypeRepository->find($cakeType);
         $cakeType->load('cakes');
 
         return Inertia::render('CakeType/ListCakesByType', compact('cakeType')); //phpcs:ignore
