@@ -4,10 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Ingredient\CreateIngredientRequest;
 use App\Http\Requests\Ingredient\UpdateIngredientRequest;
-use App\Models\Ingredient;
+use App\Repositories\Ingredient\IngredientRepository;
 
 class IngredientController extends BaseApiController
 {
+    protected IngredientRepository $ingredientRepository;
+
+    public function __construct(IngredientRepository $ingredientRepository)
+    {
+        $this->ingredientRepository = $ingredientRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +22,7 @@ class IngredientController extends BaseApiController
      */
     public function index()
     {
-        $ingredients = Ingredient::all(['id', 'name']);
+        $ingredients = $this->ingredientRepository->getAll(['id', 'name']);
 
         return response()->json([
             'success' => true,
@@ -31,36 +38,21 @@ class IngredientController extends BaseApiController
      */
     public function store(CreateIngredientRequest $request)
     {
-        $ingredient = new Ingredient();
-        $ingredient->name = $request->name;
-
-        $ingredient->save();
+        $this->ingredientRepository->create($request->only(['name']));
 
         return response()->json(['success' => true]);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ingredient $ingredient)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\Ingredient\UpdateIngredientRequest  $request
-     * @param  \App\Models\Ingredient  $ingredient
+     * @param  string  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateIngredientRequest $request, Ingredient $ingredient)
+    public function update(UpdateIngredientRequest $request, string $ingredient)
     {
-        $ingredient->name = $request->name;
-        $ingredient->save();
+        $this->ingredientRepository->update($ingredient, $request->only('name'));
 
         return response()->json(['success' => true]);
     }
@@ -68,17 +60,12 @@ class IngredientController extends BaseApiController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Ingredient  $ingredient
+     * @param  string $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ingredient $ingredient)
+    public function destroy(string $ingredient)
     {
-        if (count($ingredient->cakes) === 0) {
-            $ingredient->delete();
-
-            return response()->json(['success' => true]);
-        }
-
-        return response()->json(['success' => false]);
+        $res = $this->ingredientRepository->delete($ingredient);
+        return response()->json(['success' => $res]);
     }
 }

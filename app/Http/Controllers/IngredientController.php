@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Ingredient;
+use App\Repositories\Ingredient\IngredientRepository;
 use Inertia\Inertia;
 
 class IngredientController extends Controller
 {
+
+    protected IngredientRepository $ingredientRepository;
+
+    public function __construct(IngredientRepository $ingredientRepository)
+    {
+        $this->ingredientRepository = $ingredientRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,7 @@ class IngredientController extends Controller
      */
     public function index()
     {
-        $ingredients = Ingredient::all();
+        $ingredients = $this->ingredientRepository->getAll();
 
         return Inertia::render('Admin/ListIngredients', compact('ingredients')); //phpcs:ignore
     }
@@ -32,11 +41,12 @@ class IngredientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Ingredient  $ingredient
+     * @param  string  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function show(Ingredient $ingredient)
+    public function show(string $ingredient)
     {
+        $ingredient = $this->ingredientRepository->find($ingredient);
         $ingredient->load('cakes');
 
         return Inertia::render('Ingredient/Detail', compact('ingredient')); //phpcs:ignore
@@ -45,11 +55,13 @@ class IngredientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Ingredient  $ingredient
+     * @param  string  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ingredient $ingredient)
+    public function edit(string $ingredient)
     {
+        $ingredient = $this->ingredientRepository->find($ingredient);
+        
         return Inertia::render("Ingredient/Edit", compact('ingredient')); //phpcs:ignore
     }
 }

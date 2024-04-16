@@ -6,6 +6,8 @@ use App\Repositories\CakeType\CakeTypeRepository;
 use App\Repositories\CakeType\EloquentCakeTypeRepository;
 use App\Repositories\Cake\CakeRepository;
 use App\Repositories\Cake\EloquentCakeRepository;
+use App\Repositories\Ingredient\EloquentIngredientRepository;
+use App\Repositories\Ingredient\IngredientRepository;
 use App\Repositories\OrderDetail\EloquentOrderDetailRepository;
 use App\Repositories\OrderDetail\OrderDetailRepository;
 use App\Repositories\Order\EloquentOrderRepository;
@@ -35,5 +37,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(OrderRepository::class, EloquentOrderRepository::class);
         $this->app->singleton(OrderDetailRepository::class, EloquentOrderDetailRepository::class);
         $this->app->singleton(CakeTypeRepository::class, EloquentCakeTypeRepository::class);
+        $this->app->singleton(IngredientRepository::class, EloquentIngredientRepository::class);
     }
 }

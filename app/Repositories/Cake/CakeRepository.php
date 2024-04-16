@@ -3,11 +3,11 @@
 namespace App\Repositories\Cake;
 
 /**
- * @method mixed find(string $typeId)
+ * @method mixed find(string $id)
  * @method mixed update(string $id,array $attributes)
  * @method mixed create(array $attributes)
  * @method mixed delete(string $id)
- * @method mixed getAll()
+ * @method mixed getAll(array $attributes = ['*])
  */
 interface CakeRepository
 {

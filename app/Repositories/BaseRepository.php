@@ -12,5 +12,5 @@ interface BaseRepository
 
     public function delete(string $id);
 
-    public function getAll();
+    public function getAll(array $attributes = ['*']);
 }
