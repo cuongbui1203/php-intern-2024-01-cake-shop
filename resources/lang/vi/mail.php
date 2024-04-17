@@ -20,4 +20,6 @@ return [
     'address' => 'Địa chỉ',
     'notSee' => 'Nếu bạn không muốn nhận thông báo nữa vui lòng bấm vào',
     'here' => 'đây',
+    'titleMostCake' => 'Đây là các bánh mới được mua nhiều trong tháng này',
+    'greeting' => 'Xin chào :name! Đây là các bánh chúng tôi muốn giới thiệu cho bạn!',
 ];
