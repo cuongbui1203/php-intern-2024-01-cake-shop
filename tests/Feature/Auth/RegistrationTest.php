@@ -27,6 +27,7 @@ class RegistrationTest extends TestCase
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password1',
+            'promotion' => true,
             'password_confirmation' => 'password1',
             'dob' => Carbon::now(),
         ]);

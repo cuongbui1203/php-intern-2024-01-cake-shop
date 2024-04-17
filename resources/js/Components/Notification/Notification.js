@@ -22,7 +22,6 @@ export default function Notification() {
         setItems(tem);
         setCountNewNoti(count);
     }, [noti]);
-    console.log(items);
     return (
         <div>
             <Popover

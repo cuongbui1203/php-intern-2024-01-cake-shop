@@ -6,6 +6,7 @@ import Label from '@/Components/Label';
 import ValidationErrors from '@/Components/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import { useTranslation } from 'react-i18next';
+import { Checkbox } from 'antd';
 
 export default function Register() {
     const [t] = useTranslation();
@@ -16,7 +17,8 @@ export default function Register() {
         phone: '',
         password: '',
         address: '',
-        password_confirmation: ''
+        password_confirmation: '',
+        promotion: false
     });
 
     useEffect(() => {
@@ -54,7 +56,7 @@ export default function Register() {
                         type="text"
                         name="name"
                         value={data.name}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         autoComplete="name"
                         isFocused={true}
                         handleChange={onHandleChange}
@@ -68,7 +70,7 @@ export default function Register() {
                         type="date"
                         name="dob"
                         value={data.dob}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         autoComplete="dob"
                         isFocused={true}
                         handleChange={onHandleChange}
@@ -82,7 +84,7 @@ export default function Register() {
                         type="text"
                         name="phone"
                         value={data.phone}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         autoComplete="phone"
                         isFocused={true}
                         handleChange={onHandleChange}
@@ -97,7 +99,7 @@ export default function Register() {
                         type="text"
                         name="address"
                         value={data.address}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         autoComplete="address"
                         handleChange={onHandleChange}
                         required
@@ -110,7 +112,7 @@ export default function Register() {
                         type="email"
                         name="email"
                         value={data.email}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         autoComplete="username"
                         handleChange={onHandleChange}
                         required
@@ -124,7 +126,7 @@ export default function Register() {
                         type="password"
                         name="password"
                         value={data.password}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         autoComplete="new-password"
                         handleChange={onHandleChange}
                         required
@@ -141,16 +143,24 @@ export default function Register() {
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
-                        className="mt-1 block w-full"
+                        className="block w-full mt-1"
                         handleChange={onHandleChange}
                         required
                     />
                 </div>
-
+                <div className="mt-4">
+                    <Checkbox
+                        onChange={(e) => {
+                            setData('promotion', e.target.checked);
+                        }}
+                    >
+                        {t('promo?')}
+                    </Checkbox>
+                </div>
                 <div className="flex items-center justify-end mt-4">
                     <Link
                         href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900"
+                        className="text-sm text-gray-600 underline hover:text-gray-900"
                     >
                         {t('Already registered?')}
                     </Link>
