@@ -6,13 +6,20 @@ use App\Http\Requests\Auth\AdminRegisterRequest;
 use App\Http\Requests\Auth\ChangeRoleRequest;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Models\User;
+use App\Repositories\User\UserRepository;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends BaseApiController
 {
+    protected UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
+
     public function currentUser(Request $request)
     {
         return response()->json([
@@ -20,8 +27,10 @@ class UserController extends BaseApiController
         ], 200);
     }
 
-    public function updatePassword(ChangePasswordRequest $request, User $user)
+    public function updatePassword(ChangePasswordRequest $request, string $user)
     {
+        $user = $this->userRepository->find($user);
+
         if (Hash::check($request->oldPassword, $user->password)) {
             $user->password = Hash::make($request->getPassword());
             $user->save();
@@ -37,8 +46,9 @@ class UserController extends BaseApiController
         ], Response::HTTP_NOT_FOUND);
     }
 
-    public function destroy(User $user)
+    public function destroy(string $user)
     {
+        $user = $this->userRepository->find($user);
         $user->tokens()->delete();
 
         $user->delete();
@@ -48,40 +58,43 @@ class UserController extends BaseApiController
 
     public function storeEmployee(AdminRegisterRequest $request)
     {
-        $user = new User();
 
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        $user->email = $request->email;
-        $user->address = $request->address;
-        $user->dob = $request->dob;
-        $user->password = Hash::make($request->password);
-        $user->role_id = config('roles.employee');
+        $attributes = $request->only([
+            'name',
+            'phone',
+            'email',
+            'address',
+            'dob',
+        ]);
+        $attributes['password'] = Hash::make($request->password);
+        $attributes['role_id'] = config('roles.employee');
 
-        $user->save();
+        $this->userRepository->create($attributes);
 
         return redirect('/admin/users');
     }
 
-    public function changeUserRole(ChangeRoleRequest $request, User $user)
+    public function changeUserRole(ChangeRoleRequest $request, string $user)
     {
+        $user = $this->userRepository->find($user);
         $user->role_id = $request->roleId;
         $user->save();
 
         return response()->json(['success' => true]);
     }
 
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, string $user)
     {
-        $user->name = $request->name;
-        $user->dob = $request->dob;
-        $user->address = $request->address;
-        $user->phone = $request->phone;
+        $attributes = $request->only([
+            'name',
+            'dob',
+            'address',
+            'phone',
+        ]);
         if ($request->changeMail) {
-            $user->email = $request->email;
+            $attributes['email'] = $request->email;
         }
-
-        $user->save();
+        $this->userRepository->update($user, $attributes);
 
         return response()->json(['success' => true]);
     }

@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\Request;
+use App\Repositories\User\UserRepository;
 use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    public UserRepository $userRepository;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +20,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('role')->get(['id', 'name', 'email', 'role_id']);
+        $users = $this->userRepository
+            ->getAll(['id', 'name', 'email', 'role_id']);
+        $users->load('role');
 
         return Inertia::render('Admin/ListAccount', compact('users')); //phpcs:ignore
     }
@@ -31,65 +38,36 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  string  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(string $user)
     {
+        $user = $this->userRepository->find($user);
         $user->load('role');
 
         return Inertia::render('Auth/User', compact('user')); //phpcs:ignore
     }
 
-    public function changePass(User $user)
+    public function changePass(string $user)
     {
+        $user = $this->userRepository->find($user);
+
         return Inertia::render('Auth/ChangePassword', compact('user')); //phpcs:ignore
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  string  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(string $user)
     {
+        $user = $this->userRepository->find($user);
+
         return Inertia::render('Auth/Edit', compact('user')); //phpcs:ignore
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }
