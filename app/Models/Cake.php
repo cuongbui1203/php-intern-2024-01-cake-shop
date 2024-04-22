@@ -58,7 +58,7 @@ class Cake extends Model
         return $this->reviews->count() === 0 ? 0 : $this->reviews->avg('rating');
     }
 
-    protected $cast = [
+    protected $casts = [
         'updated_at' => 'timestamp',
         'created_at' => 'timestamp',
     ];
