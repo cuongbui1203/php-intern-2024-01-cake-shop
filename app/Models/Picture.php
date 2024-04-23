@@ -21,7 +21,7 @@ class Picture extends Model
         return $this->belongsTo(Cake::class);
     }
 
-    protected $cast = [
+    protected $casts = [
         'updated_at' => 'timestamp',
         'created_at' => 'timestamp',
     ];
