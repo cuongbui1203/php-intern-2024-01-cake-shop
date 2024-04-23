@@ -5,61 +5,41 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\AddItemToCartRequest;
 use App\Http\Requests\ConfirmOrderRequest;
 use App\Http\Requests\UpdateStatusOrderRequest;
-use App\Models\Order;
-use App\Models\OrderDetail;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Repositories\Order\OrderRepository;
+use App\Repositories\OrderDetail\OrderDetailRepository;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends BaseApiController
 {
+    protected OrderRepository $orderRepository;
+    protected OrderDetailRepository $orderDetailRepository;
+
+    public function __construct(OrderRepository $orderRepository, OrderDetailRepository $orderDetailRepository)
+    {
+        $this->orderRepository = $orderRepository;
+        $this->orderDetailRepository = $orderDetailRepository;
+    }
+
     public function index()
     {
-        $user = Auth::user();
-        $order = Order::where('user_id', $user->id)
-            ->where('status_id', config('statuses.buying'))
-            ->first();
-        if (!$order) {
-            $order = new Order();
-            $order->user_id = $user->id;
-            $order->shipping_address = $user->address;
-            $order->shipping_phone = $user->phone;
-            $order->status_id = config('statuses.buying');
-            $order->save();
-        }
-
-        $order->load(['details', 'details.cake', 'details.cake.pictures']);
+        $user = auth()->user();
+        $order = $this->orderRepository->getOrderBuying($user);
 
         return response()->json($order);
     }
 
-    public function deleteItem(Order $order, OrderDetail $orderDetail)
+    public function deleteItem(string $order, string $orderDetail)
     {
-        if ($orderDetail->order_id === $order->id) {
-            $orderDetail->delete();
+        $res = $this->orderDetailRepository->deleteItem($order, $orderDetail);
 
-            return response()->json(['success' => true]);
-        }
-
-        return response()->json(['success' => false]);
+        return response()->json(['success' => $res]);
     }
 
     public function addItem(AddItemToCartRequest $request)
     {
         $user = Auth::user();
-        try {
-            $order = Order::where('user_id', $user->id)
-                ->where('status_id', config('statuses.buying'))
-                ->firstOrFail();
-        } catch (ModelNotFoundException $e) {
-            $order = new Order();
-            $order->user_id = $user->id;
-            $order->shipping_address = $user->address;
-            $order->shipping_phone = $user->phone;
-            $order->status_id = config('statuses.buying');
-            $order->save();
-        }
-
+        $order = $this->orderRepository->getOrderBuying($user);
         $details = $order->details;
         foreach ($details as $e) {
             if ($e->cake_id === $request->cakeId) {
@@ -70,62 +50,37 @@ class CartController extends BaseApiController
             }
         }
 
-        $orderDetail = new OrderDetail([
+        $this->orderDetailRepository->create([
             'order_id' => $order->id,
             'cake_id' => $request->cakeId,
             'amount' => $request->amount,
         ]);
 
-        $orderDetail->save();
-
         return response()->json(['success' => true], Response::HTTP_CREATED);
     }
 
-    public function buy(ConfirmOrderRequest $request, Order $order)
+    public function buy(ConfirmOrderRequest $request, string $order)
     {
         $details = (array) json_decode($request->details);
 
-        foreach ($details as $key => $value) {
-            $detail = OrderDetail::find($key);
-            $detail->amount = $value;
-            $detail->cake->buy_count++;
-            $detail->cake->amount -= $value;
-            $detail->cake->save();
-            $detail->save();
-        }
+        $this->orderDetailRepository->updates($details);
 
-        $order->shipping_address = $request->shipping_address;
-        $order->shipping_phone = $request->shipping_phone;
-        $order->note = $request->note;
-        $order->status_id = config('statuses.pending');
-        $order->save();
+        $this->orderRepository->update($order, [
+            'shipping_address' => $request->shipping_address,
+            'shipping_phone' => $request->shipping_phone,
+            'note' => $request->note,
+            'status_id' => config('statuses.pending'),
+        ]);
 
         return response()->json([
             'success' => true,
         ], 200);
     }
 
-    public function updateStatus(UpdateStatusOrderRequest $request, Order $order)
+    public function updateStatus(UpdateStatusOrderRequest $request, string $order)
     {
-        if (
-            $order->status_id === config('statuses.done')
-            || $order->status_id === config('statuses.cancel')
-            || $order->status_id === config('statuses.fail')
-        ) {
-            return response()->json(['success' => false]);
-        }
+        $res = $this->orderRepository->updateStatus($order, $request->status_id);
 
-        $order->status_id = $request->status_id;
-        if (
-            $request->status_id === config('statuses.done')
-            || $request->status_id === config('statuses.cancel')
-            || $request->status_id === config('statuses.fail')
-        ) {
-            $order->finished_at = now();
-        }
-
-        $order->save();
-
-        return response()->json(['success' => true]);
+        return response()->json(['success' => $res]);
     }
 }
