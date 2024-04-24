@@ -21,4 +21,6 @@ interface CakeRepository
     public function updateIngredients(string $id, array $ingredients);
 
     public function updateCakeAmount(string $id, int $amount);
+
+    public function getTop3();
 }
